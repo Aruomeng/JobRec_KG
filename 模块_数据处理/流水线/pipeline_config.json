@@ -1,0 +1,21 @@
+{
+    "base_data_dir": "..",
+    "neo4j": {
+        "uri": "bolt://localhost:7687",
+        "user": "neo4j",
+        "password": "TYH041113"
+    },
+    "safety": {
+        "require_confirmation": true,
+        "dry_run_mode": false,
+        "backup_reminder": true,
+        "max_batch_size": 1000
+    },
+    "required_fields": [
+        "职位",
+        "公司",
+        "工作描述"
+    ],
+    "batch_size": 100,
+    "processed_cities": []
+}

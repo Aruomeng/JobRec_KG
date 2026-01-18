@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+neo4j-driver
+python-multipart
+pydantic
+pydantic-settings
+python-dotenv
+passlib[bcrypt]
+jwt
+python-docx
+PyPDF2

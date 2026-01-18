@@ -1,0 +1,7866 @@
+{
+  "students": [
+    {
+      "student_id": "STU0001",
+      "name": "程阳",
+      "education": "本科",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "Web应用安全",
+          "skills": [
+            "BurpSuite",
+            "OWASP Top10",
+            "漏洞扫描"
+          ]
+        },
+        {
+          "name": "信息隐藏技术",
+          "skills": [
+            "数字水印",
+            "隐写术",
+            "信息隐藏"
+          ]
+        },
+        {
+          "name": "恶意代码分析",
+          "skills": [
+            "逆向工程",
+            "IDA Pro",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "网络攻防实践",
+          "skills": [
+            "CTF",
+            "Metasploit",
+            "Kali Linux"
+          ]
+        },
+        {
+          "name": "数据库安全",
+          "skills": [
+            "SQL审计",
+            "数据脱敏",
+            "数据库防火墙"
+          ]
+        },
+        {
+          "name": "Python黑客编程",
+          "skills": [
+            "Python",
+            "Socket",
+            "Scapy"
+          ]
+        },
+        {
+          "name": "计算机取证",
+          "skills": [
+            "电子取证",
+            "数据恢复",
+            "日志分析"
+          ]
+        }
+      ],
+      "skills": [
+        "BurpSuite",
+        "CTF",
+        "IDA Pro",
+        "Kali Linux",
+        "Metasploit",
+        "OWASP Top10",
+        "Python",
+        "SQL审计",
+        "Scapy",
+        "Socket",
+        "信息隐藏",
+        "数字水印",
+        "数据库防火墙",
+        "数据恢复",
+        "数据脱敏",
+        "日志分析",
+        "汇编语言",
+        "漏洞扫描",
+        "电子取证",
+        "逆向工程",
+        "隐写术"
+      ]
+    },
+    {
+      "student_id": "STU0002",
+      "name": "傅航洋",
+      "education": "本科",
+      "major": "大数据管理与应用",
+      "courses": [
+        {
+          "name": "Hadoop大数据技术",
+          "skills": [
+            "Hadoop",
+            "MapReduce",
+            "HDFS"
+          ]
+        },
+        {
+          "name": "机器学习导论",
+          "skills": [
+            "Scikit-learn",
+            "机器学习",
+            "统计学"
+          ]
+        },
+        {
+          "name": "统计学基础",
+          "skills": [
+            "SPSS",
+            "概率论",
+            "A/B测试"
+          ]
+        },
+        {
+          "name": "数据可视化",
+          "skills": [
+            "ECharts",
+            "Tableau",
+            "Matplotlib"
+          ]
+        },
+        {
+          "name": "Python数据分析",
+          "skills": [
+            "Python",
+            "Pandas",
+            "NumPy"
+          ]
+        },
+        {
+          "name": "数据挖掘",
+          "skills": [
+            "数据挖掘",
+            "关联规则",
+            "聚类算法"
+          ]
+        },
+        {
+          "name": "NoSQL数据库",
+          "skills": [
+            "Redis",
+            "MongoDB",
+            "HBase"
+          ]
+        }
+      ],
+      "skills": [
+        "A/B测试",
+        "ECharts",
+        "HBase",
+        "HDFS",
+        "Hadoop",
+        "MapReduce",
+        "Matplotlib",
+        "MongoDB",
+        "NumPy",
+        "Pandas",
+        "Python",
+        "Redis",
+        "SPSS",
+        "Scikit-learn",
+        "Tableau",
+        "关联规则",
+        "数据挖掘",
+        "机器学习",
+        "概率论",
+        "统计学",
+        "聚类算法"
+      ]
+    },
+    {
+      "student_id": "STU0003",
+      "name": "蔡子",
+      "education": "本科",
+      "major": "电子商务",
+      "courses": [
+        {
+          "name": "电子商务概论",
+          "skills": [
+            "电商模式",
+            "B2B/B2C",
+            "O2O"
+          ]
+        },
+        {
+          "name": "推荐系统导论",
+          "skills": [
+            "推荐算法",
+            "协同过滤",
+            "用户行为分析"
+          ]
+        },
+        {
+          "name": "客户关系管理",
+          "skills": [
+            "CRM",
+            "Salesforce",
+            "用户画像"
+          ]
+        },
+        {
+          "name": "电商系统设计",
+          "skills": [
+            "UML",
+            "需求分析",
+            "Axure原型"
+          ]
+        },
+        {
+          "name": "电子支付与结算",
+          "skills": [
+            "第三方支付",
+            "金融科技",
+            "区块链"
+          ]
+        },
+        {
+          "name": "商务数据分析",
+          "skills": [
+            "Excel",
+            "Python",
+            "数据报表"
+          ]
+        }
+      ],
+      "skills": [
+        "Axure原型",
+        "B2B/B2C",
+        "CRM",
+        "Excel",
+        "O2O",
+        "Python",
+        "Salesforce",
+        "UML",
+        "区块链",
+        "协同过滤",
+        "推荐算法",
+        "数据报表",
+        "用户画像",
+        "用户行为分析",
+        "电商模式",
+        "第三方支付",
+        "金融科技",
+        "需求分析"
+      ]
+    },
+    {
+      "student_id": "STU0004",
+      "name": "孙婷威",
+      "education": "本科",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "密码学",
+          "skills": [
+            "加密算法",
+            "RSA",
+            "区块链基础"
+          ]
+        },
+        {
+          "name": "Python黑客编程",
+          "skills": [
+            "Python",
+            "Socket",
+            "Scapy"
+          ]
+        },
+        {
+          "name": "恶意代码分析",
+          "skills": [
+            "逆向工程",
+            "IDA Pro",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "计算机取证",
+          "skills": [
+            "电子取证",
+            "数据恢复",
+            "日志分析"
+          ]
+        },
+        {
+          "name": "操作系统安全",
+          "skills": [
+            "Linux安全",
+            "权限管理",
+            "安全加固"
+          ]
+        },
+        {
+          "name": "信息隐藏技术",
+          "skills": [
+            "数字水印",
+            "隐写术",
+            "信息隐藏"
+          ]
+        },
+        {
+          "name": "风险评估与管理",
+          "skills": [
+            "等级保护",
+            "ISO27001",
+            "风险评估"
+          ]
+        }
+      ],
+      "skills": [
+        "IDA Pro",
+        "ISO27001",
+        "Linux安全",
+        "Python",
+        "RSA",
+        "Scapy",
+        "Socket",
+        "信息隐藏",
+        "加密算法",
+        "区块链基础",
+        "安全加固",
+        "数字水印",
+        "数据恢复",
+        "日志分析",
+        "权限管理",
+        "汇编语言",
+        "电子取证",
+        "等级保护",
+        "逆向工程",
+        "隐写术",
+        "风险评估"
+      ]
+    },
+    {
+      "student_id": "STU0005",
+      "name": "魏秀英勇",
+      "education": "本科",
+      "major": "网络工程",
+      "courses": [
+        {
+          "name": "路由与交换技术",
+          "skills": [
+            "Cisco",
+            "华为认证",
+            "VLAN"
+          ]
+        },
+        {
+          "name": "网络存储技术",
+          "skills": [
+            "SAN",
+            "NAS",
+            "RAID"
+          ]
+        },
+        {
+          "name": "Web安全攻防",
+          "skills": [
+            "SQL注入",
+            "XSS",
+            "渗透测试"
+          ]
+        },
+        {
+          "name": "云计算架构",
+          "skills": [
+            "OpenStack",
+            "KVM",
+            "虚拟化"
+          ]
+        }
+      ],
+      "skills": [
+        "Cisco",
+        "KVM",
+        "NAS",
+        "OpenStack",
+        "RAID",
+        "SAN",
+        "SQL注入",
+        "VLAN",
+        "XSS",
+        "华为认证",
+        "渗透测试",
+        "虚拟化"
+      ]
+    },
+    {
+      "student_id": "STU0006",
+      "name": "朱强阳",
+      "education": "硕士",
+      "major": "人工智能",
+      "courses": [
+        {
+          "name": "模式识别",
+          "skills": [
+            "模式识别",
+            "SVM",
+            "贝叶斯分类"
+          ]
+        },
+        {
+          "name": "Python高阶编程",
+          "skills": [
+            "Python",
+            "并发编程",
+            "装饰器"
+          ]
+        },
+        {
+          "name": "机器人技术",
+          "skills": [
+            "ROS",
+            "SLAM",
+            "路径规划"
+          ]
+        },
+        {
+          "name": "深度学习",
+          "skills": [
+            "TensorFlow",
+            "PyTorch",
+            "神经网络"
+          ]
+        },
+        {
+          "name": "强化学习",
+          "skills": [
+            "强化学习",
+            "Q-Learning",
+            "智能体"
+          ]
+        },
+        {
+          "name": "高等数学",
+          "skills": [
+            "微积分",
+            "线性代数",
+            "数学建模"
+          ]
+        }
+      ],
+      "skills": [
+        "PyTorch",
+        "Python",
+        "Q-Learning",
+        "ROS",
+        "SLAM",
+        "SVM",
+        "TensorFlow",
+        "并发编程",
+        "强化学习",
+        "微积分",
+        "数学建模",
+        "智能体",
+        "模式识别",
+        "神经网络",
+        "线性代数",
+        "装饰器",
+        "贝叶斯分类",
+        "路径规划"
+      ]
+    },
+    {
+      "student_id": "STU0007",
+      "name": "孙勇",
+      "education": "大专",
+      "major": "通信工程",
+      "courses": [
+        {
+          "name": "计算机网络与协议",
+          "skills": [
+            "TCP/IP",
+            "路由交换",
+            "Cisco配置"
+          ]
+        },
+        {
+          "name": "通信原理",
+          "skills": [
+            "通信系统",
+            "调制解调",
+            "信道编码"
+          ]
+        },
+        {
+          "name": "移动通信",
+          "skills": [
+            "4G/5G",
+            "LTE",
+            "无线网络"
+          ]
+        },
+        {
+          "name": "交换技术",
+          "skills": [
+            "SDN",
+            "网络架构",
+            "软交换"
+          ]
+        },
+        {
+          "name": "网络规划与优化",
+          "skills": [
+            "网络优化",
+            "基站维护",
+            "路测"
+          ]
+        }
+      ],
+      "skills": [
+        "4G/5G",
+        "Cisco配置",
+        "LTE",
+        "SDN",
+        "TCP/IP",
+        "信道编码",
+        "基站维护",
+        "无线网络",
+        "网络优化",
+        "网络架构",
+        "调制解调",
+        "路测",
+        "路由交换",
+        "软交换",
+        "通信系统"
+      ]
+    },
+    {
+      "student_id": "STU0008",
+      "name": "丁洋勇",
+      "education": "本科",
+      "major": "通信工程",
+      "courses": [
+        {
+          "name": "下一代网络技术",
+          "skills": [
+            "IPv6",
+            "IoT",
+            "网络切片"
+          ]
+        },
+        {
+          "name": "C语言程序设计",
+          "skills": [
+            "C语言",
+            "嵌入式编程",
+            "算法"
+          ]
+        },
+        {
+          "name": "交换技术",
+          "skills": [
+            "SDN",
+            "网络架构",
+            "软交换"
+          ]
+        },
+        {
+          "name": "计算机网络与协议",
+          "skills": [
+            "TCP/IP",
+            "路由交换",
+            "Cisco配置"
+          ]
+        },
+        {
+          "name": "光纤通信",
+          "skills": [
+            "光网络",
+            "光传输",
+            "OTN"
+          ]
+        },
+        {
+          "name": "网络规划与优化",
+          "skills": [
+            "网络优化",
+            "基站维护",
+            "路测"
+          ]
+        },
+        {
+          "name": "天线与电波传播",
+          "skills": [
+            "天线设计",
+            "HFSS",
+            "电磁波"
+          ]
+        }
+      ],
+      "skills": [
+        "Cisco配置",
+        "C语言",
+        "HFSS",
+        "IPv6",
+        "IoT",
+        "OTN",
+        "SDN",
+        "TCP/IP",
+        "光传输",
+        "光网络",
+        "基站维护",
+        "天线设计",
+        "嵌入式编程",
+        "电磁波",
+        "算法",
+        "网络优化",
+        "网络切片",
+        "网络架构",
+        "路测",
+        "路由交换",
+        "软交换"
+      ]
+    },
+    {
+      "student_id": "STU0009",
+      "name": "袁伟宁",
+      "education": "硕士",
+      "major": "软件工程",
+      "courses": [
+        {
+          "name": "软件项目管理",
+          "skills": [
+            "项目管理",
+            "JIRA",
+            "Scrum"
+          ]
+        },
+        {
+          "name": "Linux操作系统",
+          "skills": [
+            "Linux",
+            "Shell",
+            "运维基础"
+          ]
+        },
+        {
+          "name": "DevOps实践",
+          "skills": [
+            "Docker",
+            "Kubernetes",
+            "Jenkins"
+          ]
+        },
+        {
+          "name": "数据库应用",
+          "skills": [
+            "MySQL",
+            "Redis",
+            "MongoDB"
+          ]
+        },
+        {
+          "name": "移动应用开发",
+          "skills": [
+            "Android",
+            "Kotlin",
+            "Flutter"
+          ]
+        },
+        {
+          "name": "设计模式",
+          "skills": [
+            "设计模式",
+            "重构",
+            "面向对象"
+          ]
+        }
+      ],
+      "skills": [
+        "Android",
+        "Docker",
+        "Flutter",
+        "JIRA",
+        "Jenkins",
+        "Kotlin",
+        "Kubernetes",
+        "Linux",
+        "MongoDB",
+        "MySQL",
+        "Redis",
+        "Scrum",
+        "Shell",
+        "设计模式",
+        "运维基础",
+        "重构",
+        "面向对象",
+        "项目管理"
+      ]
+    },
+    {
+      "student_id": "STU0010",
+      "name": "卢佳",
+      "education": "硕士",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "嵌入式开发",
+          "skills": [
+            "C语言",
+            "Keil",
+            "微控制器"
+          ]
+        },
+        {
+          "name": "EDA技术",
+          "skills": [
+            "PCB设计",
+            "Altium Designer",
+            "Protell"
+          ]
+        },
+        {
+          "name": "微机原理",
+          "skills": [
+            "汇编语言",
+            "接口技术",
+            "计算机硬件"
+          ]
+        },
+        {
+          "name": "电路分析基础",
+          "skills": [
+            "电路设计",
+            "Multisim",
+            "电子元器件"
+          ]
+        },
+        {
+          "name": "模拟电子技术",
+          "skills": [
+            "模电",
+            "晶体管",
+            "放大电路"
+          ]
+        },
+        {
+          "name": "通信电路",
+          "skills": [
+            "通信原理",
+            "高频电路",
+            "锁相环"
+          ]
+        }
+      ],
+      "skills": [
+        "Altium Designer",
+        "C语言",
+        "Keil",
+        "Multisim",
+        "PCB设计",
+        "Protell",
+        "微控制器",
+        "接口技术",
+        "放大电路",
+        "晶体管",
+        "模电",
+        "汇编语言",
+        "电子元器件",
+        "电路设计",
+        "计算机硬件",
+        "通信原理",
+        "锁相环",
+        "高频电路"
+      ]
+    },
+    {
+      "student_id": "STU0011",
+      "name": "郭逸",
+      "education": "本科",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "计算机网络",
+          "skills": [
+            "TCP/IP",
+            "HTTP协议",
+            "网络编程"
+          ]
+        },
+        {
+          "name": "计算机组成原理",
+          "skills": [
+            "计算机体系结构",
+            "汇编语言",
+            "硬件基础"
+          ]
+        },
+        {
+          "name": "数据库系统概论",
+          "skills": [
+            "MySQL",
+            "SQL",
+            "数据库设计"
+          ]
+        },
+        {
+          "name": "Web前端开发",
+          "skills": [
+            "HTML/CSS",
+            "JavaScript",
+            "Vue.js"
+          ]
+        },
+        {
+          "name": "软件工程导论",
+          "skills": [
+            "敏捷开发",
+            "UML建模",
+            "Git"
+          ]
+        },
+        {
+          "name": "操作系统原理",
+          "skills": [
+            "Linux",
+            "Shell脚本",
+            "进程管理"
+          ]
+        },
+        {
+          "name": "C++程序设计",
+          "skills": [
+            "C++",
+            "面向对象",
+            "STL库"
+          ]
+        },
+        {
+          "name": "编译原理",
+          "skills": [
+            "编译技术",
+            "词法分析",
+            "正则表达式"
+          ]
+        }
+      ],
+      "skills": [
+        "C++",
+        "Git",
+        "HTML/CSS",
+        "HTTP协议",
+        "JavaScript",
+        "Linux",
+        "MySQL",
+        "SQL",
+        "STL库",
+        "Shell脚本",
+        "TCP/IP",
+        "UML建模",
+        "Vue.js",
+        "敏捷开发",
+        "数据库设计",
+        "正则表达式",
+        "汇编语言",
+        "硬件基础",
+        "编译技术",
+        "网络编程",
+        "计算机体系结构",
+        "词法分析",
+        "进程管理",
+        "面向对象"
+      ]
+    },
+    {
+      "student_id": "STU0012",
+      "name": "贾磊思",
+      "education": "本科",
+      "major": "大数据管理与应用",
+      "courses": [
+        {
+          "name": "网络爬虫技术",
+          "skills": [
+            "Python",
+            "Scrapy",
+            "网络爬虫"
+          ]
+        },
+        {
+          "name": "数据挖掘",
+          "skills": [
+            "数据挖掘",
+            "关联规则",
+            "聚类算法"
+          ]
+        },
+        {
+          "name": "Spark大数据处理",
+          "skills": [
+            "Spark",
+            "Scala",
+            "分布式计算"
+          ]
+        },
+        {
+          "name": "数据可视化",
+          "skills": [
+            "ECharts",
+            "Tableau",
+            "Matplotlib"
+          ]
+        },
+        {
+          "name": "商业智能BI",
+          "skills": [
+            "PowerBI",
+            "数据仓库",
+            "ETL"
+          ]
+        },
+        {
+          "name": "机器学习导论",
+          "skills": [
+            "Scikit-learn",
+            "机器学习",
+            "统计学"
+          ]
+        },
+        {
+          "name": "统计学基础",
+          "skills": [
+            "SPSS",
+            "概率论",
+            "A/B测试"
+          ]
+        }
+      ],
+      "skills": [
+        "A/B测试",
+        "ECharts",
+        "ETL",
+        "Matplotlib",
+        "PowerBI",
+        "Python",
+        "SPSS",
+        "Scala",
+        "Scikit-learn",
+        "Scrapy",
+        "Spark",
+        "Tableau",
+        "关联规则",
+        "分布式计算",
+        "数据仓库",
+        "数据挖掘",
+        "机器学习",
+        "概率论",
+        "统计学",
+        "网络爬虫",
+        "聚类算法"
+      ]
+    },
+    {
+      "student_id": "STU0013",
+      "name": "傅轩凯",
+      "education": "本科",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "数字信号处理",
+          "skills": [
+            "DSP",
+            "滤波器设计",
+            "MATLAB"
+          ]
+        },
+        {
+          "name": "数字电子技术",
+          "skills": [
+            "数电",
+            "FPGA",
+            "Verilog"
+          ]
+        },
+        {
+          "name": "模拟电子技术",
+          "skills": [
+            "模电",
+            "晶体管",
+            "放大电路"
+          ]
+        },
+        {
+          "name": "电路分析基础",
+          "skills": [
+            "电路设计",
+            "Multisim",
+            "电子元器件"
+          ]
+        },
+        {
+          "name": "信号与系统",
+          "skills": [
+            "信号处理",
+            "MATLAB",
+            "傅里叶变换"
+          ]
+        },
+        {
+          "name": "EDA技术",
+          "skills": [
+            "PCB设计",
+            "Altium Designer",
+            "Protell"
+          ]
+        },
+        {
+          "name": "微机原理",
+          "skills": [
+            "汇编语言",
+            "接口技术",
+            "计算机硬件"
+          ]
+        },
+        {
+          "name": "通信电路",
+          "skills": [
+            "通信原理",
+            "高频电路",
+            "锁相环"
+          ]
+        }
+      ],
+      "skills": [
+        "Altium Designer",
+        "DSP",
+        "FPGA",
+        "MATLAB",
+        "Multisim",
+        "PCB设计",
+        "Protell",
+        "Verilog",
+        "信号处理",
+        "傅里叶变换",
+        "接口技术",
+        "放大电路",
+        "数电",
+        "晶体管",
+        "模电",
+        "汇编语言",
+        "滤波器设计",
+        "电子元器件",
+        "电路设计",
+        "计算机硬件",
+        "通信原理",
+        "锁相环",
+        "高频电路"
+      ]
+    },
+    {
+      "student_id": "STU0014",
+      "name": "刘杰",
+      "education": "大专",
+      "major": "软件工程",
+      "courses": [
+        {
+          "name": "数据库应用",
+          "skills": [
+            "MySQL",
+            "Redis",
+            "MongoDB"
+          ]
+        },
+        {
+          "name": "设计模式",
+          "skills": [
+            "设计模式",
+            "重构",
+            "面向对象"
+          ]
+        },
+        {
+          "name": "Linux操作系统",
+          "skills": [
+            "Linux",
+            "Shell",
+            "运维基础"
+          ]
+        },
+        {
+          "name": "移动应用开发",
+          "skills": [
+            "Android",
+            "Kotlin",
+            "Flutter"
+          ]
+        },
+        {
+          "name": "软件项目管理",
+          "skills": [
+            "项目管理",
+            "JIRA",
+            "Scrum"
+          ]
+        },
+        {
+          "name": "Java企业级开发",
+          "skills": [
+            "Java",
+            "Spring Boot",
+            "MyBatis"
+          ]
+        },
+        {
+          "name": "Web应用开发",
+          "skills": [
+            "React",
+            "JavaScript",
+            "Node.js"
+          ]
+        }
+      ],
+      "skills": [
+        "Android",
+        "Flutter",
+        "JIRA",
+        "Java",
+        "JavaScript",
+        "Kotlin",
+        "Linux",
+        "MongoDB",
+        "MyBatis",
+        "MySQL",
+        "Node.js",
+        "React",
+        "Redis",
+        "Scrum",
+        "Shell",
+        "Spring Boot",
+        "设计模式",
+        "运维基础",
+        "重构",
+        "面向对象",
+        "项目管理"
+      ]
+    },
+    {
+      "student_id": "STU0015",
+      "name": "曹皓",
+      "education": "本科",
+      "major": "物联网工程",
+      "courses": [
+        {
+          "name": "物联网导论",
+          "skills": [
+            "IoT概念",
+            "传感器技术",
+            "RFID"
+          ]
+        },
+        {
+          "name": "Python物联网开发",
+          "skills": [
+            "Python",
+            "MQTT协议",
+            "Socket编程"
+          ]
+        },
+        {
+          "name": "物联网信息安全",
+          "skills": [
+            "网络安全",
+            "加密算法",
+            "数据隐私"
+          ]
+        },
+        {
+          "name": "物联网通信技术",
+          "skills": [
+            "NB-IoT",
+            "LoRa",
+            "5G技术"
+          ]
+        }
+      ],
+      "skills": [
+        "5G技术",
+        "IoT概念",
+        "LoRa",
+        "MQTT协议",
+        "NB-IoT",
+        "Python",
+        "RFID",
+        "Socket编程",
+        "传感器技术",
+        "加密算法",
+        "数据隐私",
+        "网络安全"
+      ]
+    },
+    {
+      "student_id": "STU0016",
+      "name": "李杰",
+      "education": "硕士",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "嵌入式开发",
+          "skills": [
+            "C语言",
+            "Keil",
+            "微控制器"
+          ]
+        },
+        {
+          "name": "EDA技术",
+          "skills": [
+            "PCB设计",
+            "Altium Designer",
+            "Protell"
+          ]
+        },
+        {
+          "name": "微机原理",
+          "skills": [
+            "汇编语言",
+            "接口技术",
+            "计算机硬件"
+          ]
+        },
+        {
+          "name": "电磁场与电磁波",
+          "skills": [
+            "电磁兼容",
+            "天线设计",
+            "微波技术"
+          ]
+        }
+      ],
+      "skills": [
+        "Altium Designer",
+        "C语言",
+        "Keil",
+        "PCB设计",
+        "Protell",
+        "天线设计",
+        "微控制器",
+        "微波技术",
+        "接口技术",
+        "汇编语言",
+        "电磁兼容",
+        "计算机硬件"
+      ]
+    },
+    {
+      "student_id": "STU0017",
+      "name": "谢勇思",
+      "education": "大专",
+      "major": "物联网工程",
+      "courses": [
+        {
+          "name": "Python物联网开发",
+          "skills": [
+            "Python",
+            "MQTT协议",
+            "Socket编程"
+          ]
+        },
+        {
+          "name": "无线传感器网络",
+          "skills": [
+            "ZigBee",
+            "蓝牙",
+            "Wi-Fi协议"
+          ]
+        },
+        {
+          "name": "物联网通信技术",
+          "skills": [
+            "NB-IoT",
+            "LoRa",
+            "5G技术"
+          ]
+        },
+        {
+          "name": "传感器技术",
+          "skills": [
+            "传感器",
+            "模数转换",
+            "信号处理"
+          ]
+        },
+        {
+          "name": "物联网信息安全",
+          "skills": [
+            "网络安全",
+            "加密算法",
+            "数据隐私"
+          ]
+        }
+      ],
+      "skills": [
+        "5G技术",
+        "LoRa",
+        "MQTT协议",
+        "NB-IoT",
+        "Python",
+        "Socket编程",
+        "Wi-Fi协议",
+        "ZigBee",
+        "传感器",
+        "信号处理",
+        "加密算法",
+        "数据隐私",
+        "模数转换",
+        "网络安全",
+        "蓝牙"
+      ]
+    },
+    {
+      "student_id": "STU0018",
+      "name": "吕宁敏",
+      "education": "硕士",
+      "major": "软件工程",
+      "courses": [
+        {
+          "name": "中间件技术",
+          "skills": [
+            "消息队列",
+            "Kafka",
+            "Nginx"
+          ]
+        },
+        {
+          "name": "Web应用开发",
+          "skills": [
+            "React",
+            "JavaScript",
+            "Node.js"
+          ]
+        },
+        {
+          "name": "Linux操作系统",
+          "skills": [
+            "Linux",
+            "Shell",
+            "运维基础"
+          ]
+        },
+        {
+          "name": "软件测试技术",
+          "skills": [
+            "软件测试",
+            "Selenium",
+            "JUnit"
+          ]
+        },
+        {
+          "name": "软件项目管理",
+          "skills": [
+            "项目管理",
+            "JIRA",
+            "Scrum"
+          ]
+        },
+        {
+          "name": "移动应用开发",
+          "skills": [
+            "Android",
+            "Kotlin",
+            "Flutter"
+          ]
+        },
+        {
+          "name": "DevOps实践",
+          "skills": [
+            "Docker",
+            "Kubernetes",
+            "Jenkins"
+          ]
+        },
+        {
+          "name": "数据库应用",
+          "skills": [
+            "MySQL",
+            "Redis",
+            "MongoDB"
+          ]
+        }
+      ],
+      "skills": [
+        "Android",
+        "Docker",
+        "Flutter",
+        "JIRA",
+        "JUnit",
+        "JavaScript",
+        "Jenkins",
+        "Kafka",
+        "Kotlin",
+        "Kubernetes",
+        "Linux",
+        "MongoDB",
+        "MySQL",
+        "Nginx",
+        "Node.js",
+        "React",
+        "Redis",
+        "Scrum",
+        "Selenium",
+        "Shell",
+        "消息队列",
+        "软件测试",
+        "运维基础",
+        "项目管理"
+      ]
+    },
+    {
+      "student_id": "STU0019",
+      "name": "赵勇欣",
+      "education": "大专",
+      "major": "通信工程",
+      "courses": [
+        {
+          "name": "交换技术",
+          "skills": [
+            "SDN",
+            "网络架构",
+            "软交换"
+          ]
+        },
+        {
+          "name": "通信原理",
+          "skills": [
+            "通信系统",
+            "调制解调",
+            "信道编码"
+          ]
+        },
+        {
+          "name": "下一代网络技术",
+          "skills": [
+            "IPv6",
+            "IoT",
+            "网络切片"
+          ]
+        },
+        {
+          "name": "计算机网络与协议",
+          "skills": [
+            "TCP/IP",
+            "路由交换",
+            "Cisco配置"
+          ]
+        },
+        {
+          "name": "网络规划与优化",
+          "skills": [
+            "网络优化",
+            "基站维护",
+            "路测"
+          ]
+        }
+      ],
+      "skills": [
+        "Cisco配置",
+        "IPv6",
+        "IoT",
+        "SDN",
+        "TCP/IP",
+        "信道编码",
+        "基站维护",
+        "网络优化",
+        "网络切片",
+        "网络架构",
+        "调制解调",
+        "路测",
+        "路由交换",
+        "软交换",
+        "通信系统"
+      ]
+    },
+    {
+      "student_id": "STU0020",
+      "name": "孙军",
+      "education": "本科",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "Web前端开发",
+          "skills": [
+            "HTML/CSS",
+            "JavaScript",
+            "Vue.js"
+          ]
+        },
+        {
+          "name": "计算机组成原理",
+          "skills": [
+            "计算机体系结构",
+            "汇编语言",
+            "硬件基础"
+          ]
+        },
+        {
+          "name": "C++程序设计",
+          "skills": [
+            "C++",
+            "面向对象",
+            "STL库"
+          ]
+        },
+        {
+          "name": "数据库系统概论",
+          "skills": [
+            "MySQL",
+            "SQL",
+            "数据库设计"
+          ]
+        },
+        {
+          "name": "操作系统原理",
+          "skills": [
+            "Linux",
+            "Shell脚本",
+            "进程管理"
+          ]
+        },
+        {
+          "name": "数据结构与算法",
+          "skills": [
+            "算法",
+            "数据结构",
+            "逻辑思维"
+          ]
+        },
+        {
+          "name": "编译原理",
+          "skills": [
+            "编译技术",
+            "词法分析",
+            "正则表达式"
+          ]
+        },
+        {
+          "name": "计算机网络",
+          "skills": [
+            "TCP/IP",
+            "HTTP协议",
+            "网络编程"
+          ]
+        }
+      ],
+      "skills": [
+        "C++",
+        "HTML/CSS",
+        "HTTP协议",
+        "JavaScript",
+        "Linux",
+        "MySQL",
+        "SQL",
+        "STL库",
+        "Shell脚本",
+        "TCP/IP",
+        "Vue.js",
+        "数据库设计",
+        "数据结构",
+        "正则表达式",
+        "汇编语言",
+        "硬件基础",
+        "算法",
+        "编译技术",
+        "网络编程",
+        "计算机体系结构",
+        "词法分析",
+        "进程管理",
+        "逻辑思维",
+        "面向对象"
+      ]
+    },
+    {
+      "student_id": "STU0021",
+      "name": "许雨",
+      "education": "大专",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "网络攻防实践",
+          "skills": [
+            "CTF",
+            "Metasploit",
+            "Kali Linux"
+          ]
+        },
+        {
+          "name": "Web应用安全",
+          "skills": [
+            "BurpSuite",
+            "OWASP Top10",
+            "漏洞扫描"
+          ]
+        },
+        {
+          "name": "计算机取证",
+          "skills": [
+            "电子取证",
+            "数据恢复",
+            "日志分析"
+          ]
+        },
+        {
+          "name": "Python黑客编程",
+          "skills": [
+            "Python",
+            "Socket",
+            "Scapy"
+          ]
+        }
+      ],
+      "skills": [
+        "BurpSuite",
+        "CTF",
+        "Kali Linux",
+        "Metasploit",
+        "OWASP Top10",
+        "Python",
+        "Scapy",
+        "Socket",
+        "数据恢复",
+        "日志分析",
+        "漏洞扫描",
+        "电子取证"
+      ]
+    },
+    {
+      "student_id": "STU0022",
+      "name": "阎帆",
+      "education": "本科",
+      "major": "软件工程",
+      "courses": [
+        {
+          "name": "移动应用开发",
+          "skills": [
+            "Android",
+            "Kotlin",
+            "Flutter"
+          ]
+        },
+        {
+          "name": "Linux操作系统",
+          "skills": [
+            "Linux",
+            "Shell",
+            "运维基础"
+          ]
+        },
+        {
+          "name": "软件项目管理",
+          "skills": [
+            "项目管理",
+            "JIRA",
+            "Scrum"
+          ]
+        },
+        {
+          "name": "软件测试技术",
+          "skills": [
+            "软件测试",
+            "Selenium",
+            "JUnit"
+          ]
+        },
+        {
+          "name": "中间件技术",
+          "skills": [
+            "消息队列",
+            "Kafka",
+            "Nginx"
+          ]
+        }
+      ],
+      "skills": [
+        "Android",
+        "Flutter",
+        "JIRA",
+        "JUnit",
+        "Kafka",
+        "Kotlin",
+        "Linux",
+        "Nginx",
+        "Scrum",
+        "Selenium",
+        "Shell",
+        "消息队列",
+        "软件测试",
+        "运维基础",
+        "项目管理"
+      ]
+    },
+    {
+      "student_id": "STU0023",
+      "name": "曾文",
+      "education": "硕士",
+      "major": "软件工程",
+      "courses": [
+        {
+          "name": "Linux操作系统",
+          "skills": [
+            "Linux",
+            "Shell",
+            "运维基础"
+          ]
+        },
+        {
+          "name": "软件测试技术",
+          "skills": [
+            "软件测试",
+            "Selenium",
+            "JUnit"
+          ]
+        },
+        {
+          "name": "软件项目管理",
+          "skills": [
+            "项目管理",
+            "JIRA",
+            "Scrum"
+          ]
+        },
+        {
+          "name": "移动应用开发",
+          "skills": [
+            "Android",
+            "Kotlin",
+            "Flutter"
+          ]
+        }
+      ],
+      "skills": [
+        "Android",
+        "Flutter",
+        "JIRA",
+        "JUnit",
+        "Kotlin",
+        "Linux",
+        "Scrum",
+        "Selenium",
+        "Shell",
+        "软件测试",
+        "运维基础",
+        "项目管理"
+      ]
+    },
+    {
+      "student_id": "STU0024",
+      "name": "杨涛娜",
+      "education": "本科",
+      "major": "电子商务",
+      "courses": [
+        {
+          "name": "移动电商开发",
+          "skills": [
+            "小程序开发",
+            "微信生态",
+            "JavaScript"
+          ]
+        },
+        {
+          "name": "商务数据分析",
+          "skills": [
+            "Excel",
+            "Python",
+            "数据报表"
+          ]
+        },
+        {
+          "name": "网络营销",
+          "skills": [
+            "SEO/SEM",
+            "新媒体运营",
+            "用户增长"
+          ]
+        },
+        {
+          "name": "推荐系统导论",
+          "skills": [
+            "推荐算法",
+            "协同过滤",
+            "用户行为分析"
+          ]
+        },
+        {
+          "name": "客户关系管理",
+          "skills": [
+            "CRM",
+            "Salesforce",
+            "用户画像"
+          ]
+        },
+        {
+          "name": "供应链管理",
+          "skills": [
+            "ERP系统",
+            "物流管理",
+            "库存控制"
+          ]
+        },
+        {
+          "name": "电子商务概论",
+          "skills": [
+            "电商模式",
+            "B2B/B2C",
+            "O2O"
+          ]
+        },
+        {
+          "name": "网页设计与制作",
+          "skills": [
+            "HTML/CSS",
+            "Dreamweaver",
+            "UI设计"
+          ]
+        }
+      ],
+      "skills": [
+        "B2B/B2C",
+        "CRM",
+        "Dreamweaver",
+        "ERP系统",
+        "Excel",
+        "HTML/CSS",
+        "JavaScript",
+        "O2O",
+        "Python",
+        "SEO/SEM",
+        "Salesforce",
+        "UI设计",
+        "协同过滤",
+        "小程序开发",
+        "库存控制",
+        "微信生态",
+        "推荐算法",
+        "数据报表",
+        "新媒体运营",
+        "物流管理",
+        "用户增长",
+        "用户画像",
+        "用户行为分析",
+        "电商模式"
+      ]
+    },
+    {
+      "student_id": "STU0025",
+      "name": "赵晨军",
+      "education": "本科",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "操作系统原理",
+          "skills": [
+            "Linux",
+            "Shell脚本",
+            "进程管理"
+          ]
+        },
+        {
+          "name": "计算机网络",
+          "skills": [
+            "TCP/IP",
+            "HTTP协议",
+            "网络编程"
+          ]
+        },
+        {
+          "name": "计算机组成原理",
+          "skills": [
+            "计算机体系结构",
+            "汇编语言",
+            "硬件基础"
+          ]
+        },
+        {
+          "name": "Java语言程序设计",
+          "skills": [
+            "Java",
+            "JVM",
+            "多线程"
+          ]
+        },
+        {
+          "name": "数据结构与算法",
+          "skills": [
+            "算法",
+            "数据结构",
+            "逻辑思维"
+          ]
+        },
+        {
+          "name": "Web前端开发",
+          "skills": [
+            "HTML/CSS",
+            "JavaScript",
+            "Vue.js"
+          ]
+        },
+        {
+          "name": "数据库系统概论",
+          "skills": [
+            "MySQL",
+            "SQL",
+            "数据库设计"
+          ]
+        }
+      ],
+      "skills": [
+        "HTML/CSS",
+        "HTTP协议",
+        "JVM",
+        "Java",
+        "JavaScript",
+        "Linux",
+        "MySQL",
+        "SQL",
+        "Shell脚本",
+        "TCP/IP",
+        "Vue.js",
+        "多线程",
+        "数据库设计",
+        "数据结构",
+        "汇编语言",
+        "硬件基础",
+        "算法",
+        "网络编程",
+        "计算机体系结构",
+        "进程管理",
+        "逻辑思维"
+      ]
+    },
+    {
+      "student_id": "STU0026",
+      "name": "程雪阳",
+      "education": "本科",
+      "major": "电子商务",
+      "courses": [
+        {
+          "name": "电子支付与结算",
+          "skills": [
+            "第三方支付",
+            "金融科技",
+            "区块链"
+          ]
+        },
+        {
+          "name": "移动电商开发",
+          "skills": [
+            "小程序开发",
+            "微信生态",
+            "JavaScript"
+          ]
+        },
+        {
+          "name": "供应链管理",
+          "skills": [
+            "ERP系统",
+            "物流管理",
+            "库存控制"
+          ]
+        },
+        {
+          "name": "网页设计与制作",
+          "skills": [
+            "HTML/CSS",
+            "Dreamweaver",
+            "UI设计"
+          ]
+        },
+        {
+          "name": "电子商务概论",
+          "skills": [
+            "电商模式",
+            "B2B/B2C",
+            "O2O"
+          ]
+        }
+      ],
+      "skills": [
+        "B2B/B2C",
+        "Dreamweaver",
+        "ERP系统",
+        "HTML/CSS",
+        "JavaScript",
+        "O2O",
+        "UI设计",
+        "区块链",
+        "小程序开发",
+        "库存控制",
+        "微信生态",
+        "物流管理",
+        "电商模式",
+        "第三方支付",
+        "金融科技"
+      ]
+    },
+    {
+      "student_id": "STU0027",
+      "name": "杨欣",
+      "education": "本科",
+      "major": "大数据管理与应用",
+      "courses": [
+        {
+          "name": "NoSQL数据库",
+          "skills": [
+            "Redis",
+            "MongoDB",
+            "HBase"
+          ]
+        },
+        {
+          "name": "数据挖掘",
+          "skills": [
+            "数据挖掘",
+            "关联规则",
+            "聚类算法"
+          ]
+        },
+        {
+          "name": "Python数据分析",
+          "skills": [
+            "Python",
+            "Pandas",
+            "NumPy"
+          ]
+        },
+        {
+          "name": "Spark大数据处理",
+          "skills": [
+            "Spark",
+            "Scala",
+            "分布式计算"
+          ]
+        }
+      ],
+      "skills": [
+        "HBase",
+        "MongoDB",
+        "NumPy",
+        "Pandas",
+        "Python",
+        "Redis",
+        "Scala",
+        "Spark",
+        "关联规则",
+        "分布式计算",
+        "数据挖掘",
+        "聚类算法"
+      ]
+    },
+    {
+      "student_id": "STU0028",
+      "name": "陈嘉",
+      "education": "本科",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "操作系统安全",
+          "skills": [
+            "Linux安全",
+            "权限管理",
+            "安全加固"
+          ]
+        },
+        {
+          "name": "Python黑客编程",
+          "skills": [
+            "Python",
+            "Socket",
+            "Scapy"
+          ]
+        },
+        {
+          "name": "网络攻防实践",
+          "skills": [
+            "CTF",
+            "Metasploit",
+            "Kali Linux"
+          ]
+        },
+        {
+          "name": "计算机取证",
+          "skills": [
+            "电子取证",
+            "数据恢复",
+            "日志分析"
+          ]
+        },
+        {
+          "name": "信息隐藏技术",
+          "skills": [
+            "数字水印",
+            "隐写术",
+            "信息隐藏"
+          ]
+        },
+        {
+          "name": "恶意代码分析",
+          "skills": [
+            "逆向工程",
+            "IDA Pro",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "数据库安全",
+          "skills": [
+            "SQL审计",
+            "数据脱敏",
+            "数据库防火墙"
+          ]
+        },
+        {
+          "name": "Web应用安全",
+          "skills": [
+            "BurpSuite",
+            "OWASP Top10",
+            "漏洞扫描"
+          ]
+        }
+      ],
+      "skills": [
+        "BurpSuite",
+        "CTF",
+        "IDA Pro",
+        "Kali Linux",
+        "Linux安全",
+        "Metasploit",
+        "OWASP Top10",
+        "Python",
+        "SQL审计",
+        "Scapy",
+        "Socket",
+        "信息隐藏",
+        "安全加固",
+        "数字水印",
+        "数据库防火墙",
+        "数据恢复",
+        "数据脱敏",
+        "日志分析",
+        "权限管理",
+        "汇编语言",
+        "漏洞扫描",
+        "电子取证",
+        "逆向工程",
+        "隐写术"
+      ]
+    },
+    {
+      "student_id": "STU0029",
+      "name": "赵嘉秀英",
+      "education": "本科",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "密码学",
+          "skills": [
+            "加密算法",
+            "RSA",
+            "区块链基础"
+          ]
+        },
+        {
+          "name": "Web应用安全",
+          "skills": [
+            "BurpSuite",
+            "OWASP Top10",
+            "漏洞扫描"
+          ]
+        },
+        {
+          "name": "恶意代码分析",
+          "skills": [
+            "逆向工程",
+            "IDA Pro",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "计算机取证",
+          "skills": [
+            "电子取证",
+            "数据恢复",
+            "日志分析"
+          ]
+        },
+        {
+          "name": "Python黑客编程",
+          "skills": [
+            "Python",
+            "Socket",
+            "Scapy"
+          ]
+        },
+        {
+          "name": "信息隐藏技术",
+          "skills": [
+            "数字水印",
+            "隐写术",
+            "信息隐藏"
+          ]
+        },
+        {
+          "name": "数据库安全",
+          "skills": [
+            "SQL审计",
+            "数据脱敏",
+            "数据库防火墙"
+          ]
+        }
+      ],
+      "skills": [
+        "BurpSuite",
+        "IDA Pro",
+        "OWASP Top10",
+        "Python",
+        "RSA",
+        "SQL审计",
+        "Scapy",
+        "Socket",
+        "信息隐藏",
+        "加密算法",
+        "区块链基础",
+        "数字水印",
+        "数据库防火墙",
+        "数据恢复",
+        "数据脱敏",
+        "日志分析",
+        "汇编语言",
+        "漏洞扫描",
+        "电子取证",
+        "逆向工程",
+        "隐写术"
+      ]
+    },
+    {
+      "student_id": "STU0030",
+      "name": "沈阳",
+      "education": "本科",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "计算机组成原理",
+          "skills": [
+            "计算机体系结构",
+            "汇编语言",
+            "硬件基础"
+          ]
+        },
+        {
+          "name": "计算机网络",
+          "skills": [
+            "TCP/IP",
+            "HTTP协议",
+            "网络编程"
+          ]
+        },
+        {
+          "name": "Java语言程序设计",
+          "skills": [
+            "Java",
+            "JVM",
+            "多线程"
+          ]
+        },
+        {
+          "name": "操作系统原理",
+          "skills": [
+            "Linux",
+            "Shell脚本",
+            "进程管理"
+          ]
+        },
+        {
+          "name": "数据结构与算法",
+          "skills": [
+            "算法",
+            "数据结构",
+            "逻辑思维"
+          ]
+        }
+      ],
+      "skills": [
+        "HTTP协议",
+        "JVM",
+        "Java",
+        "Linux",
+        "Shell脚本",
+        "TCP/IP",
+        "多线程",
+        "数据结构",
+        "汇编语言",
+        "硬件基础",
+        "算法",
+        "网络编程",
+        "计算机体系结构",
+        "进程管理",
+        "逻辑思维"
+      ]
+    },
+    {
+      "student_id": "STU0031",
+      "name": "董帆",
+      "education": "本科",
+      "major": "人工智能",
+      "courses": [
+        {
+          "name": "Linux环境编程",
+          "skills": [
+            "Linux",
+            "Shell",
+            "C++"
+          ]
+        },
+        {
+          "name": "计算机视觉",
+          "skills": [
+            "OpenCV",
+            "图像处理",
+            "CNN"
+          ]
+        },
+        {
+          "name": "Python高阶编程",
+          "skills": [
+            "Python",
+            "并发编程",
+            "装饰器"
+          ]
+        },
+        {
+          "name": "机器人技术",
+          "skills": [
+            "ROS",
+            "SLAM",
+            "路径规划"
+          ]
+        },
+        {
+          "name": "自然语言处理",
+          "skills": [
+            "NLP",
+            "BERT",
+            "文本分析"
+          ]
+        }
+      ],
+      "skills": [
+        "BERT",
+        "C++",
+        "CNN",
+        "Linux",
+        "NLP",
+        "OpenCV",
+        "Python",
+        "ROS",
+        "SLAM",
+        "Shell",
+        "图像处理",
+        "并发编程",
+        "文本分析",
+        "装饰器",
+        "路径规划"
+      ]
+    },
+    {
+      "student_id": "STU0032",
+      "name": "胡欣",
+      "education": "博士",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "信号与系统",
+          "skills": [
+            "信号处理",
+            "MATLAB",
+            "傅里叶变换"
+          ]
+        },
+        {
+          "name": "数字电子技术",
+          "skills": [
+            "数电",
+            "FPGA",
+            "Verilog"
+          ]
+        },
+        {
+          "name": "微机原理",
+          "skills": [
+            "汇编语言",
+            "接口技术",
+            "计算机硬件"
+          ]
+        },
+        {
+          "name": "通信电路",
+          "skills": [
+            "通信原理",
+            "高频电路",
+            "锁相环"
+          ]
+        }
+      ],
+      "skills": [
+        "FPGA",
+        "MATLAB",
+        "Verilog",
+        "信号处理",
+        "傅里叶变换",
+        "接口技术",
+        "数电",
+        "汇编语言",
+        "计算机硬件",
+        "通信原理",
+        "锁相环",
+        "高频电路"
+      ]
+    },
+    {
+      "student_id": "STU0033",
+      "name": "黄辉嘉",
+      "education": "本科",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "嵌入式开发",
+          "skills": [
+            "C语言",
+            "Keil",
+            "微控制器"
+          ]
+        },
+        {
+          "name": "微机原理",
+          "skills": [
+            "汇编语言",
+            "接口技术",
+            "计算机硬件"
+          ]
+        },
+        {
+          "name": "EDA技术",
+          "skills": [
+            "PCB设计",
+            "Altium Designer",
+            "Protell"
+          ]
+        },
+        {
+          "name": "电路分析基础",
+          "skills": [
+            "电路设计",
+            "Multisim",
+            "电子元器件"
+          ]
+        },
+        {
+          "name": "数字信号处理",
+          "skills": [
+            "DSP",
+            "滤波器设计",
+            "MATLAB"
+          ]
+        }
+      ],
+      "skills": [
+        "Altium Designer",
+        "C语言",
+        "DSP",
+        "Keil",
+        "MATLAB",
+        "Multisim",
+        "PCB设计",
+        "Protell",
+        "微控制器",
+        "接口技术",
+        "汇编语言",
+        "滤波器设计",
+        "电子元器件",
+        "电路设计",
+        "计算机硬件"
+      ]
+    },
+    {
+      "student_id": "STU0034",
+      "name": "沈平龙",
+      "education": "硕士",
+      "major": "电子商务",
+      "courses": [
+        {
+          "name": "移动电商开发",
+          "skills": [
+            "小程序开发",
+            "微信生态",
+            "JavaScript"
+          ]
+        },
+        {
+          "name": "供应链管理",
+          "skills": [
+            "ERP系统",
+            "物流管理",
+            "库存控制"
+          ]
+        },
+        {
+          "name": "商务数据分析",
+          "skills": [
+            "Excel",
+            "Python",
+            "数据报表"
+          ]
+        },
+        {
+          "name": "网页设计与制作",
+          "skills": [
+            "HTML/CSS",
+            "Dreamweaver",
+            "UI设计"
+          ]
+        },
+        {
+          "name": "推荐系统导论",
+          "skills": [
+            "推荐算法",
+            "协同过滤",
+            "用户行为分析"
+          ]
+        },
+        {
+          "name": "客户关系管理",
+          "skills": [
+            "CRM",
+            "Salesforce",
+            "用户画像"
+          ]
+        }
+      ],
+      "skills": [
+        "CRM",
+        "Dreamweaver",
+        "ERP系统",
+        "Excel",
+        "HTML/CSS",
+        "JavaScript",
+        "Python",
+        "Salesforce",
+        "UI设计",
+        "协同过滤",
+        "小程序开发",
+        "库存控制",
+        "微信生态",
+        "推荐算法",
+        "数据报表",
+        "物流管理",
+        "用户画像",
+        "用户行为分析"
+      ]
+    },
+    {
+      "student_id": "STU0035",
+      "name": "宋睿",
+      "education": "本科",
+      "major": "人工智能",
+      "courses": [
+        {
+          "name": "高等数学",
+          "skills": [
+            "微积分",
+            "线性代数",
+            "数学建模"
+          ]
+        },
+        {
+          "name": "自然语言处理",
+          "skills": [
+            "NLP",
+            "BERT",
+            "文本分析"
+          ]
+        },
+        {
+          "name": "人工智能导论",
+          "skills": [
+            "AI概念",
+            "专家系统",
+            "知识图谱"
+          ]
+        },
+        {
+          "name": "Python高阶编程",
+          "skills": [
+            "Python",
+            "并发编程",
+            "装饰器"
+          ]
+        },
+        {
+          "name": "强化学习",
+          "skills": [
+            "强化学习",
+            "Q-Learning",
+            "智能体"
+          ]
+        }
+      ],
+      "skills": [
+        "AI概念",
+        "BERT",
+        "NLP",
+        "Python",
+        "Q-Learning",
+        "专家系统",
+        "并发编程",
+        "强化学习",
+        "微积分",
+        "数学建模",
+        "文本分析",
+        "智能体",
+        "知识图谱",
+        "线性代数",
+        "装饰器"
+      ]
+    },
+    {
+      "student_id": "STU0036",
+      "name": "袁浩",
+      "education": "本科",
+      "major": "网络工程",
+      "courses": [
+        {
+          "name": "Web安全攻防",
+          "skills": [
+            "SQL注入",
+            "XSS",
+            "渗透测试"
+          ]
+        },
+        {
+          "name": "网络存储技术",
+          "skills": [
+            "SAN",
+            "NAS",
+            "RAID"
+          ]
+        },
+        {
+          "name": "Python运维开发",
+          "skills": [
+            "Python",
+            "Ansible",
+            "自动化运维"
+          ]
+        },
+        {
+          "name": "Linux网络管理",
+          "skills": [
+            "CentOS",
+            "Shell",
+            "Apache/Nginx"
+          ]
+        },
+        {
+          "name": "网络规划设计",
+          "skills": [
+            "Visio",
+            "网络拓扑",
+            "综合布线"
+          ]
+        },
+        {
+          "name": "SDN技术",
+          "skills": [
+            "SDN",
+            "OpenFlow",
+            "Mininet"
+          ]
+        }
+      ],
+      "skills": [
+        "Ansible",
+        "Apache/Nginx",
+        "CentOS",
+        "Mininet",
+        "NAS",
+        "OpenFlow",
+        "Python",
+        "RAID",
+        "SAN",
+        "SDN",
+        "SQL注入",
+        "Shell",
+        "Visio",
+        "XSS",
+        "渗透测试",
+        "综合布线",
+        "网络拓扑",
+        "自动化运维"
+      ]
+    },
+    {
+      "student_id": "STU0037",
+      "name": "彭杰奕",
+      "education": "本科",
+      "major": "物联网工程",
+      "courses": [
+        {
+          "name": "无线传感器网络",
+          "skills": [
+            "ZigBee",
+            "蓝牙",
+            "Wi-Fi协议"
+          ]
+        },
+        {
+          "name": "Python物联网开发",
+          "skills": [
+            "Python",
+            "MQTT协议",
+            "Socket编程"
+          ]
+        },
+        {
+          "name": "传感器技术",
+          "skills": [
+            "传感器",
+            "模数转换",
+            "信号处理"
+          ]
+        },
+        {
+          "name": "物联网信息安全",
+          "skills": [
+            "网络安全",
+            "加密算法",
+            "数据隐私"
+          ]
+        }
+      ],
+      "skills": [
+        "MQTT协议",
+        "Python",
+        "Socket编程",
+        "Wi-Fi协议",
+        "ZigBee",
+        "传感器",
+        "信号处理",
+        "加密算法",
+        "数据隐私",
+        "模数转换",
+        "网络安全",
+        "蓝牙"
+      ]
+    },
+    {
+      "student_id": "STU0038",
+      "name": "赵伟",
+      "education": "本科",
+      "major": "网络工程",
+      "courses": [
+        {
+          "name": "网络存储技术",
+          "skills": [
+            "SAN",
+            "NAS",
+            "RAID"
+          ]
+        },
+        {
+          "name": "云计算架构",
+          "skills": [
+            "OpenStack",
+            "KVM",
+            "虚拟化"
+          ]
+        },
+        {
+          "name": "网络规划设计",
+          "skills": [
+            "Visio",
+            "网络拓扑",
+            "综合布线"
+          ]
+        },
+        {
+          "name": "路由与交换技术",
+          "skills": [
+            "Cisco",
+            "华为认证",
+            "VLAN"
+          ]
+        },
+        {
+          "name": "Windows Server管理",
+          "skills": [
+            "Windows Server",
+            "AD域",
+            "系统管理"
+          ]
+        },
+        {
+          "name": "Python运维开发",
+          "skills": [
+            "Python",
+            "Ansible",
+            "自动化运维"
+          ]
+        }
+      ],
+      "skills": [
+        "AD域",
+        "Ansible",
+        "Cisco",
+        "KVM",
+        "NAS",
+        "OpenStack",
+        "Python",
+        "RAID",
+        "SAN",
+        "VLAN",
+        "Visio",
+        "Windows Server",
+        "华为认证",
+        "系统管理",
+        "综合布线",
+        "网络拓扑",
+        "自动化运维",
+        "虚拟化"
+      ]
+    },
+    {
+      "student_id": "STU0039",
+      "name": "郑辉",
+      "education": "本科",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "微机原理",
+          "skills": [
+            "汇编语言",
+            "接口技术",
+            "计算机硬件"
+          ]
+        },
+        {
+          "name": "数字信号处理",
+          "skills": [
+            "DSP",
+            "滤波器设计",
+            "MATLAB"
+          ]
+        },
+        {
+          "name": "信号与系统",
+          "skills": [
+            "信号处理",
+            "MATLAB",
+            "傅里叶变换"
+          ]
+        },
+        {
+          "name": "通信电路",
+          "skills": [
+            "通信原理",
+            "高频电路",
+            "锁相环"
+          ]
+        },
+        {
+          "name": "模拟电子技术",
+          "skills": [
+            "模电",
+            "晶体管",
+            "放大电路"
+          ]
+        }
+      ],
+      "skills": [
+        "DSP",
+        "MATLAB",
+        "信号处理",
+        "傅里叶变换",
+        "接口技术",
+        "放大电路",
+        "晶体管",
+        "模电",
+        "汇编语言",
+        "滤波器设计",
+        "计算机硬件",
+        "通信原理",
+        "锁相环",
+        "高频电路"
+      ]
+    },
+    {
+      "student_id": "STU0040",
+      "name": "高文凯",
+      "education": "本科",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "数字电子技术",
+          "skills": [
+            "数电",
+            "FPGA",
+            "Verilog"
+          ]
+        },
+        {
+          "name": "数字信号处理",
+          "skills": [
+            "DSP",
+            "滤波器设计",
+            "MATLAB"
+          ]
+        },
+        {
+          "name": "电磁场与电磁波",
+          "skills": [
+            "电磁兼容",
+            "天线设计",
+            "微波技术"
+          ]
+        },
+        {
+          "name": "微机原理",
+          "skills": [
+            "汇编语言",
+            "接口技术",
+            "计算机硬件"
+          ]
+        }
+      ],
+      "skills": [
+        "DSP",
+        "FPGA",
+        "MATLAB",
+        "Verilog",
+        "天线设计",
+        "微波技术",
+        "接口技术",
+        "数电",
+        "汇编语言",
+        "滤波器设计",
+        "电磁兼容",
+        "计算机硬件"
+      ]
+    },
+    {
+      "student_id": "STU0041",
+      "name": "赵超",
+      "education": "本科",
+      "major": "电子商务",
+      "courses": [
+        {
+          "name": "移动电商开发",
+          "skills": [
+            "小程序开发",
+            "微信生态",
+            "JavaScript"
+          ]
+        },
+        {
+          "name": "客户关系管理",
+          "skills": [
+            "CRM",
+            "Salesforce",
+            "用户画像"
+          ]
+        },
+        {
+          "name": "电商系统设计",
+          "skills": [
+            "UML",
+            "需求分析",
+            "Axure原型"
+          ]
+        },
+        {
+          "name": "商务数据分析",
+          "skills": [
+            "Excel",
+            "Python",
+            "数据报表"
+          ]
+        },
+        {
+          "name": "供应链管理",
+          "skills": [
+            "ERP系统",
+            "物流管理",
+            "库存控制"
+          ]
+        },
+        {
+          "name": "网络营销",
+          "skills": [
+            "SEO/SEM",
+            "新媒体运营",
+            "用户增长"
+          ]
+        }
+      ],
+      "skills": [
+        "Axure原型",
+        "CRM",
+        "ERP系统",
+        "Excel",
+        "JavaScript",
+        "Python",
+        "SEO/SEM",
+        "Salesforce",
+        "UML",
+        "小程序开发",
+        "库存控制",
+        "微信生态",
+        "数据报表",
+        "新媒体运营",
+        "物流管理",
+        "用户增长",
+        "用户画像",
+        "需求分析"
+      ]
+    },
+    {
+      "student_id": "STU0042",
+      "name": "薛雨",
+      "education": "本科",
+      "major": "软件工程",
+      "courses": [
+        {
+          "name": "软件项目管理",
+          "skills": [
+            "项目管理",
+            "JIRA",
+            "Scrum"
+          ]
+        },
+        {
+          "name": "设计模式",
+          "skills": [
+            "设计模式",
+            "重构",
+            "面向对象"
+          ]
+        },
+        {
+          "name": "中间件技术",
+          "skills": [
+            "消息队列",
+            "Kafka",
+            "Nginx"
+          ]
+        },
+        {
+          "name": "DevOps实践",
+          "skills": [
+            "Docker",
+            "Kubernetes",
+            "Jenkins"
+          ]
+        }
+      ],
+      "skills": [
+        "Docker",
+        "JIRA",
+        "Jenkins",
+        "Kafka",
+        "Kubernetes",
+        "Nginx",
+        "Scrum",
+        "消息队列",
+        "设计模式",
+        "重构",
+        "面向对象",
+        "项目管理"
+      ]
+    },
+    {
+      "student_id": "STU0043",
+      "name": "邓丽梓",
+      "education": "本科",
+      "major": "通信工程",
+      "courses": [
+        {
+          "name": "交换技术",
+          "skills": [
+            "SDN",
+            "网络架构",
+            "软交换"
+          ]
+        },
+        {
+          "name": "移动通信",
+          "skills": [
+            "4G/5G",
+            "LTE",
+            "无线网络"
+          ]
+        },
+        {
+          "name": "下一代网络技术",
+          "skills": [
+            "IPv6",
+            "IoT",
+            "网络切片"
+          ]
+        },
+        {
+          "name": "通信原理",
+          "skills": [
+            "通信系统",
+            "调制解调",
+            "信道编码"
+          ]
+        },
+        {
+          "name": "信号处理实验",
+          "skills": [
+            "MATLAB",
+            "Simulink",
+            "数据分析"
+          ]
+        },
+        {
+          "name": "网络规划与优化",
+          "skills": [
+            "网络优化",
+            "基站维护",
+            "路测"
+          ]
+        },
+        {
+          "name": "光纤通信",
+          "skills": [
+            "光网络",
+            "光传输",
+            "OTN"
+          ]
+        },
+        {
+          "name": "计算机网络与协议",
+          "skills": [
+            "TCP/IP",
+            "路由交换",
+            "Cisco配置"
+          ]
+        }
+      ],
+      "skills": [
+        "4G/5G",
+        "Cisco配置",
+        "IPv6",
+        "IoT",
+        "LTE",
+        "MATLAB",
+        "OTN",
+        "SDN",
+        "Simulink",
+        "TCP/IP",
+        "信道编码",
+        "光传输",
+        "光网络",
+        "基站维护",
+        "数据分析",
+        "无线网络",
+        "网络优化",
+        "网络切片",
+        "网络架构",
+        "调制解调",
+        "路测",
+        "路由交换",
+        "软交换",
+        "通信系统"
+      ]
+    },
+    {
+      "student_id": "STU0044",
+      "name": "唐洋",
+      "education": "博士",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "风险评估与管理",
+          "skills": [
+            "等级保护",
+            "ISO27001",
+            "风险评估"
+          ]
+        },
+        {
+          "name": "Web应用安全",
+          "skills": [
+            "BurpSuite",
+            "OWASP Top10",
+            "漏洞扫描"
+          ]
+        },
+        {
+          "name": "恶意代码分析",
+          "skills": [
+            "逆向工程",
+            "IDA Pro",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "网络攻防实践",
+          "skills": [
+            "CTF",
+            "Metasploit",
+            "Kali Linux"
+          ]
+        },
+        {
+          "name": "密码学",
+          "skills": [
+            "加密算法",
+            "RSA",
+            "区块链基础"
+          ]
+        },
+        {
+          "name": "数据库安全",
+          "skills": [
+            "SQL审计",
+            "数据脱敏",
+            "数据库防火墙"
+          ]
+        }
+      ],
+      "skills": [
+        "BurpSuite",
+        "CTF",
+        "IDA Pro",
+        "ISO27001",
+        "Kali Linux",
+        "Metasploit",
+        "OWASP Top10",
+        "RSA",
+        "SQL审计",
+        "加密算法",
+        "区块链基础",
+        "数据库防火墙",
+        "数据脱敏",
+        "汇编语言",
+        "漏洞扫描",
+        "等级保护",
+        "逆向工程",
+        "风险评估"
+      ]
+    },
+    {
+      "student_id": "STU0045",
+      "name": "陈阳",
+      "education": "本科",
+      "major": "通信工程",
+      "courses": [
+        {
+          "name": "信号处理实验",
+          "skills": [
+            "MATLAB",
+            "Simulink",
+            "数据分析"
+          ]
+        },
+        {
+          "name": "通信原理",
+          "skills": [
+            "通信系统",
+            "调制解调",
+            "信道编码"
+          ]
+        },
+        {
+          "name": "网络规划与优化",
+          "skills": [
+            "网络优化",
+            "基站维护",
+            "路测"
+          ]
+        },
+        {
+          "name": "交换技术",
+          "skills": [
+            "SDN",
+            "网络架构",
+            "软交换"
+          ]
+        },
+        {
+          "name": "计算机网络与协议",
+          "skills": [
+            "TCP/IP",
+            "路由交换",
+            "Cisco配置"
+          ]
+        },
+        {
+          "name": "移动通信",
+          "skills": [
+            "4G/5G",
+            "LTE",
+            "无线网络"
+          ]
+        }
+      ],
+      "skills": [
+        "4G/5G",
+        "Cisco配置",
+        "LTE",
+        "MATLAB",
+        "SDN",
+        "Simulink",
+        "TCP/IP",
+        "信道编码",
+        "基站维护",
+        "数据分析",
+        "无线网络",
+        "网络优化",
+        "网络架构",
+        "调制解调",
+        "路测",
+        "路由交换",
+        "软交换",
+        "通信系统"
+      ]
+    },
+    {
+      "student_id": "STU0046",
+      "name": "董泽",
+      "education": "本科",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "Java语言程序设计",
+          "skills": [
+            "Java",
+            "JVM",
+            "多线程"
+          ]
+        },
+        {
+          "name": "Web前端开发",
+          "skills": [
+            "HTML/CSS",
+            "JavaScript",
+            "Vue.js"
+          ]
+        },
+        {
+          "name": "软件工程导论",
+          "skills": [
+            "敏捷开发",
+            "UML建模",
+            "Git"
+          ]
+        },
+        {
+          "name": "编译原理",
+          "skills": [
+            "编译技术",
+            "词法分析",
+            "正则表达式"
+          ]
+        },
+        {
+          "name": "计算机组成原理",
+          "skills": [
+            "计算机体系结构",
+            "汇编语言",
+            "硬件基础"
+          ]
+        },
+        {
+          "name": "C++程序设计",
+          "skills": [
+            "C++",
+            "面向对象",
+            "STL库"
+          ]
+        }
+      ],
+      "skills": [
+        "C++",
+        "Git",
+        "HTML/CSS",
+        "JVM",
+        "Java",
+        "JavaScript",
+        "STL库",
+        "UML建模",
+        "Vue.js",
+        "多线程",
+        "敏捷开发",
+        "正则表达式",
+        "汇编语言",
+        "硬件基础",
+        "编译技术",
+        "计算机体系结构",
+        "词法分析",
+        "面向对象"
+      ]
+    },
+    {
+      "student_id": "STU0047",
+      "name": "周俊",
+      "education": "本科",
+      "major": "通信工程",
+      "courses": [
+        {
+          "name": "信号处理实验",
+          "skills": [
+            "MATLAB",
+            "Simulink",
+            "数据分析"
+          ]
+        },
+        {
+          "name": "光纤通信",
+          "skills": [
+            "光网络",
+            "光传输",
+            "OTN"
+          ]
+        },
+        {
+          "name": "移动通信",
+          "skills": [
+            "4G/5G",
+            "LTE",
+            "无线网络"
+          ]
+        },
+        {
+          "name": "通信原理",
+          "skills": [
+            "通信系统",
+            "调制解调",
+            "信道编码"
+          ]
+        }
+      ],
+      "skills": [
+        "4G/5G",
+        "LTE",
+        "MATLAB",
+        "OTN",
+        "Simulink",
+        "信道编码",
+        "光传输",
+        "光网络",
+        "数据分析",
+        "无线网络",
+        "调制解调",
+        "通信系统"
+      ]
+    },
+    {
+      "student_id": "STU0048",
+      "name": "徐霞",
+      "education": "本科",
+      "major": "物联网工程",
+      "courses": [
+        {
+          "name": "物联网信息安全",
+          "skills": [
+            "网络安全",
+            "加密算法",
+            "数据隐私"
+          ]
+        },
+        {
+          "name": "云计算与物联网",
+          "skills": [
+            "云计算",
+            "AWS",
+            "边缘计算"
+          ]
+        },
+        {
+          "name": "单片机原理",
+          "skills": [
+            "STM32",
+            "C语言",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "物联网导论",
+          "skills": [
+            "IoT概念",
+            "传感器技术",
+            "RFID"
+          ]
+        }
+      ],
+      "skills": [
+        "AWS",
+        "C语言",
+        "IoT概念",
+        "RFID",
+        "STM32",
+        "云计算",
+        "传感器技术",
+        "加密算法",
+        "数据隐私",
+        "汇编语言",
+        "网络安全",
+        "边缘计算"
+      ]
+    },
+    {
+      "student_id": "STU0049",
+      "name": "韩逸",
+      "education": "本科",
+      "major": "大数据管理与应用",
+      "courses": [
+        {
+          "name": "Python数据分析",
+          "skills": [
+            "Python",
+            "Pandas",
+            "NumPy"
+          ]
+        },
+        {
+          "name": "Hadoop大数据技术",
+          "skills": [
+            "Hadoop",
+            "MapReduce",
+            "HDFS"
+          ]
+        },
+        {
+          "name": "NoSQL数据库",
+          "skills": [
+            "Redis",
+            "MongoDB",
+            "HBase"
+          ]
+        },
+        {
+          "name": "数据可视化",
+          "skills": [
+            "ECharts",
+            "Tableau",
+            "Matplotlib"
+          ]
+        },
+        {
+          "name": "机器学习导论",
+          "skills": [
+            "Scikit-learn",
+            "机器学习",
+            "统计学"
+          ]
+        },
+        {
+          "name": "统计学基础",
+          "skills": [
+            "SPSS",
+            "概率论",
+            "A/B测试"
+          ]
+        },
+        {
+          "name": "数据挖掘",
+          "skills": [
+            "数据挖掘",
+            "关联规则",
+            "聚类算法"
+          ]
+        }
+      ],
+      "skills": [
+        "A/B测试",
+        "ECharts",
+        "HBase",
+        "HDFS",
+        "Hadoop",
+        "MapReduce",
+        "Matplotlib",
+        "MongoDB",
+        "NumPy",
+        "Pandas",
+        "Python",
+        "Redis",
+        "SPSS",
+        "Scikit-learn",
+        "Tableau",
+        "关联规则",
+        "数据挖掘",
+        "机器学习",
+        "概率论",
+        "统计学",
+        "聚类算法"
+      ]
+    },
+    {
+      "student_id": "STU0050",
+      "name": "张佳俊",
+      "education": "本科",
+      "major": "物联网工程",
+      "courses": [
+        {
+          "name": "单片机原理",
+          "skills": [
+            "STM32",
+            "C语言",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "无线传感器网络",
+          "skills": [
+            "ZigBee",
+            "蓝牙",
+            "Wi-Fi协议"
+          ]
+        },
+        {
+          "name": "物联网信息安全",
+          "skills": [
+            "网络安全",
+            "加密算法",
+            "数据隐私"
+          ]
+        },
+        {
+          "name": "嵌入式系统设计",
+          "skills": [
+            "C语言",
+            "ARM架构",
+            "Linux驱动"
+          ]
+        },
+        {
+          "name": "传感器技术",
+          "skills": [
+            "传感器",
+            "模数转换",
+            "信号处理"
+          ]
+        },
+        {
+          "name": "云计算与物联网",
+          "skills": [
+            "云计算",
+            "AWS",
+            "边缘计算"
+          ]
+        },
+        {
+          "name": "Python物联网开发",
+          "skills": [
+            "Python",
+            "MQTT协议",
+            "Socket编程"
+          ]
+        },
+        {
+          "name": "物联网通信技术",
+          "skills": [
+            "NB-IoT",
+            "LoRa",
+            "5G技术"
+          ]
+        }
+      ],
+      "skills": [
+        "5G技术",
+        "ARM架构",
+        "AWS",
+        "C语言",
+        "Linux驱动",
+        "LoRa",
+        "MQTT协议",
+        "NB-IoT",
+        "Python",
+        "STM32",
+        "Socket编程",
+        "Wi-Fi协议",
+        "ZigBee",
+        "云计算",
+        "传感器",
+        "信号处理",
+        "加密算法",
+        "数据隐私",
+        "模数转换",
+        "汇编语言",
+        "网络安全",
+        "蓝牙",
+        "边缘计算"
+      ]
+    },
+    {
+      "student_id": "STU0051",
+      "name": "赵刚",
+      "education": "硕士",
+      "major": "电子商务",
+      "courses": [
+        {
+          "name": "网络营销",
+          "skills": [
+            "SEO/SEM",
+            "新媒体运营",
+            "用户增长"
+          ]
+        },
+        {
+          "name": "电商系统设计",
+          "skills": [
+            "UML",
+            "需求分析",
+            "Axure原型"
+          ]
+        },
+        {
+          "name": "电子支付与结算",
+          "skills": [
+            "第三方支付",
+            "金融科技",
+            "区块链"
+          ]
+        },
+        {
+          "name": "网页设计与制作",
+          "skills": [
+            "HTML/CSS",
+            "Dreamweaver",
+            "UI设计"
+          ]
+        }
+      ],
+      "skills": [
+        "Axure原型",
+        "Dreamweaver",
+        "HTML/CSS",
+        "SEO/SEM",
+        "UI设计",
+        "UML",
+        "区块链",
+        "新媒体运营",
+        "用户增长",
+        "第三方支付",
+        "金融科技",
+        "需求分析"
+      ]
+    },
+    {
+      "student_id": "STU0052",
+      "name": "阎志",
+      "education": "本科",
+      "major": "大数据管理与应用",
+      "courses": [
+        {
+          "name": "Python数据分析",
+          "skills": [
+            "Python",
+            "Pandas",
+            "NumPy"
+          ]
+        },
+        {
+          "name": "网络爬虫技术",
+          "skills": [
+            "Python",
+            "Scrapy",
+            "网络爬虫"
+          ]
+        },
+        {
+          "name": "统计学基础",
+          "skills": [
+            "SPSS",
+            "概率论",
+            "A/B测试"
+          ]
+        },
+        {
+          "name": "Spark大数据处理",
+          "skills": [
+            "Spark",
+            "Scala",
+            "分布式计算"
+          ]
+        }
+      ],
+      "skills": [
+        "A/B测试",
+        "NumPy",
+        "Pandas",
+        "Python",
+        "SPSS",
+        "Scala",
+        "Scrapy",
+        "Spark",
+        "分布式计算",
+        "概率论",
+        "网络爬虫"
+      ]
+    },
+    {
+      "student_id": "STU0053",
+      "name": "丁晨",
+      "education": "博士",
+      "major": "网络工程",
+      "courses": [
+        {
+          "name": "网络安全技术",
+          "skills": [
+            "防火墙",
+            "VPN",
+            "入侵检测"
+          ]
+        },
+        {
+          "name": "Linux网络管理",
+          "skills": [
+            "CentOS",
+            "Shell",
+            "Apache/Nginx"
+          ]
+        },
+        {
+          "name": "云计算架构",
+          "skills": [
+            "OpenStack",
+            "KVM",
+            "虚拟化"
+          ]
+        },
+        {
+          "name": "网络存储技术",
+          "skills": [
+            "SAN",
+            "NAS",
+            "RAID"
+          ]
+        },
+        {
+          "name": "SDN技术",
+          "skills": [
+            "SDN",
+            "OpenFlow",
+            "Mininet"
+          ]
+        },
+        {
+          "name": "Windows Server管理",
+          "skills": [
+            "Windows Server",
+            "AD域",
+            "系统管理"
+          ]
+        },
+        {
+          "name": "路由与交换技术",
+          "skills": [
+            "Cisco",
+            "华为认证",
+            "VLAN"
+          ]
+        }
+      ],
+      "skills": [
+        "AD域",
+        "Apache/Nginx",
+        "CentOS",
+        "Cisco",
+        "KVM",
+        "Mininet",
+        "NAS",
+        "OpenFlow",
+        "OpenStack",
+        "RAID",
+        "SAN",
+        "SDN",
+        "Shell",
+        "VLAN",
+        "VPN",
+        "Windows Server",
+        "入侵检测",
+        "华为认证",
+        "系统管理",
+        "虚拟化",
+        "防火墙"
+      ]
+    },
+    {
+      "student_id": "STU0054",
+      "name": "郭嘉霞",
+      "education": "大专",
+      "major": "电子商务",
+      "courses": [
+        {
+          "name": "供应链管理",
+          "skills": [
+            "ERP系统",
+            "物流管理",
+            "库存控制"
+          ]
+        },
+        {
+          "name": "商务数据分析",
+          "skills": [
+            "Excel",
+            "Python",
+            "数据报表"
+          ]
+        },
+        {
+          "name": "移动电商开发",
+          "skills": [
+            "小程序开发",
+            "微信生态",
+            "JavaScript"
+          ]
+        },
+        {
+          "name": "电子支付与结算",
+          "skills": [
+            "第三方支付",
+            "金融科技",
+            "区块链"
+          ]
+        }
+      ],
+      "skills": [
+        "ERP系统",
+        "Excel",
+        "JavaScript",
+        "Python",
+        "区块链",
+        "小程序开发",
+        "库存控制",
+        "微信生态",
+        "数据报表",
+        "物流管理",
+        "第三方支付",
+        "金融科技"
+      ]
+    },
+    {
+      "student_id": "STU0055",
+      "name": "魏伟",
+      "education": "大专",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "风险评估与管理",
+          "skills": [
+            "等级保护",
+            "ISO27001",
+            "风险评估"
+          ]
+        },
+        {
+          "name": "操作系统安全",
+          "skills": [
+            "Linux安全",
+            "权限管理",
+            "安全加固"
+          ]
+        },
+        {
+          "name": "网络攻防实践",
+          "skills": [
+            "CTF",
+            "Metasploit",
+            "Kali Linux"
+          ]
+        },
+        {
+          "name": "数据库安全",
+          "skills": [
+            "SQL审计",
+            "数据脱敏",
+            "数据库防火墙"
+          ]
+        }
+      ],
+      "skills": [
+        "CTF",
+        "ISO27001",
+        "Kali Linux",
+        "Linux安全",
+        "Metasploit",
+        "SQL审计",
+        "安全加固",
+        "数据库防火墙",
+        "数据脱敏",
+        "权限管理",
+        "等级保护",
+        "风险评估"
+      ]
+    },
+    {
+      "student_id": "STU0056",
+      "name": "刘辉航",
+      "education": "本科",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "数据库系统概论",
+          "skills": [
+            "MySQL",
+            "SQL",
+            "数据库设计"
+          ]
+        },
+        {
+          "name": "编译原理",
+          "skills": [
+            "编译技术",
+            "词法分析",
+            "正则表达式"
+          ]
+        },
+        {
+          "name": "Java语言程序设计",
+          "skills": [
+            "Java",
+            "JVM",
+            "多线程"
+          ]
+        },
+        {
+          "name": "数据结构与算法",
+          "skills": [
+            "算法",
+            "数据结构",
+            "逻辑思维"
+          ]
+        }
+      ],
+      "skills": [
+        "JVM",
+        "Java",
+        "MySQL",
+        "SQL",
+        "多线程",
+        "数据库设计",
+        "数据结构",
+        "正则表达式",
+        "算法",
+        "编译技术",
+        "词法分析",
+        "逻辑思维"
+      ]
+    },
+    {
+      "student_id": "STU0057",
+      "name": "何宸",
+      "education": "本科",
+      "major": "电子商务",
+      "courses": [
+        {
+          "name": "网页设计与制作",
+          "skills": [
+            "HTML/CSS",
+            "Dreamweaver",
+            "UI设计"
+          ]
+        },
+        {
+          "name": "网络营销",
+          "skills": [
+            "SEO/SEM",
+            "新媒体运营",
+            "用户增长"
+          ]
+        },
+        {
+          "name": "供应链管理",
+          "skills": [
+            "ERP系统",
+            "物流管理",
+            "库存控制"
+          ]
+        },
+        {
+          "name": "电子支付与结算",
+          "skills": [
+            "第三方支付",
+            "金融科技",
+            "区块链"
+          ]
+        },
+        {
+          "name": "推荐系统导论",
+          "skills": [
+            "推荐算法",
+            "协同过滤",
+            "用户行为分析"
+          ]
+        },
+        {
+          "name": "客户关系管理",
+          "skills": [
+            "CRM",
+            "Salesforce",
+            "用户画像"
+          ]
+        }
+      ],
+      "skills": [
+        "CRM",
+        "Dreamweaver",
+        "ERP系统",
+        "HTML/CSS",
+        "SEO/SEM",
+        "Salesforce",
+        "UI设计",
+        "区块链",
+        "协同过滤",
+        "库存控制",
+        "推荐算法",
+        "新媒体运营",
+        "物流管理",
+        "用户增长",
+        "用户画像",
+        "用户行为分析",
+        "第三方支付",
+        "金融科技"
+      ]
+    },
+    {
+      "student_id": "STU0058",
+      "name": "董雨晓",
+      "education": "本科",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "计算机网络",
+          "skills": [
+            "TCP/IP",
+            "HTTP协议",
+            "网络编程"
+          ]
+        },
+        {
+          "name": "编译原理",
+          "skills": [
+            "编译技术",
+            "词法分析",
+            "正则表达式"
+          ]
+        },
+        {
+          "name": "数据结构与算法",
+          "skills": [
+            "算法",
+            "数据结构",
+            "逻辑思维"
+          ]
+        },
+        {
+          "name": "软件工程导论",
+          "skills": [
+            "敏捷开发",
+            "UML建模",
+            "Git"
+          ]
+        },
+        {
+          "name": "Java语言程序设计",
+          "skills": [
+            "Java",
+            "JVM",
+            "多线程"
+          ]
+        },
+        {
+          "name": "操作系统原理",
+          "skills": [
+            "Linux",
+            "Shell脚本",
+            "进程管理"
+          ]
+        },
+        {
+          "name": "C++程序设计",
+          "skills": [
+            "C++",
+            "面向对象",
+            "STL库"
+          ]
+        }
+      ],
+      "skills": [
+        "C++",
+        "Git",
+        "HTTP协议",
+        "JVM",
+        "Java",
+        "Linux",
+        "STL库",
+        "Shell脚本",
+        "TCP/IP",
+        "UML建模",
+        "多线程",
+        "敏捷开发",
+        "数据结构",
+        "正则表达式",
+        "算法",
+        "编译技术",
+        "网络编程",
+        "词法分析",
+        "进程管理",
+        "逻辑思维",
+        "面向对象"
+      ]
+    },
+    {
+      "student_id": "STU0059",
+      "name": "杨睿刚",
+      "education": "硕士",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "EDA技术",
+          "skills": [
+            "PCB设计",
+            "Altium Designer",
+            "Protell"
+          ]
+        },
+        {
+          "name": "电路分析基础",
+          "skills": [
+            "电路设计",
+            "Multisim",
+            "电子元器件"
+          ]
+        },
+        {
+          "name": "嵌入式开发",
+          "skills": [
+            "C语言",
+            "Keil",
+            "微控制器"
+          ]
+        },
+        {
+          "name": "通信电路",
+          "skills": [
+            "通信原理",
+            "高频电路",
+            "锁相环"
+          ]
+        },
+        {
+          "name": "数字信号处理",
+          "skills": [
+            "DSP",
+            "滤波器设计",
+            "MATLAB"
+          ]
+        },
+        {
+          "name": "数字电子技术",
+          "skills": [
+            "数电",
+            "FPGA",
+            "Verilog"
+          ]
+        },
+        {
+          "name": "模拟电子技术",
+          "skills": [
+            "模电",
+            "晶体管",
+            "放大电路"
+          ]
+        }
+      ],
+      "skills": [
+        "Altium Designer",
+        "C语言",
+        "DSP",
+        "FPGA",
+        "Keil",
+        "MATLAB",
+        "Multisim",
+        "PCB设计",
+        "Protell",
+        "Verilog",
+        "微控制器",
+        "放大电路",
+        "数电",
+        "晶体管",
+        "模电",
+        "滤波器设计",
+        "电子元器件",
+        "电路设计",
+        "通信原理",
+        "锁相环",
+        "高频电路"
+      ]
+    },
+    {
+      "student_id": "STU0060",
+      "name": "杨阳",
+      "education": "本科",
+      "major": "网络工程",
+      "courses": [
+        {
+          "name": "Python运维开发",
+          "skills": [
+            "Python",
+            "Ansible",
+            "自动化运维"
+          ]
+        },
+        {
+          "name": "云计算架构",
+          "skills": [
+            "OpenStack",
+            "KVM",
+            "虚拟化"
+          ]
+        },
+        {
+          "name": "SDN技术",
+          "skills": [
+            "SDN",
+            "OpenFlow",
+            "Mininet"
+          ]
+        },
+        {
+          "name": "网络安全技术",
+          "skills": [
+            "防火墙",
+            "VPN",
+            "入侵检测"
+          ]
+        },
+        {
+          "name": "Linux网络管理",
+          "skills": [
+            "CentOS",
+            "Shell",
+            "Apache/Nginx"
+          ]
+        }
+      ],
+      "skills": [
+        "Ansible",
+        "Apache/Nginx",
+        "CentOS",
+        "KVM",
+        "Mininet",
+        "OpenFlow",
+        "OpenStack",
+        "Python",
+        "SDN",
+        "Shell",
+        "VPN",
+        "入侵检测",
+        "自动化运维",
+        "虚拟化",
+        "防火墙"
+      ]
+    },
+    {
+      "student_id": "STU0061",
+      "name": "黄宁丽",
+      "education": "本科",
+      "major": "电子商务",
+      "courses": [
+        {
+          "name": "网络营销",
+          "skills": [
+            "SEO/SEM",
+            "新媒体运营",
+            "用户增长"
+          ]
+        },
+        {
+          "name": "电商系统设计",
+          "skills": [
+            "UML",
+            "需求分析",
+            "Axure原型"
+          ]
+        },
+        {
+          "name": "推荐系统导论",
+          "skills": [
+            "推荐算法",
+            "协同过滤",
+            "用户行为分析"
+          ]
+        },
+        {
+          "name": "移动电商开发",
+          "skills": [
+            "小程序开发",
+            "微信生态",
+            "JavaScript"
+          ]
+        },
+        {
+          "name": "网页设计与制作",
+          "skills": [
+            "HTML/CSS",
+            "Dreamweaver",
+            "UI设计"
+          ]
+        },
+        {
+          "name": "供应链管理",
+          "skills": [
+            "ERP系统",
+            "物流管理",
+            "库存控制"
+          ]
+        },
+        {
+          "name": "电子支付与结算",
+          "skills": [
+            "第三方支付",
+            "金融科技",
+            "区块链"
+          ]
+        },
+        {
+          "name": "电子商务概论",
+          "skills": [
+            "电商模式",
+            "B2B/B2C",
+            "O2O"
+          ]
+        }
+      ],
+      "skills": [
+        "Axure原型",
+        "B2B/B2C",
+        "Dreamweaver",
+        "ERP系统",
+        "HTML/CSS",
+        "JavaScript",
+        "O2O",
+        "SEO/SEM",
+        "UI设计",
+        "UML",
+        "区块链",
+        "协同过滤",
+        "小程序开发",
+        "库存控制",
+        "微信生态",
+        "推荐算法",
+        "新媒体运营",
+        "物流管理",
+        "用户增长",
+        "用户行为分析",
+        "电商模式",
+        "第三方支付",
+        "金融科技",
+        "需求分析"
+      ]
+    },
+    {
+      "student_id": "STU0062",
+      "name": "蒋威",
+      "education": "硕士",
+      "major": "物联网工程",
+      "courses": [
+        {
+          "name": "物联网通信技术",
+          "skills": [
+            "NB-IoT",
+            "LoRa",
+            "5G技术"
+          ]
+        },
+        {
+          "name": "Python物联网开发",
+          "skills": [
+            "Python",
+            "MQTT协议",
+            "Socket编程"
+          ]
+        },
+        {
+          "name": "物联网信息安全",
+          "skills": [
+            "网络安全",
+            "加密算法",
+            "数据隐私"
+          ]
+        },
+        {
+          "name": "单片机原理",
+          "skills": [
+            "STM32",
+            "C语言",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "无线传感器网络",
+          "skills": [
+            "ZigBee",
+            "蓝牙",
+            "Wi-Fi协议"
+          ]
+        },
+        {
+          "name": "物联网导论",
+          "skills": [
+            "IoT概念",
+            "传感器技术",
+            "RFID"
+          ]
+        },
+        {
+          "name": "嵌入式系统设计",
+          "skills": [
+            "C语言",
+            "ARM架构",
+            "Linux驱动"
+          ]
+        }
+      ],
+      "skills": [
+        "5G技术",
+        "ARM架构",
+        "C语言",
+        "IoT概念",
+        "Linux驱动",
+        "LoRa",
+        "MQTT协议",
+        "NB-IoT",
+        "Python",
+        "RFID",
+        "STM32",
+        "Socket编程",
+        "Wi-Fi协议",
+        "ZigBee",
+        "传感器技术",
+        "加密算法",
+        "数据隐私",
+        "汇编语言",
+        "网络安全",
+        "蓝牙"
+      ]
+    },
+    {
+      "student_id": "STU0063",
+      "name": "贾熙威",
+      "education": "大专",
+      "major": "大数据管理与应用",
+      "courses": [
+        {
+          "name": "机器学习导论",
+          "skills": [
+            "Scikit-learn",
+            "机器学习",
+            "统计学"
+          ]
+        },
+        {
+          "name": "Spark大数据处理",
+          "skills": [
+            "Spark",
+            "Scala",
+            "分布式计算"
+          ]
+        },
+        {
+          "name": "Hadoop大数据技术",
+          "skills": [
+            "Hadoop",
+            "MapReduce",
+            "HDFS"
+          ]
+        },
+        {
+          "name": "数据可视化",
+          "skills": [
+            "ECharts",
+            "Tableau",
+            "Matplotlib"
+          ]
+        },
+        {
+          "name": "统计学基础",
+          "skills": [
+            "SPSS",
+            "概率论",
+            "A/B测试"
+          ]
+        }
+      ],
+      "skills": [
+        "A/B测试",
+        "ECharts",
+        "HDFS",
+        "Hadoop",
+        "MapReduce",
+        "Matplotlib",
+        "SPSS",
+        "Scala",
+        "Scikit-learn",
+        "Spark",
+        "Tableau",
+        "分布式计算",
+        "机器学习",
+        "概率论",
+        "统计学"
+      ]
+    },
+    {
+      "student_id": "STU0064",
+      "name": "曹超丽",
+      "education": "硕士",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "电磁场与电磁波",
+          "skills": [
+            "电磁兼容",
+            "天线设计",
+            "微波技术"
+          ]
+        },
+        {
+          "name": "信号与系统",
+          "skills": [
+            "信号处理",
+            "MATLAB",
+            "傅里叶变换"
+          ]
+        },
+        {
+          "name": "微机原理",
+          "skills": [
+            "汇编语言",
+            "接口技术",
+            "计算机硬件"
+          ]
+        },
+        {
+          "name": "嵌入式开发",
+          "skills": [
+            "C语言",
+            "Keil",
+            "微控制器"
+          ]
+        }
+      ],
+      "skills": [
+        "C语言",
+        "Keil",
+        "MATLAB",
+        "信号处理",
+        "傅里叶变换",
+        "天线设计",
+        "微控制器",
+        "微波技术",
+        "接口技术",
+        "汇编语言",
+        "电磁兼容",
+        "计算机硬件"
+      ]
+    },
+    {
+      "student_id": "STU0065",
+      "name": "丁逸雨",
+      "education": "本科",
+      "major": "通信工程",
+      "courses": [
+        {
+          "name": "下一代网络技术",
+          "skills": [
+            "IPv6",
+            "IoT",
+            "网络切片"
+          ]
+        },
+        {
+          "name": "通信原理",
+          "skills": [
+            "通信系统",
+            "调制解调",
+            "信道编码"
+          ]
+        },
+        {
+          "name": "网络规划与优化",
+          "skills": [
+            "网络优化",
+            "基站维护",
+            "路测"
+          ]
+        },
+        {
+          "name": "移动通信",
+          "skills": [
+            "4G/5G",
+            "LTE",
+            "无线网络"
+          ]
+        },
+        {
+          "name": "光纤通信",
+          "skills": [
+            "光网络",
+            "光传输",
+            "OTN"
+          ]
+        },
+        {
+          "name": "C语言程序设计",
+          "skills": [
+            "C语言",
+            "嵌入式编程",
+            "算法"
+          ]
+        },
+        {
+          "name": "信号处理实验",
+          "skills": [
+            "MATLAB",
+            "Simulink",
+            "数据分析"
+          ]
+        }
+      ],
+      "skills": [
+        "4G/5G",
+        "C语言",
+        "IPv6",
+        "IoT",
+        "LTE",
+        "MATLAB",
+        "OTN",
+        "Simulink",
+        "信道编码",
+        "光传输",
+        "光网络",
+        "基站维护",
+        "嵌入式编程",
+        "数据分析",
+        "无线网络",
+        "算法",
+        "网络优化",
+        "网络切片",
+        "调制解调",
+        "路测",
+        "通信系统"
+      ]
+    },
+    {
+      "student_id": "STU0066",
+      "name": "郑佳",
+      "education": "硕士",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "模拟电子技术",
+          "skills": [
+            "模电",
+            "晶体管",
+            "放大电路"
+          ]
+        },
+        {
+          "name": "数字信号处理",
+          "skills": [
+            "DSP",
+            "滤波器设计",
+            "MATLAB"
+          ]
+        },
+        {
+          "name": "嵌入式开发",
+          "skills": [
+            "C语言",
+            "Keil",
+            "微控制器"
+          ]
+        },
+        {
+          "name": "信号与系统",
+          "skills": [
+            "信号处理",
+            "MATLAB",
+            "傅里叶变换"
+          ]
+        }
+      ],
+      "skills": [
+        "C语言",
+        "DSP",
+        "Keil",
+        "MATLAB",
+        "信号处理",
+        "傅里叶变换",
+        "微控制器",
+        "放大电路",
+        "晶体管",
+        "模电",
+        "滤波器设计"
+      ]
+    },
+    {
+      "student_id": "STU0067",
+      "name": "冯超",
+      "education": "本科",
+      "major": "软件工程",
+      "courses": [
+        {
+          "name": "设计模式",
+          "skills": [
+            "设计模式",
+            "重构",
+            "面向对象"
+          ]
+        },
+        {
+          "name": "Linux操作系统",
+          "skills": [
+            "Linux",
+            "Shell",
+            "运维基础"
+          ]
+        },
+        {
+          "name": "移动应用开发",
+          "skills": [
+            "Android",
+            "Kotlin",
+            "Flutter"
+          ]
+        },
+        {
+          "name": "DevOps实践",
+          "skills": [
+            "Docker",
+            "Kubernetes",
+            "Jenkins"
+          ]
+        }
+      ],
+      "skills": [
+        "Android",
+        "Docker",
+        "Flutter",
+        "Jenkins",
+        "Kotlin",
+        "Kubernetes",
+        "Linux",
+        "Shell",
+        "设计模式",
+        "运维基础",
+        "重构",
+        "面向对象"
+      ]
+    },
+    {
+      "student_id": "STU0068",
+      "name": "陈逸",
+      "education": "博士",
+      "major": "人工智能",
+      "courses": [
+        {
+          "name": "计算机视觉",
+          "skills": [
+            "OpenCV",
+            "图像处理",
+            "CNN"
+          ]
+        },
+        {
+          "name": "Linux环境编程",
+          "skills": [
+            "Linux",
+            "Shell",
+            "C++"
+          ]
+        },
+        {
+          "name": "人工智能导论",
+          "skills": [
+            "AI概念",
+            "专家系统",
+            "知识图谱"
+          ]
+        },
+        {
+          "name": "自然语言处理",
+          "skills": [
+            "NLP",
+            "BERT",
+            "文本分析"
+          ]
+        },
+        {
+          "name": "深度学习",
+          "skills": [
+            "TensorFlow",
+            "PyTorch",
+            "神经网络"
+          ]
+        },
+        {
+          "name": "强化学习",
+          "skills": [
+            "强化学习",
+            "Q-Learning",
+            "智能体"
+          ]
+        },
+        {
+          "name": "模式识别",
+          "skills": [
+            "模式识别",
+            "SVM",
+            "贝叶斯分类"
+          ]
+        },
+        {
+          "name": "机器人技术",
+          "skills": [
+            "ROS",
+            "SLAM",
+            "路径规划"
+          ]
+        }
+      ],
+      "skills": [
+        "AI概念",
+        "BERT",
+        "C++",
+        "CNN",
+        "Linux",
+        "NLP",
+        "OpenCV",
+        "PyTorch",
+        "Q-Learning",
+        "ROS",
+        "SLAM",
+        "SVM",
+        "Shell",
+        "TensorFlow",
+        "专家系统",
+        "图像处理",
+        "强化学习",
+        "文本分析",
+        "智能体",
+        "模式识别",
+        "知识图谱",
+        "神经网络",
+        "贝叶斯分类",
+        "路径规划"
+      ]
+    },
+    {
+      "student_id": "STU0069",
+      "name": "冯晓刚",
+      "education": "大专",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "操作系统安全",
+          "skills": [
+            "Linux安全",
+            "权限管理",
+            "安全加固"
+          ]
+        },
+        {
+          "name": "风险评估与管理",
+          "skills": [
+            "等级保护",
+            "ISO27001",
+            "风险评估"
+          ]
+        },
+        {
+          "name": "恶意代码分析",
+          "skills": [
+            "逆向工程",
+            "IDA Pro",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "计算机取证",
+          "skills": [
+            "电子取证",
+            "数据恢复",
+            "日志分析"
+          ]
+        }
+      ],
+      "skills": [
+        "IDA Pro",
+        "ISO27001",
+        "Linux安全",
+        "安全加固",
+        "数据恢复",
+        "日志分析",
+        "权限管理",
+        "汇编语言",
+        "电子取证",
+        "等级保护",
+        "逆向工程",
+        "风险评估"
+      ]
+    },
+    {
+      "student_id": "STU0070",
+      "name": "丁芳梓",
+      "education": "本科",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "数据库系统概论",
+          "skills": [
+            "MySQL",
+            "SQL",
+            "数据库设计"
+          ]
+        },
+        {
+          "name": "操作系统原理",
+          "skills": [
+            "Linux",
+            "Shell脚本",
+            "进程管理"
+          ]
+        },
+        {
+          "name": "Java语言程序设计",
+          "skills": [
+            "Java",
+            "JVM",
+            "多线程"
+          ]
+        },
+        {
+          "name": "C++程序设计",
+          "skills": [
+            "C++",
+            "面向对象",
+            "STL库"
+          ]
+        },
+        {
+          "name": "编译原理",
+          "skills": [
+            "编译技术",
+            "词法分析",
+            "正则表达式"
+          ]
+        }
+      ],
+      "skills": [
+        "C++",
+        "JVM",
+        "Java",
+        "Linux",
+        "MySQL",
+        "SQL",
+        "STL库",
+        "Shell脚本",
+        "多线程",
+        "数据库设计",
+        "正则表达式",
+        "编译技术",
+        "词法分析",
+        "进程管理",
+        "面向对象"
+      ]
+    },
+    {
+      "student_id": "STU0071",
+      "name": "杨昊",
+      "education": "大专",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "通信电路",
+          "skills": [
+            "通信原理",
+            "高频电路",
+            "锁相环"
+          ]
+        },
+        {
+          "name": "嵌入式开发",
+          "skills": [
+            "C语言",
+            "Keil",
+            "微控制器"
+          ]
+        },
+        {
+          "name": "信号与系统",
+          "skills": [
+            "信号处理",
+            "MATLAB",
+            "傅里叶变换"
+          ]
+        },
+        {
+          "name": "模拟电子技术",
+          "skills": [
+            "模电",
+            "晶体管",
+            "放大电路"
+          ]
+        },
+        {
+          "name": "电磁场与电磁波",
+          "skills": [
+            "电磁兼容",
+            "天线设计",
+            "微波技术"
+          ]
+        },
+        {
+          "name": "电路分析基础",
+          "skills": [
+            "电路设计",
+            "Multisim",
+            "电子元器件"
+          ]
+        }
+      ],
+      "skills": [
+        "C语言",
+        "Keil",
+        "MATLAB",
+        "Multisim",
+        "信号处理",
+        "傅里叶变换",
+        "天线设计",
+        "微控制器",
+        "微波技术",
+        "放大电路",
+        "晶体管",
+        "模电",
+        "电子元器件",
+        "电磁兼容",
+        "电路设计",
+        "通信原理",
+        "锁相环",
+        "高频电路"
+      ]
+    },
+    {
+      "student_id": "STU0072",
+      "name": "吴磊秀英",
+      "education": "本科",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "电路分析基础",
+          "skills": [
+            "电路设计",
+            "Multisim",
+            "电子元器件"
+          ]
+        },
+        {
+          "name": "信号与系统",
+          "skills": [
+            "信号处理",
+            "MATLAB",
+            "傅里叶变换"
+          ]
+        },
+        {
+          "name": "模拟电子技术",
+          "skills": [
+            "模电",
+            "晶体管",
+            "放大电路"
+          ]
+        },
+        {
+          "name": "嵌入式开发",
+          "skills": [
+            "C语言",
+            "Keil",
+            "微控制器"
+          ]
+        }
+      ],
+      "skills": [
+        "C语言",
+        "Keil",
+        "MATLAB",
+        "Multisim",
+        "信号处理",
+        "傅里叶变换",
+        "微控制器",
+        "放大电路",
+        "晶体管",
+        "模电",
+        "电子元器件",
+        "电路设计"
+      ]
+    },
+    {
+      "student_id": "STU0073",
+      "name": "唐威",
+      "education": "硕士",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "编译原理",
+          "skills": [
+            "编译技术",
+            "词法分析",
+            "正则表达式"
+          ]
+        },
+        {
+          "name": "操作系统原理",
+          "skills": [
+            "Linux",
+            "Shell脚本",
+            "进程管理"
+          ]
+        },
+        {
+          "name": "数据结构与算法",
+          "skills": [
+            "算法",
+            "数据结构",
+            "逻辑思维"
+          ]
+        },
+        {
+          "name": "计算机网络",
+          "skills": [
+            "TCP/IP",
+            "HTTP协议",
+            "网络编程"
+          ]
+        },
+        {
+          "name": "软件工程导论",
+          "skills": [
+            "敏捷开发",
+            "UML建模",
+            "Git"
+          ]
+        },
+        {
+          "name": "计算机组成原理",
+          "skills": [
+            "计算机体系结构",
+            "汇编语言",
+            "硬件基础"
+          ]
+        },
+        {
+          "name": "C++程序设计",
+          "skills": [
+            "C++",
+            "面向对象",
+            "STL库"
+          ]
+        },
+        {
+          "name": "Web前端开发",
+          "skills": [
+            "HTML/CSS",
+            "JavaScript",
+            "Vue.js"
+          ]
+        }
+      ],
+      "skills": [
+        "C++",
+        "Git",
+        "HTML/CSS",
+        "HTTP协议",
+        "JavaScript",
+        "Linux",
+        "STL库",
+        "Shell脚本",
+        "TCP/IP",
+        "UML建模",
+        "Vue.js",
+        "敏捷开发",
+        "数据结构",
+        "正则表达式",
+        "汇编语言",
+        "硬件基础",
+        "算法",
+        "编译技术",
+        "网络编程",
+        "计算机体系结构",
+        "词法分析",
+        "进程管理",
+        "逻辑思维",
+        "面向对象"
+      ]
+    },
+    {
+      "student_id": "STU0074",
+      "name": "王志杰",
+      "education": "大专",
+      "major": "通信工程",
+      "courses": [
+        {
+          "name": "C语言程序设计",
+          "skills": [
+            "C语言",
+            "嵌入式编程",
+            "算法"
+          ]
+        },
+        {
+          "name": "移动通信",
+          "skills": [
+            "4G/5G",
+            "LTE",
+            "无线网络"
+          ]
+        },
+        {
+          "name": "网络规划与优化",
+          "skills": [
+            "网络优化",
+            "基站维护",
+            "路测"
+          ]
+        },
+        {
+          "name": "交换技术",
+          "skills": [
+            "SDN",
+            "网络架构",
+            "软交换"
+          ]
+        },
+        {
+          "name": "通信原理",
+          "skills": [
+            "通信系统",
+            "调制解调",
+            "信道编码"
+          ]
+        },
+        {
+          "name": "天线与电波传播",
+          "skills": [
+            "天线设计",
+            "HFSS",
+            "电磁波"
+          ]
+        }
+      ],
+      "skills": [
+        "4G/5G",
+        "C语言",
+        "HFSS",
+        "LTE",
+        "SDN",
+        "信道编码",
+        "基站维护",
+        "天线设计",
+        "嵌入式编程",
+        "无线网络",
+        "电磁波",
+        "算法",
+        "网络优化",
+        "网络架构",
+        "调制解调",
+        "路测",
+        "软交换",
+        "通信系统"
+      ]
+    },
+    {
+      "student_id": "STU0075",
+      "name": "张秀英强",
+      "education": "本科",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "Python黑客编程",
+          "skills": [
+            "Python",
+            "Socket",
+            "Scapy"
+          ]
+        },
+        {
+          "name": "信息隐藏技术",
+          "skills": [
+            "数字水印",
+            "隐写术",
+            "信息隐藏"
+          ]
+        },
+        {
+          "name": "网络攻防实践",
+          "skills": [
+            "CTF",
+            "Metasploit",
+            "Kali Linux"
+          ]
+        },
+        {
+          "name": "恶意代码分析",
+          "skills": [
+            "逆向工程",
+            "IDA Pro",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "密码学",
+          "skills": [
+            "加密算法",
+            "RSA",
+            "区块链基础"
+          ]
+        }
+      ],
+      "skills": [
+        "CTF",
+        "IDA Pro",
+        "Kali Linux",
+        "Metasploit",
+        "Python",
+        "RSA",
+        "Scapy",
+        "Socket",
+        "信息隐藏",
+        "加密算法",
+        "区块链基础",
+        "数字水印",
+        "汇编语言",
+        "逆向工程",
+        "隐写术"
+      ]
+    },
+    {
+      "student_id": "STU0076",
+      "name": "孙强鹏",
+      "education": "本科",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "软件工程导论",
+          "skills": [
+            "敏捷开发",
+            "UML建模",
+            "Git"
+          ]
+        },
+        {
+          "name": "Java语言程序设计",
+          "skills": [
+            "Java",
+            "JVM",
+            "多线程"
+          ]
+        },
+        {
+          "name": "计算机组成原理",
+          "skills": [
+            "计算机体系结构",
+            "汇编语言",
+            "硬件基础"
+          ]
+        },
+        {
+          "name": "数据结构与算法",
+          "skills": [
+            "算法",
+            "数据结构",
+            "逻辑思维"
+          ]
+        },
+        {
+          "name": "C++程序设计",
+          "skills": [
+            "C++",
+            "面向对象",
+            "STL库"
+          ]
+        },
+        {
+          "name": "编译原理",
+          "skills": [
+            "编译技术",
+            "词法分析",
+            "正则表达式"
+          ]
+        },
+        {
+          "name": "计算机网络",
+          "skills": [
+            "TCP/IP",
+            "HTTP协议",
+            "网络编程"
+          ]
+        },
+        {
+          "name": "操作系统原理",
+          "skills": [
+            "Linux",
+            "Shell脚本",
+            "进程管理"
+          ]
+        }
+      ],
+      "skills": [
+        "C++",
+        "Git",
+        "HTTP协议",
+        "JVM",
+        "Java",
+        "Linux",
+        "STL库",
+        "Shell脚本",
+        "TCP/IP",
+        "UML建模",
+        "多线程",
+        "敏捷开发",
+        "数据结构",
+        "正则表达式",
+        "汇编语言",
+        "硬件基础",
+        "算法",
+        "编译技术",
+        "网络编程",
+        "计算机体系结构",
+        "词法分析",
+        "进程管理",
+        "逻辑思维",
+        "面向对象"
+      ]
+    },
+    {
+      "student_id": "STU0077",
+      "name": "袁静",
+      "education": "本科",
+      "major": "网络工程",
+      "courses": [
+        {
+          "name": "Linux网络管理",
+          "skills": [
+            "CentOS",
+            "Shell",
+            "Apache/Nginx"
+          ]
+        },
+        {
+          "name": "Web安全攻防",
+          "skills": [
+            "SQL注入",
+            "XSS",
+            "渗透测试"
+          ]
+        },
+        {
+          "name": "路由与交换技术",
+          "skills": [
+            "Cisco",
+            "华为认证",
+            "VLAN"
+          ]
+        },
+        {
+          "name": "Python运维开发",
+          "skills": [
+            "Python",
+            "Ansible",
+            "自动化运维"
+          ]
+        },
+        {
+          "name": "网络规划设计",
+          "skills": [
+            "Visio",
+            "网络拓扑",
+            "综合布线"
+          ]
+        }
+      ],
+      "skills": [
+        "Ansible",
+        "Apache/Nginx",
+        "CentOS",
+        "Cisco",
+        "Python",
+        "SQL注入",
+        "Shell",
+        "VLAN",
+        "Visio",
+        "XSS",
+        "华为认证",
+        "渗透测试",
+        "综合布线",
+        "网络拓扑",
+        "自动化运维"
+      ]
+    },
+    {
+      "student_id": "STU0078",
+      "name": "董泽龙",
+      "education": "本科",
+      "major": "网络工程",
+      "courses": [
+        {
+          "name": "Web安全攻防",
+          "skills": [
+            "SQL注入",
+            "XSS",
+            "渗透测试"
+          ]
+        },
+        {
+          "name": "路由与交换技术",
+          "skills": [
+            "Cisco",
+            "华为认证",
+            "VLAN"
+          ]
+        },
+        {
+          "name": "网络规划设计",
+          "skills": [
+            "Visio",
+            "网络拓扑",
+            "综合布线"
+          ]
+        },
+        {
+          "name": "网络存储技术",
+          "skills": [
+            "SAN",
+            "NAS",
+            "RAID"
+          ]
+        },
+        {
+          "name": "Windows Server管理",
+          "skills": [
+            "Windows Server",
+            "AD域",
+            "系统管理"
+          ]
+        },
+        {
+          "name": "SDN技术",
+          "skills": [
+            "SDN",
+            "OpenFlow",
+            "Mininet"
+          ]
+        },
+        {
+          "name": "Linux网络管理",
+          "skills": [
+            "CentOS",
+            "Shell",
+            "Apache/Nginx"
+          ]
+        }
+      ],
+      "skills": [
+        "AD域",
+        "Apache/Nginx",
+        "CentOS",
+        "Cisco",
+        "Mininet",
+        "NAS",
+        "OpenFlow",
+        "RAID",
+        "SAN",
+        "SDN",
+        "SQL注入",
+        "Shell",
+        "VLAN",
+        "Visio",
+        "Windows Server",
+        "XSS",
+        "华为认证",
+        "渗透测试",
+        "系统管理",
+        "综合布线",
+        "网络拓扑"
+      ]
+    },
+    {
+      "student_id": "STU0079",
+      "name": "曹俊",
+      "education": "本科",
+      "major": "大数据管理与应用",
+      "courses": [
+        {
+          "name": "统计学基础",
+          "skills": [
+            "SPSS",
+            "概率论",
+            "A/B测试"
+          ]
+        },
+        {
+          "name": "数据可视化",
+          "skills": [
+            "ECharts",
+            "Tableau",
+            "Matplotlib"
+          ]
+        },
+        {
+          "name": "商业智能BI",
+          "skills": [
+            "PowerBI",
+            "数据仓库",
+            "ETL"
+          ]
+        },
+        {
+          "name": "网络爬虫技术",
+          "skills": [
+            "Python",
+            "Scrapy",
+            "网络爬虫"
+          ]
+        }
+      ],
+      "skills": [
+        "A/B测试",
+        "ECharts",
+        "ETL",
+        "Matplotlib",
+        "PowerBI",
+        "Python",
+        "SPSS",
+        "Scrapy",
+        "Tableau",
+        "数据仓库",
+        "概率论",
+        "网络爬虫"
+      ]
+    },
+    {
+      "student_id": "STU0080",
+      "name": "曹静",
+      "education": "本科",
+      "major": "通信工程",
+      "courses": [
+        {
+          "name": "网络规划与优化",
+          "skills": [
+            "网络优化",
+            "基站维护",
+            "路测"
+          ]
+        },
+        {
+          "name": "计算机网络与协议",
+          "skills": [
+            "TCP/IP",
+            "路由交换",
+            "Cisco配置"
+          ]
+        },
+        {
+          "name": "天线与电波传播",
+          "skills": [
+            "天线设计",
+            "HFSS",
+            "电磁波"
+          ]
+        },
+        {
+          "name": "通信原理",
+          "skills": [
+            "通信系统",
+            "调制解调",
+            "信道编码"
+          ]
+        },
+        {
+          "name": "下一代网络技术",
+          "skills": [
+            "IPv6",
+            "IoT",
+            "网络切片"
+          ]
+        },
+        {
+          "name": "光纤通信",
+          "skills": [
+            "光网络",
+            "光传输",
+            "OTN"
+          ]
+        },
+        {
+          "name": "移动通信",
+          "skills": [
+            "4G/5G",
+            "LTE",
+            "无线网络"
+          ]
+        },
+        {
+          "name": "信号处理实验",
+          "skills": [
+            "MATLAB",
+            "Simulink",
+            "数据分析"
+          ]
+        }
+      ],
+      "skills": [
+        "4G/5G",
+        "Cisco配置",
+        "HFSS",
+        "IPv6",
+        "IoT",
+        "LTE",
+        "MATLAB",
+        "OTN",
+        "Simulink",
+        "TCP/IP",
+        "信道编码",
+        "光传输",
+        "光网络",
+        "基站维护",
+        "天线设计",
+        "数据分析",
+        "无线网络",
+        "电磁波",
+        "网络优化",
+        "网络切片",
+        "调制解调",
+        "路测",
+        "路由交换",
+        "通信系统"
+      ]
+    },
+    {
+      "student_id": "STU0081",
+      "name": "谢秀英",
+      "education": "硕士",
+      "major": "通信工程",
+      "courses": [
+        {
+          "name": "计算机网络与协议",
+          "skills": [
+            "TCP/IP",
+            "路由交换",
+            "Cisco配置"
+          ]
+        },
+        {
+          "name": "C语言程序设计",
+          "skills": [
+            "C语言",
+            "嵌入式编程",
+            "算法"
+          ]
+        },
+        {
+          "name": "下一代网络技术",
+          "skills": [
+            "IPv6",
+            "IoT",
+            "网络切片"
+          ]
+        },
+        {
+          "name": "天线与电波传播",
+          "skills": [
+            "天线设计",
+            "HFSS",
+            "电磁波"
+          ]
+        },
+        {
+          "name": "通信原理",
+          "skills": [
+            "通信系统",
+            "调制解调",
+            "信道编码"
+          ]
+        },
+        {
+          "name": "交换技术",
+          "skills": [
+            "SDN",
+            "网络架构",
+            "软交换"
+          ]
+        }
+      ],
+      "skills": [
+        "Cisco配置",
+        "C语言",
+        "HFSS",
+        "IPv6",
+        "IoT",
+        "SDN",
+        "TCP/IP",
+        "信道编码",
+        "天线设计",
+        "嵌入式编程",
+        "电磁波",
+        "算法",
+        "网络切片",
+        "网络架构",
+        "调制解调",
+        "路由交换",
+        "软交换",
+        "通信系统"
+      ]
+    },
+    {
+      "student_id": "STU0082",
+      "name": "萧刚",
+      "education": "大专",
+      "major": "软件工程",
+      "courses": [
+        {
+          "name": "中间件技术",
+          "skills": [
+            "消息队列",
+            "Kafka",
+            "Nginx"
+          ]
+        },
+        {
+          "name": "移动应用开发",
+          "skills": [
+            "Android",
+            "Kotlin",
+            "Flutter"
+          ]
+        },
+        {
+          "name": "Linux操作系统",
+          "skills": [
+            "Linux",
+            "Shell",
+            "运维基础"
+          ]
+        },
+        {
+          "name": "Java企业级开发",
+          "skills": [
+            "Java",
+            "Spring Boot",
+            "MyBatis"
+          ]
+        },
+        {
+          "name": "设计模式",
+          "skills": [
+            "设计模式",
+            "重构",
+            "面向对象"
+          ]
+        }
+      ],
+      "skills": [
+        "Android",
+        "Flutter",
+        "Java",
+        "Kafka",
+        "Kotlin",
+        "Linux",
+        "MyBatis",
+        "Nginx",
+        "Shell",
+        "Spring Boot",
+        "消息队列",
+        "设计模式",
+        "运维基础",
+        "重构",
+        "面向对象"
+      ]
+    },
+    {
+      "student_id": "STU0083",
+      "name": "张文",
+      "education": "本科",
+      "major": "物联网工程",
+      "courses": [
+        {
+          "name": "Python物联网开发",
+          "skills": [
+            "Python",
+            "MQTT协议",
+            "Socket编程"
+          ]
+        },
+        {
+          "name": "RFID原理及应用",
+          "skills": [
+            "RFID",
+            "射频识别",
+            "NFC"
+          ]
+        },
+        {
+          "name": "物联网通信技术",
+          "skills": [
+            "NB-IoT",
+            "LoRa",
+            "5G技术"
+          ]
+        },
+        {
+          "name": "物联网信息安全",
+          "skills": [
+            "网络安全",
+            "加密算法",
+            "数据隐私"
+          ]
+        },
+        {
+          "name": "物联网导论",
+          "skills": [
+            "IoT概念",
+            "传感器技术",
+            "RFID"
+          ]
+        },
+        {
+          "name": "云计算与物联网",
+          "skills": [
+            "云计算",
+            "AWS",
+            "边缘计算"
+          ]
+        },
+        {
+          "name": "单片机原理",
+          "skills": [
+            "STM32",
+            "C语言",
+            "汇编语言"
+          ]
+        }
+      ],
+      "skills": [
+        "5G技术",
+        "AWS",
+        "C语言",
+        "IoT概念",
+        "LoRa",
+        "MQTT协议",
+        "NB-IoT",
+        "NFC",
+        "Python",
+        "RFID",
+        "STM32",
+        "Socket编程",
+        "云计算",
+        "传感器技术",
+        "加密算法",
+        "射频识别",
+        "数据隐私",
+        "汇编语言",
+        "网络安全",
+        "边缘计算"
+      ]
+    },
+    {
+      "student_id": "STU0084",
+      "name": "罗泽",
+      "education": "本科",
+      "major": "网络工程",
+      "courses": [
+        {
+          "name": "Python运维开发",
+          "skills": [
+            "Python",
+            "Ansible",
+            "自动化运维"
+          ]
+        },
+        {
+          "name": "Linux网络管理",
+          "skills": [
+            "CentOS",
+            "Shell",
+            "Apache/Nginx"
+          ]
+        },
+        {
+          "name": "路由与交换技术",
+          "skills": [
+            "Cisco",
+            "华为认证",
+            "VLAN"
+          ]
+        },
+        {
+          "name": "SDN技术",
+          "skills": [
+            "SDN",
+            "OpenFlow",
+            "Mininet"
+          ]
+        },
+        {
+          "name": "云计算架构",
+          "skills": [
+            "OpenStack",
+            "KVM",
+            "虚拟化"
+          ]
+        },
+        {
+          "name": "网络安全技术",
+          "skills": [
+            "防火墙",
+            "VPN",
+            "入侵检测"
+          ]
+        },
+        {
+          "name": "网络规划设计",
+          "skills": [
+            "Visio",
+            "网络拓扑",
+            "综合布线"
+          ]
+        }
+      ],
+      "skills": [
+        "Ansible",
+        "Apache/Nginx",
+        "CentOS",
+        "Cisco",
+        "KVM",
+        "Mininet",
+        "OpenFlow",
+        "OpenStack",
+        "Python",
+        "SDN",
+        "Shell",
+        "VLAN",
+        "VPN",
+        "Visio",
+        "入侵检测",
+        "华为认证",
+        "综合布线",
+        "网络拓扑",
+        "自动化运维",
+        "虚拟化",
+        "防火墙"
+      ]
+    },
+    {
+      "student_id": "STU0085",
+      "name": "叶文",
+      "education": "大专",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "恶意代码分析",
+          "skills": [
+            "逆向工程",
+            "IDA Pro",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "操作系统安全",
+          "skills": [
+            "Linux安全",
+            "权限管理",
+            "安全加固"
+          ]
+        },
+        {
+          "name": "Web应用安全",
+          "skills": [
+            "BurpSuite",
+            "OWASP Top10",
+            "漏洞扫描"
+          ]
+        },
+        {
+          "name": "数据库安全",
+          "skills": [
+            "SQL审计",
+            "数据脱敏",
+            "数据库防火墙"
+          ]
+        }
+      ],
+      "skills": [
+        "BurpSuite",
+        "IDA Pro",
+        "Linux安全",
+        "OWASP Top10",
+        "SQL审计",
+        "安全加固",
+        "数据库防火墙",
+        "数据脱敏",
+        "权限管理",
+        "汇编语言",
+        "漏洞扫描",
+        "逆向工程"
+      ]
+    },
+    {
+      "student_id": "STU0086",
+      "name": "贾晓",
+      "education": "本科",
+      "major": "人工智能",
+      "courses": [
+        {
+          "name": "强化学习",
+          "skills": [
+            "强化学习",
+            "Q-Learning",
+            "智能体"
+          ]
+        },
+        {
+          "name": "高等数学",
+          "skills": [
+            "微积分",
+            "线性代数",
+            "数学建模"
+          ]
+        },
+        {
+          "name": "模式识别",
+          "skills": [
+            "模式识别",
+            "SVM",
+            "贝叶斯分类"
+          ]
+        },
+        {
+          "name": "自然语言处理",
+          "skills": [
+            "NLP",
+            "BERT",
+            "文本分析"
+          ]
+        }
+      ],
+      "skills": [
+        "BERT",
+        "NLP",
+        "Q-Learning",
+        "SVM",
+        "强化学习",
+        "微积分",
+        "数学建模",
+        "文本分析",
+        "智能体",
+        "模式识别",
+        "线性代数",
+        "贝叶斯分类"
+      ]
+    },
+    {
+      "student_id": "STU0087",
+      "name": "吕宇",
+      "education": "本科",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "信息隐藏技术",
+          "skills": [
+            "数字水印",
+            "隐写术",
+            "信息隐藏"
+          ]
+        },
+        {
+          "name": "数据库安全",
+          "skills": [
+            "SQL审计",
+            "数据脱敏",
+            "数据库防火墙"
+          ]
+        },
+        {
+          "name": "恶意代码分析",
+          "skills": [
+            "逆向工程",
+            "IDA Pro",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "操作系统安全",
+          "skills": [
+            "Linux安全",
+            "权限管理",
+            "安全加固"
+          ]
+        },
+        {
+          "name": "计算机取证",
+          "skills": [
+            "电子取证",
+            "数据恢复",
+            "日志分析"
+          ]
+        },
+        {
+          "name": "Python黑客编程",
+          "skills": [
+            "Python",
+            "Socket",
+            "Scapy"
+          ]
+        },
+        {
+          "name": "风险评估与管理",
+          "skills": [
+            "等级保护",
+            "ISO27001",
+            "风险评估"
+          ]
+        },
+        {
+          "name": "网络攻防实践",
+          "skills": [
+            "CTF",
+            "Metasploit",
+            "Kali Linux"
+          ]
+        }
+      ],
+      "skills": [
+        "CTF",
+        "IDA Pro",
+        "ISO27001",
+        "Kali Linux",
+        "Linux安全",
+        "Metasploit",
+        "Python",
+        "SQL审计",
+        "Scapy",
+        "Socket",
+        "信息隐藏",
+        "安全加固",
+        "数字水印",
+        "数据库防火墙",
+        "数据恢复",
+        "数据脱敏",
+        "日志分析",
+        "权限管理",
+        "汇编语言",
+        "电子取证",
+        "等级保护",
+        "逆向工程",
+        "隐写术",
+        "风险评估"
+      ]
+    },
+    {
+      "student_id": "STU0088",
+      "name": "马明",
+      "education": "硕士",
+      "major": "通信工程",
+      "courses": [
+        {
+          "name": "信号处理实验",
+          "skills": [
+            "MATLAB",
+            "Simulink",
+            "数据分析"
+          ]
+        },
+        {
+          "name": "计算机网络与协议",
+          "skills": [
+            "TCP/IP",
+            "路由交换",
+            "Cisco配置"
+          ]
+        },
+        {
+          "name": "通信原理",
+          "skills": [
+            "通信系统",
+            "调制解调",
+            "信道编码"
+          ]
+        },
+        {
+          "name": "C语言程序设计",
+          "skills": [
+            "C语言",
+            "嵌入式编程",
+            "算法"
+          ]
+        },
+        {
+          "name": "天线与电波传播",
+          "skills": [
+            "天线设计",
+            "HFSS",
+            "电磁波"
+          ]
+        }
+      ],
+      "skills": [
+        "Cisco配置",
+        "C语言",
+        "HFSS",
+        "MATLAB",
+        "Simulink",
+        "TCP/IP",
+        "信道编码",
+        "天线设计",
+        "嵌入式编程",
+        "数据分析",
+        "电磁波",
+        "算法",
+        "调制解调",
+        "路由交换",
+        "通信系统"
+      ]
+    },
+    {
+      "student_id": "STU0089",
+      "name": "蔡博",
+      "education": "硕士",
+      "major": "物联网工程",
+      "courses": [
+        {
+          "name": "嵌入式系统设计",
+          "skills": [
+            "C语言",
+            "ARM架构",
+            "Linux驱动"
+          ]
+        },
+        {
+          "name": "传感器技术",
+          "skills": [
+            "传感器",
+            "模数转换",
+            "信号处理"
+          ]
+        },
+        {
+          "name": "RFID原理及应用",
+          "skills": [
+            "RFID",
+            "射频识别",
+            "NFC"
+          ]
+        },
+        {
+          "name": "无线传感器网络",
+          "skills": [
+            "ZigBee",
+            "蓝牙",
+            "Wi-Fi协议"
+          ]
+        }
+      ],
+      "skills": [
+        "ARM架构",
+        "C语言",
+        "Linux驱动",
+        "NFC",
+        "RFID",
+        "Wi-Fi协议",
+        "ZigBee",
+        "传感器",
+        "信号处理",
+        "射频识别",
+        "模数转换",
+        "蓝牙"
+      ]
+    },
+    {
+      "student_id": "STU0090",
+      "name": "吴俊",
+      "education": "硕士",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "软件工程导论",
+          "skills": [
+            "敏捷开发",
+            "UML建模",
+            "Git"
+          ]
+        },
+        {
+          "name": "数据结构与算法",
+          "skills": [
+            "算法",
+            "数据结构",
+            "逻辑思维"
+          ]
+        },
+        {
+          "name": "编译原理",
+          "skills": [
+            "编译技术",
+            "词法分析",
+            "正则表达式"
+          ]
+        },
+        {
+          "name": "Java语言程序设计",
+          "skills": [
+            "Java",
+            "JVM",
+            "多线程"
+          ]
+        },
+        {
+          "name": "操作系统原理",
+          "skills": [
+            "Linux",
+            "Shell脚本",
+            "进程管理"
+          ]
+        },
+        {
+          "name": "计算机网络",
+          "skills": [
+            "TCP/IP",
+            "HTTP协议",
+            "网络编程"
+          ]
+        },
+        {
+          "name": "数据库系统概论",
+          "skills": [
+            "MySQL",
+            "SQL",
+            "数据库设计"
+          ]
+        }
+      ],
+      "skills": [
+        "Git",
+        "HTTP协议",
+        "JVM",
+        "Java",
+        "Linux",
+        "MySQL",
+        "SQL",
+        "Shell脚本",
+        "TCP/IP",
+        "UML建模",
+        "多线程",
+        "敏捷开发",
+        "数据库设计",
+        "数据结构",
+        "正则表达式",
+        "算法",
+        "编译技术",
+        "网络编程",
+        "词法分析",
+        "进程管理",
+        "逻辑思维"
+      ]
+    },
+    {
+      "student_id": "STU0091",
+      "name": "吕洋",
+      "education": "本科",
+      "major": "软件工程",
+      "courses": [
+        {
+          "name": "Linux操作系统",
+          "skills": [
+            "Linux",
+            "Shell",
+            "运维基础"
+          ]
+        },
+        {
+          "name": "设计模式",
+          "skills": [
+            "设计模式",
+            "重构",
+            "面向对象"
+          ]
+        },
+        {
+          "name": "Java企业级开发",
+          "skills": [
+            "Java",
+            "Spring Boot",
+            "MyBatis"
+          ]
+        },
+        {
+          "name": "Web应用开发",
+          "skills": [
+            "React",
+            "JavaScript",
+            "Node.js"
+          ]
+        },
+        {
+          "name": "中间件技术",
+          "skills": [
+            "消息队列",
+            "Kafka",
+            "Nginx"
+          ]
+        }
+      ],
+      "skills": [
+        "Java",
+        "JavaScript",
+        "Kafka",
+        "Linux",
+        "MyBatis",
+        "Nginx",
+        "Node.js",
+        "React",
+        "Shell",
+        "Spring Boot",
+        "消息队列",
+        "设计模式",
+        "运维基础",
+        "重构",
+        "面向对象"
+      ]
+    },
+    {
+      "student_id": "STU0092",
+      "name": "曾艳晨",
+      "education": "本科",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "计算机组成原理",
+          "skills": [
+            "计算机体系结构",
+            "汇编语言",
+            "硬件基础"
+          ]
+        },
+        {
+          "name": "数据结构与算法",
+          "skills": [
+            "算法",
+            "数据结构",
+            "逻辑思维"
+          ]
+        },
+        {
+          "name": "编译原理",
+          "skills": [
+            "编译技术",
+            "词法分析",
+            "正则表达式"
+          ]
+        },
+        {
+          "name": "计算机网络",
+          "skills": [
+            "TCP/IP",
+            "HTTP协议",
+            "网络编程"
+          ]
+        }
+      ],
+      "skills": [
+        "HTTP协议",
+        "TCP/IP",
+        "数据结构",
+        "正则表达式",
+        "汇编语言",
+        "硬件基础",
+        "算法",
+        "编译技术",
+        "网络编程",
+        "计算机体系结构",
+        "词法分析",
+        "逻辑思维"
+      ]
+    },
+    {
+      "student_id": "STU0093",
+      "name": "董敏",
+      "education": "本科",
+      "major": "通信工程",
+      "courses": [
+        {
+          "name": "交换技术",
+          "skills": [
+            "SDN",
+            "网络架构",
+            "软交换"
+          ]
+        },
+        {
+          "name": "通信原理",
+          "skills": [
+            "通信系统",
+            "调制解调",
+            "信道编码"
+          ]
+        },
+        {
+          "name": "网络规划与优化",
+          "skills": [
+            "网络优化",
+            "基站维护",
+            "路测"
+          ]
+        },
+        {
+          "name": "移动通信",
+          "skills": [
+            "4G/5G",
+            "LTE",
+            "无线网络"
+          ]
+        },
+        {
+          "name": "计算机网络与协议",
+          "skills": [
+            "TCP/IP",
+            "路由交换",
+            "Cisco配置"
+          ]
+        }
+      ],
+      "skills": [
+        "4G/5G",
+        "Cisco配置",
+        "LTE",
+        "SDN",
+        "TCP/IP",
+        "信道编码",
+        "基站维护",
+        "无线网络",
+        "网络优化",
+        "网络架构",
+        "调制解调",
+        "路测",
+        "路由交换",
+        "软交换",
+        "通信系统"
+      ]
+    },
+    {
+      "student_id": "STU0094",
+      "name": "吴熙霞",
+      "education": "本科",
+      "major": "大数据管理与应用",
+      "courses": [
+        {
+          "name": "数据可视化",
+          "skills": [
+            "ECharts",
+            "Tableau",
+            "Matplotlib"
+          ]
+        },
+        {
+          "name": "网络爬虫技术",
+          "skills": [
+            "Python",
+            "Scrapy",
+            "网络爬虫"
+          ]
+        },
+        {
+          "name": "数据挖掘",
+          "skills": [
+            "数据挖掘",
+            "关联规则",
+            "聚类算法"
+          ]
+        },
+        {
+          "name": "商业智能BI",
+          "skills": [
+            "PowerBI",
+            "数据仓库",
+            "ETL"
+          ]
+        },
+        {
+          "name": "Spark大数据处理",
+          "skills": [
+            "Spark",
+            "Scala",
+            "分布式计算"
+          ]
+        },
+        {
+          "name": "NoSQL数据库",
+          "skills": [
+            "Redis",
+            "MongoDB",
+            "HBase"
+          ]
+        }
+      ],
+      "skills": [
+        "ECharts",
+        "ETL",
+        "HBase",
+        "Matplotlib",
+        "MongoDB",
+        "PowerBI",
+        "Python",
+        "Redis",
+        "Scala",
+        "Scrapy",
+        "Spark",
+        "Tableau",
+        "关联规则",
+        "分布式计算",
+        "数据仓库",
+        "数据挖掘",
+        "网络爬虫",
+        "聚类算法"
+      ]
+    },
+    {
+      "student_id": "STU0095",
+      "name": "彭敏威",
+      "education": "硕士",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "密码学",
+          "skills": [
+            "加密算法",
+            "RSA",
+            "区块链基础"
+          ]
+        },
+        {
+          "name": "计算机取证",
+          "skills": [
+            "电子取证",
+            "数据恢复",
+            "日志分析"
+          ]
+        },
+        {
+          "name": "Web应用安全",
+          "skills": [
+            "BurpSuite",
+            "OWASP Top10",
+            "漏洞扫描"
+          ]
+        },
+        {
+          "name": "Python黑客编程",
+          "skills": [
+            "Python",
+            "Socket",
+            "Scapy"
+          ]
+        },
+        {
+          "name": "信息隐藏技术",
+          "skills": [
+            "数字水印",
+            "隐写术",
+            "信息隐藏"
+          ]
+        }
+      ],
+      "skills": [
+        "BurpSuite",
+        "OWASP Top10",
+        "Python",
+        "RSA",
+        "Scapy",
+        "Socket",
+        "信息隐藏",
+        "加密算法",
+        "区块链基础",
+        "数字水印",
+        "数据恢复",
+        "日志分析",
+        "漏洞扫描",
+        "电子取证",
+        "隐写术"
+      ]
+    },
+    {
+      "student_id": "STU0096",
+      "name": "陈强",
+      "education": "本科",
+      "major": "人工智能",
+      "courses": [
+        {
+          "name": "深度学习",
+          "skills": [
+            "TensorFlow",
+            "PyTorch",
+            "神经网络"
+          ]
+        },
+        {
+          "name": "自然语言处理",
+          "skills": [
+            "NLP",
+            "BERT",
+            "文本分析"
+          ]
+        },
+        {
+          "name": "强化学习",
+          "skills": [
+            "强化学习",
+            "Q-Learning",
+            "智能体"
+          ]
+        },
+        {
+          "name": "Python高阶编程",
+          "skills": [
+            "Python",
+            "并发编程",
+            "装饰器"
+          ]
+        },
+        {
+          "name": "计算机视觉",
+          "skills": [
+            "OpenCV",
+            "图像处理",
+            "CNN"
+          ]
+        }
+      ],
+      "skills": [
+        "BERT",
+        "CNN",
+        "NLP",
+        "OpenCV",
+        "PyTorch",
+        "Python",
+        "Q-Learning",
+        "TensorFlow",
+        "图像处理",
+        "并发编程",
+        "强化学习",
+        "文本分析",
+        "智能体",
+        "神经网络",
+        "装饰器"
+      ]
+    },
+    {
+      "student_id": "STU0097",
+      "name": "吕奕",
+      "education": "本科",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "微机原理",
+          "skills": [
+            "汇编语言",
+            "接口技术",
+            "计算机硬件"
+          ]
+        },
+        {
+          "name": "嵌入式开发",
+          "skills": [
+            "C语言",
+            "Keil",
+            "微控制器"
+          ]
+        },
+        {
+          "name": "通信电路",
+          "skills": [
+            "通信原理",
+            "高频电路",
+            "锁相环"
+          ]
+        },
+        {
+          "name": "数字电子技术",
+          "skills": [
+            "数电",
+            "FPGA",
+            "Verilog"
+          ]
+        },
+        {
+          "name": "电磁场与电磁波",
+          "skills": [
+            "电磁兼容",
+            "天线设计",
+            "微波技术"
+          ]
+        },
+        {
+          "name": "信号与系统",
+          "skills": [
+            "信号处理",
+            "MATLAB",
+            "傅里叶变换"
+          ]
+        }
+      ],
+      "skills": [
+        "C语言",
+        "FPGA",
+        "Keil",
+        "MATLAB",
+        "Verilog",
+        "信号处理",
+        "傅里叶变换",
+        "天线设计",
+        "微控制器",
+        "微波技术",
+        "接口技术",
+        "数电",
+        "汇编语言",
+        "电磁兼容",
+        "计算机硬件",
+        "通信原理",
+        "锁相环",
+        "高频电路"
+      ]
+    },
+    {
+      "student_id": "STU0098",
+      "name": "李文",
+      "education": "本科",
+      "major": "信息安全",
+      "courses": [
+        {
+          "name": "风险评估与管理",
+          "skills": [
+            "等级保护",
+            "ISO27001",
+            "风险评估"
+          ]
+        },
+        {
+          "name": "Python黑客编程",
+          "skills": [
+            "Python",
+            "Socket",
+            "Scapy"
+          ]
+        },
+        {
+          "name": "恶意代码分析",
+          "skills": [
+            "逆向工程",
+            "IDA Pro",
+            "汇编语言"
+          ]
+        },
+        {
+          "name": "密码学",
+          "skills": [
+            "加密算法",
+            "RSA",
+            "区块链基础"
+          ]
+        },
+        {
+          "name": "计算机取证",
+          "skills": [
+            "电子取证",
+            "数据恢复",
+            "日志分析"
+          ]
+        },
+        {
+          "name": "信息隐藏技术",
+          "skills": [
+            "数字水印",
+            "隐写术",
+            "信息隐藏"
+          ]
+        },
+        {
+          "name": "操作系统安全",
+          "skills": [
+            "Linux安全",
+            "权限管理",
+            "安全加固"
+          ]
+        },
+        {
+          "name": "网络攻防实践",
+          "skills": [
+            "CTF",
+            "Metasploit",
+            "Kali Linux"
+          ]
+        }
+      ],
+      "skills": [
+        "CTF",
+        "IDA Pro",
+        "ISO27001",
+        "Kali Linux",
+        "Linux安全",
+        "Metasploit",
+        "Python",
+        "RSA",
+        "Scapy",
+        "Socket",
+        "信息隐藏",
+        "加密算法",
+        "区块链基础",
+        "安全加固",
+        "数字水印",
+        "数据恢复",
+        "日志分析",
+        "权限管理",
+        "汇编语言",
+        "电子取证",
+        "等级保护",
+        "逆向工程",
+        "隐写术",
+        "风险评估"
+      ]
+    },
+    {
+      "student_id": "STU0099",
+      "name": "谢芳",
+      "education": "大专",
+      "major": "计算机科学与技术",
+      "courses": [
+        {
+          "name": "操作系统原理",
+          "skills": [
+            "Linux",
+            "Shell脚本",
+            "进程管理"
+          ]
+        },
+        {
+          "name": "软件工程导论",
+          "skills": [
+            "敏捷开发",
+            "UML建模",
+            "Git"
+          ]
+        },
+        {
+          "name": "Java语言程序设计",
+          "skills": [
+            "Java",
+            "JVM",
+            "多线程"
+          ]
+        },
+        {
+          "name": "数据库系统概论",
+          "skills": [
+            "MySQL",
+            "SQL",
+            "数据库设计"
+          ]
+        },
+        {
+          "name": "计算机网络",
+          "skills": [
+            "TCP/IP",
+            "HTTP协议",
+            "网络编程"
+          ]
+        },
+        {
+          "name": "Web前端开发",
+          "skills": [
+            "HTML/CSS",
+            "JavaScript",
+            "Vue.js"
+          ]
+        },
+        {
+          "name": "编译原理",
+          "skills": [
+            "编译技术",
+            "词法分析",
+            "正则表达式"
+          ]
+        },
+        {
+          "name": "计算机组成原理",
+          "skills": [
+            "计算机体系结构",
+            "汇编语言",
+            "硬件基础"
+          ]
+        }
+      ],
+      "skills": [
+        "Git",
+        "HTML/CSS",
+        "HTTP协议",
+        "JVM",
+        "Java",
+        "JavaScript",
+        "Linux",
+        "MySQL",
+        "SQL",
+        "Shell脚本",
+        "TCP/IP",
+        "UML建模",
+        "Vue.js",
+        "多线程",
+        "敏捷开发",
+        "数据库设计",
+        "正则表达式",
+        "汇编语言",
+        "硬件基础",
+        "编译技术",
+        "网络编程",
+        "计算机体系结构",
+        "词法分析",
+        "进程管理"
+      ]
+    },
+    {
+      "student_id": "STU0100",
+      "name": "程娟",
+      "education": "本科",
+      "major": "电子信息工程",
+      "courses": [
+        {
+          "name": "EDA技术",
+          "skills": [
+            "PCB设计",
+            "Altium Designer",
+            "Protell"
+          ]
+        },
+        {
+          "name": "数字信号处理",
+          "skills": [
+            "DSP",
+            "滤波器设计",
+            "MATLAB"
+          ]
+        },
+        {
+          "name": "通信电路",
+          "skills": [
+            "通信原理",
+            "高频电路",
+            "锁相环"
+          ]
+        },
+        {
+          "name": "模拟电子技术",
+          "skills": [
+            "模电",
+            "晶体管",
+            "放大电路"
+          ]
+        },
+        {
+          "name": "嵌入式开发",
+          "skills": [
+            "C语言",
+            "Keil",
+            "微控制器"
+          ]
+        },
+        {
+          "name": "微机原理",
+          "skills": [
+            "汇编语言",
+            "接口技术",
+            "计算机硬件"
+          ]
+        },
+        {
+          "name": "信号与系统",
+          "skills": [
+            "信号处理",
+            "MATLAB",
+            "傅里叶变换"
+          ]
+        },
+        {
+          "name": "数字电子技术",
+          "skills": [
+            "数电",
+            "FPGA",
+            "Verilog"
+          ]
+        }
+      ],
+      "skills": [
+        "Altium Designer",
+        "C语言",
+        "DSP",
+        "FPGA",
+        "Keil",
+        "MATLAB",
+        "PCB设计",
+        "Protell",
+        "Verilog",
+        "信号处理",
+        "傅里叶变换",
+        "微控制器",
+        "接口技术",
+        "放大电路",
+        "数电",
+        "晶体管",
+        "模电",
+        "汇编语言",
+        "滤波器设计",
+        "计算机硬件",
+        "通信原理",
+        "锁相环",
+        "高频电路"
+      ]
+    }
+  ],
+  "domain_data": {
+    "物联网工程": {
+      "物联网导论": [
+        "IoT概念",
+        "传感器技术",
+        "RFID"
+      ],
+      "嵌入式系统设计": [
+        "C语言",
+        "ARM架构",
+        "Linux驱动"
+      ],
+      "无线传感器网络": [
+        "ZigBee",
+        "蓝牙",
+        "Wi-Fi协议"
+      ],
+      "RFID原理及应用": [
+        "RFID",
+        "射频识别",
+        "NFC"
+      ],
+      "单片机原理": [
+        "STM32",
+        "C语言",
+        "汇编语言"
+      ],
+      "传感器技术": [
+        "传感器",
+        "模数转换",
+        "信号处理"
+      ],
+      "物联网通信技术": [
+        "NB-IoT",
+        "LoRa",
+        "5G技术"
+      ],
+      "Python物联网开发": [
+        "Python",
+        "MQTT协议",
+        "Socket编程"
+      ],
+      "物联网信息安全": [
+        "网络安全",
+        "加密算法",
+        "数据隐私"
+      ],
+      "云计算与物联网": [
+        "云计算",
+        "AWS",
+        "边缘计算"
+      ]
+    },
+    "计算机科学与技术": {
+      "C++程序设计": [
+        "C++",
+        "面向对象",
+        "STL库"
+      ],
+      "Java语言程序设计": [
+        "Java",
+        "JVM",
+        "多线程"
+      ],
+      "数据结构与算法": [
+        "算法",
+        "数据结构",
+        "逻辑思维"
+      ],
+      "计算机网络": [
+        "TCP/IP",
+        "HTTP协议",
+        "网络编程"
+      ],
+      "操作系统原理": [
+        "Linux",
+        "Shell脚本",
+        "进程管理"
+      ],
+      "数据库系统概论": [
+        "MySQL",
+        "SQL",
+        "数据库设计"
+      ],
+      "计算机组成原理": [
+        "计算机体系结构",
+        "汇编语言",
+        "硬件基础"
+      ],
+      "编译原理": [
+        "编译技术",
+        "词法分析",
+        "正则表达式"
+      ],
+      "Web前端开发": [
+        "HTML/CSS",
+        "JavaScript",
+        "Vue.js"
+      ],
+      "软件工程导论": [
+        "敏捷开发",
+        "UML建模",
+        "Git"
+      ]
+    },
+    "软件工程": {
+      "Java企业级开发": [
+        "Java",
+        "Spring Boot",
+        "MyBatis"
+      ],
+      "Web应用开发": [
+        "React",
+        "JavaScript",
+        "Node.js"
+      ],
+      "软件测试技术": [
+        "软件测试",
+        "Selenium",
+        "JUnit"
+      ],
+      "移动应用开发": [
+        "Android",
+        "Kotlin",
+        "Flutter"
+      ],
+      "软件项目管理": [
+        "项目管理",
+        "JIRA",
+        "Scrum"
+      ],
+      "设计模式": [
+        "设计模式",
+        "重构",
+        "面向对象"
+      ],
+      "数据库应用": [
+        "MySQL",
+        "Redis",
+        "MongoDB"
+      ],
+      "Linux操作系统": [
+        "Linux",
+        "Shell",
+        "运维基础"
+      ],
+      "DevOps实践": [
+        "Docker",
+        "Kubernetes",
+        "Jenkins"
+      ],
+      "中间件技术": [
+        "消息队列",
+        "Kafka",
+        "Nginx"
+      ]
+    },
+    "大数据管理与应用": {
+      "Python数据分析": [
+        "Python",
+        "Pandas",
+        "NumPy"
+      ],
+      "Hadoop大数据技术": [
+        "Hadoop",
+        "MapReduce",
+        "HDFS"
+      ],
+      "Spark大数据处理": [
+        "Spark",
+        "Scala",
+        "分布式计算"
+      ],
+      "数据可视化": [
+        "ECharts",
+        "Tableau",
+        "Matplotlib"
+      ],
+      "NoSQL数据库": [
+        "Redis",
+        "MongoDB",
+        "HBase"
+      ],
+      "机器学习导论": [
+        "Scikit-learn",
+        "机器学习",
+        "统计学"
+      ],
+      "数据挖掘": [
+        "数据挖掘",
+        "关联规则",
+        "聚类算法"
+      ],
+      "网络爬虫技术": [
+        "Python",
+        "Scrapy",
+        "网络爬虫"
+      ],
+      "商业智能BI": [
+        "PowerBI",
+        "数据仓库",
+        "ETL"
+      ],
+      "统计学基础": [
+        "SPSS",
+        "概率论",
+        "A/B测试"
+      ]
+    },
+    "电子信息工程": {
+      "电路分析基础": [
+        "电路设计",
+        "Multisim",
+        "电子元器件"
+      ],
+      "模拟电子技术": [
+        "模电",
+        "晶体管",
+        "放大电路"
+      ],
+      "数字电子技术": [
+        "数电",
+        "FPGA",
+        "Verilog"
+      ],
+      "信号与系统": [
+        "信号处理",
+        "MATLAB",
+        "傅里叶变换"
+      ],
+      "数字信号处理": [
+        "DSP",
+        "滤波器设计",
+        "MATLAB"
+      ],
+      "EDA技术": [
+        "PCB设计",
+        "Altium Designer",
+        "Protell"
+      ],
+      "嵌入式开发": [
+        "C语言",
+        "Keil",
+        "微控制器"
+      ],
+      "微机原理": [
+        "汇编语言",
+        "接口技术",
+        "计算机硬件"
+      ],
+      "电磁场与电磁波": [
+        "电磁兼容",
+        "天线设计",
+        "微波技术"
+      ],
+      "通信电路": [
+        "通信原理",
+        "高频电路",
+        "锁相环"
+      ]
+    },
+    "通信工程": {
+      "通信原理": [
+        "通信系统",
+        "调制解调",
+        "信道编码"
+      ],
+      "移动通信": [
+        "4G/5G",
+        "LTE",
+        "无线网络"
+      ],
+      "光纤通信": [
+        "光网络",
+        "光传输",
+        "OTN"
+      ],
+      "计算机网络与协议": [
+        "TCP/IP",
+        "路由交换",
+        "Cisco配置"
+      ],
+      "交换技术": [
+        "SDN",
+        "网络架构",
+        "软交换"
+      ],
+      "天线与电波传播": [
+        "天线设计",
+        "HFSS",
+        "电磁波"
+      ],
+      "信号处理实验": [
+        "MATLAB",
+        "Simulink",
+        "数据分析"
+      ],
+      "C语言程序设计": [
+        "C语言",
+        "嵌入式编程",
+        "算法"
+      ],
+      "下一代网络技术": [
+        "IPv6",
+        "IoT",
+        "网络切片"
+      ],
+      "网络规划与优化": [
+        "网络优化",
+        "基站维护",
+        "路测"
+      ]
+    },
+    "人工智能": {
+      "人工智能导论": [
+        "AI概念",
+        "专家系统",
+        "知识图谱"
+      ],
+      "深度学习": [
+        "TensorFlow",
+        "PyTorch",
+        "神经网络"
+      ],
+      "计算机视觉": [
+        "OpenCV",
+        "图像处理",
+        "CNN"
+      ],
+      "自然语言处理": [
+        "NLP",
+        "BERT",
+        "文本分析"
+      ],
+      "强化学习": [
+        "强化学习",
+        "Q-Learning",
+        "智能体"
+      ],
+      "模式识别": [
+        "模式识别",
+        "SVM",
+        "贝叶斯分类"
+      ],
+      "Python高阶编程": [
+        "Python",
+        "并发编程",
+        "装饰器"
+      ],
+      "高等数学": [
+        "微积分",
+        "线性代数",
+        "数学建模"
+      ],
+      "Linux环境编程": [
+        "Linux",
+        "Shell",
+        "C++"
+      ],
+      "机器人技术": [
+        "ROS",
+        "SLAM",
+        "路径规划"
+      ]
+    },
+    "网络工程": {
+      "路由与交换技术": [
+        "Cisco",
+        "华为认证",
+        "VLAN"
+      ],
+      "网络安全技术": [
+        "防火墙",
+        "VPN",
+        "入侵检测"
+      ],
+      "Windows Server管理": [
+        "Windows Server",
+        "AD域",
+        "系统管理"
+      ],
+      "Linux网络管理": [
+        "CentOS",
+        "Shell",
+        "Apache/Nginx"
+      ],
+      "网络规划设计": [
+        "Visio",
+        "网络拓扑",
+        "综合布线"
+      ],
+      "网络存储技术": [
+        "SAN",
+        "NAS",
+        "RAID"
+      ],
+      "云计算架构": [
+        "OpenStack",
+        "KVM",
+        "虚拟化"
+      ],
+      "Python运维开发": [
+        "Python",
+        "Ansible",
+        "自动化运维"
+      ],
+      "Web安全攻防": [
+        "SQL注入",
+        "XSS",
+        "渗透测试"
+      ],
+      "SDN技术": [
+        "SDN",
+        "OpenFlow",
+        "Mininet"
+      ]
+    },
+    "信息安全": {
+      "密码学": [
+        "加密算法",
+        "RSA",
+        "区块链基础"
+      ],
+      "操作系统安全": [
+        "Linux安全",
+        "权限管理",
+        "安全加固"
+      ],
+      "网络攻防实践": [
+        "CTF",
+        "Metasploit",
+        "Kali Linux"
+      ],
+      "恶意代码分析": [
+        "逆向工程",
+        "IDA Pro",
+        "汇编语言"
+      ],
+      "Web应用安全": [
+        "BurpSuite",
+        "OWASP Top10",
+        "漏洞扫描"
+      ],
+      "信息隐藏技术": [
+        "数字水印",
+        "隐写术",
+        "信息隐藏"
+      ],
+      "数据库安全": [
+        "SQL审计",
+        "数据脱敏",
+        "数据库防火墙"
+      ],
+      "风险评估与管理": [
+        "等级保护",
+        "ISO27001",
+        "风险评估"
+      ],
+      "计算机取证": [
+        "电子取证",
+        "数据恢复",
+        "日志分析"
+      ],
+      "Python黑客编程": [
+        "Python",
+        "Socket",
+        "Scapy"
+      ]
+    },
+    "电子商务": {
+      "电子商务概论": [
+        "电商模式",
+        "B2B/B2C",
+        "O2O"
+      ],
+      "网络营销": [
+        "SEO/SEM",
+        "新媒体运营",
+        "用户增长"
+      ],
+      "网页设计与制作": [
+        "HTML/CSS",
+        "Dreamweaver",
+        "UI设计"
+      ],
+      "商务数据分析": [
+        "Excel",
+        "Python",
+        "数据报表"
+      ],
+      "供应链管理": [
+        "ERP系统",
+        "物流管理",
+        "库存控制"
+      ],
+      "客户关系管理": [
+        "CRM",
+        "Salesforce",
+        "用户画像"
+      ],
+      "移动电商开发": [
+        "小程序开发",
+        "微信生态",
+        "JavaScript"
+      ],
+      "电子支付与结算": [
+        "第三方支付",
+        "金融科技",
+        "区块链"
+      ],
+      "电商系统设计": [
+        "UML",
+        "需求分析",
+        "Axure原型"
+      ],
+      "推荐系统导论": [
+        "推荐算法",
+        "协同过滤",
+        "用户行为分析"
+      ]
+    }
+  },
+  "generated_at": "2026-01-12 14:13:50"
+}
