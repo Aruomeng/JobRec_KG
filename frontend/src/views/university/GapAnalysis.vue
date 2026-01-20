@@ -94,7 +94,8 @@
                 <a-progress 
                   :percent="Math.round(record.job_relevance * 100)" 
                   :stroke-color="getRelevanceColor(record.job_relevance)"
-                  :size="80"
+                  :show-info="true"
+                  style="width: 100px; margin: 0;"
                 />
               </template>
               <template v-else-if="column.key === 'salary_impact'">
@@ -257,5 +258,17 @@ onMounted(fetchData)
 
 :deep(.ant-tabs-nav) {
   margin-bottom: 16px;
+}
+
+:deep(.ant-table-thead > tr > th) {
+  padding: 8px 12px !important;
+}
+
+:deep(.ant-table-tbody > tr > td) {
+  padding: 8px 12px !important;
+}
+
+:deep(.ant-progress) {
+  margin-bottom: 0 !important;
 }
 </style>

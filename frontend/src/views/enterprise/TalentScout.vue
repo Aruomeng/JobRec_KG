@@ -13,7 +13,7 @@
         <a-col :span="10">
           <a-input-search
             v-model:value="jobId"
-            placeholder="输入职位ID或关键词"
+            placeholder="输入职位ID、技能关键词（如Python、Java）"
             enter-button="搜索人才"
             size="large"
             @search="scoutTalents"
@@ -44,32 +44,42 @@
     <a-spin :spinning="loading">
       <a-table 
         :columns="columns" 
-        :data-source="candidates" 
+        :data-source="paginatedCandidates" 
         :row-key="record => record.student_id"
-        :pagination="{ pageSize: 10 }"
+        :pagination="false"
+        :scroll="{ x: 1200 }"
+        bordered
       >
         <!-- 匹配度 -->
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'match_score'">
-            <a-progress 
-              :percent="Math.round(record.match_score * 100)" 
-              :size="80"
-              :stroke-color="getScoreColor(record.match_score)"
-            />
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <a-progress 
+                :percent="Math.round(record.match_score * 100)" 
+                :stroke-color="getScoreColor(record.match_score)"
+                :show-info="true"
+                style="width: 100px; margin: 0;"
+              />
+            </div>
           </template>
           
           <!-- 雷达图 -->
           <template v-else-if="column.key === 'radar'">
-            <a-button size="small" @click="showRadar(record)">
+            <a-button size="small" type="primary" ghost @click="showRadar(record)">
               查看能力图
             </a-button>
           </template>
           
           <!-- 技能 -->
           <template v-else-if="column.key === 'skills'">
-            <a-tag v-for="skill in record.matched_skills" :key="skill" color="green">
-              {{ skill }}
-            </a-tag>
+            <div style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              <a-tag v-for="skill in record.matched_skills.slice(0, 3)" :key="skill" color="green">
+                {{ skill }}
+              </a-tag>
+              <a-tag v-if="record.matched_skills.length > 3" color="blue">
+                +{{ record.matched_skills.length - 3 }}
+              </a-tag>
+            </div>
           </template>
           
           <!-- 操作 -->
@@ -83,7 +93,47 @@
           </template>
         </template>
       </a-table>
+      
+      <!-- 分页组件 -->
+      <div class="pagination-container" v-if="candidates.length > 0">
+        <a-pagination
+          v-model:current="currentPage"
+          v-model:pageSize="pageSize"
+          :total="candidates.length"
+          :pageSizeOptions="['10', '20', '50']"
+          show-size-changer
+          show-quick-jumper
+          :show-total="total => `共 ${total} 名候选人`"
+        />
+      </div>
     </a-spin>
+    
+    <!-- 能力图弹窗 -->
+    <a-modal 
+      v-model:open="radarVisible" 
+      :title="`📊 ${currentCandidate?.name || ''} 的能力分析`"
+      width="600px"
+      :footer="null"
+    >
+      <div v-if="currentCandidate" style="padding: 14px;">
+        <a-descriptions :column="4" bordered size="small">
+          <a-descriptions-item label="学生ID">{{ currentCandidate.student_id }}</a-descriptions-item>
+          <a-descriptions-item label="姓名">{{ currentCandidate.name }}</a-descriptions-item>
+          <a-descriptions-item label="专业" :span="2">{{ currentCandidate.major }}</a-descriptions-item>
+          <a-descriptions-item label="学历" :span="2">{{ currentCandidate.education }}</a-descriptions-item>
+          <a-descriptions-item label="匹配度" :span="2">
+            <a-progress :percent="Math.round(currentCandidate.match_score * 100)" :stroke-color="getScoreColor(currentCandidate.match_score)" />
+          </a-descriptions-item>
+        </a-descriptions>
+        
+        <a-divider>匹配技能</a-divider>
+        <div>
+          <a-tag v-for="skill in currentCandidate.matched_skills" :key="skill" color="green" style="margin: 4px;">
+            {{ skill }}
+          </a-tag>
+        </div>
+      </div>
+    </a-modal>
     
     <!-- 简历透视弹窗 -->
     <a-modal 
@@ -95,45 +145,28 @@
       <div v-if="resumeInsight">
         <a-row :gutter="24">
           <a-col :span="12">
-            <a-card title="显性技能" size="small">
-              <a-tag v-for="skill in resumeInsight.explicit_skills" :key="skill" color="blue">
+            <a-card title="匹配技能" size="small">
+              <a-tag v-for="skill in resumeInsight.matched_skills" :key="skill" color="green">
                 {{ skill }}
               </a-tag>
+              <a-empty v-if="!resumeInsight.matched_skills?.length" description="无匹配技能" />
             </a-card>
           </a-col>
           <a-col :span="12">
-            <a-card title="隐性技能（AI推断）" size="small">
-              <a-tag v-for="skill in resumeInsight.implicit_skills" :key="skill" color="purple">
+            <a-card title="缺失技能" size="small">
+              <a-tag v-for="skill in resumeInsight.missing_skills" :key="skill" color="red">
                 {{ skill }}
               </a-tag>
+              <a-empty v-if="!resumeInsight.missing_skills?.length" description="无缺失技能" />
             </a-card>
           </a-col>
         </a-row>
         
-        <a-divider>技能来源追溯</a-divider>
-        
-        <a-list 
-          :data-source="resumeInsight.skill_sources"
-          size="small"
-        >
-          <template #renderItem="{ item }">
-            <a-list-item>
-              <a-tag :color="item.type === 'explicit' ? 'blue' : 'purple'">
-                {{ item.skill }}
-              </a-tag>
-              <span>← {{ item.source }}</span>
-              <template #extra>
-                <a-tag v-if="item.type === 'implicit'" color="gold">AI推断</a-tag>
-              </template>
-            </a-list-item>
-          </template>
-        </a-list>
-        
         <a-statistic 
-          title="整体匹配度" 
-          :value="Math.round(resumeInsight.overall_fit * 100)" 
+          title="技能匹配率" 
+          :value="Math.round((resumeInsight.match_rate || 0) * 100)" 
           suffix="%" 
-          style="margin-top: 16px"
+          style="margin-top: 16px; text-align: center;"
         />
       </div>
     </a-modal>
@@ -141,7 +174,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { message } from 'ant-design-vue'
 import { SearchOutlined } from '@ant-design/icons-vue'
 import { enterpriseApi } from '@/api'
@@ -153,16 +186,28 @@ const loading = ref(false)
 const candidates = ref([])
 const xrayVisible = ref(false)
 const resumeInsight = ref(null)
+const radarVisible = ref(false)
+const currentCandidate = ref(null)
+
+// 分页相关
+const currentPage = ref(1)
+const pageSize = ref(10)
+
+const paginatedCandidates = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value
+  const end = start + pageSize.value
+  return candidates.value.slice(start, end)
+})
 
 const columns = [
-  { title: '学生ID', dataIndex: 'student_id', key: 'student_id' },
-  { title: '姓名', dataIndex: 'name', key: 'name' },
-  { title: '专业', dataIndex: 'major', key: 'major' },
-  { title: '学历', dataIndex: 'education', key: 'education' },
+  { title: '学生ID', dataIndex: 'student_id', key: 'student_id', width: 100, fixed: 'left' },
+  { title: '姓名', dataIndex: 'name', key: 'name', width: 100 },
+  { title: '专业', dataIndex: 'major', key: 'major', width: 150 },
+  { title: '学历', dataIndex: 'education', key: 'education', width: 80 },
   { title: '匹配度', key: 'match_score', width: 150 },
-  { title: '匹配技能', key: 'skills' },
-  { title: '能力图', key: 'radar', width: 100 },
-  { title: '操作', key: 'action', width: 180 }
+  { title: '匹配技能', key: 'skills', width: 220 },
+  { title: '能力图', key: 'radar', width: 110 },
+  { title: '操作', key: 'action', width: 150, fixed: 'right' }
 ]
 
 const getScoreColor = (score) => {
@@ -173,7 +218,7 @@ const getScoreColor = (score) => {
 
 const scoutTalents = async () => {
   if (!jobId.value) {
-    message.warning('请输入职位ID')
+    message.warning('请输入职位ID或技能关键词')
     return
   }
   
@@ -187,14 +232,15 @@ const scoutTalents = async () => {
     candidates.value = data.candidates
     message.success(`找到 ${data.candidates.length} 名候选人`)
   } catch (error) {
-    message.error('搜索失败')
+    message.error('搜索失败: ' + (error.response?.data?.detail || error.message))
   } finally {
     loading.value = false
   }
 }
 
 const showRadar = (record) => {
-  message.info(`查看 ${record.name} 的能力雷达图`)
+  currentCandidate.value = record
+  radarVisible.value = true
 }
 
 const xrayResume = async (record) => {
@@ -219,4 +265,30 @@ const xrayResume = async (record) => {
   border-radius: 12px;
   border-left: 4px solid #722ed1;
 }
+
+:deep(.ant-table) {
+  font-size: 13px;
+}
+
+:deep(.ant-table-thead > tr > th) {
+  background: #fafafa;
+  font-weight: 600;
+  padding: 8px 12px !important;
+}
+
+:deep(.ant-table-tbody > tr > td) {
+  padding: 8px 12px !important;
+}
+
+:deep(.ant-progress) {
+  margin-bottom: 0 !important;
+}
+
+.pagination-container {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 16px;
+}
 </style>
+
