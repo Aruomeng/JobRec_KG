@@ -112,26 +112,72 @@
     <a-modal 
       v-model:open="radarVisible" 
       :title="`📊 ${currentCandidate?.name || ''} 的能力分析`"
-      width="600px"
+      width="800px"
       :footer="null"
     >
-      <div v-if="currentCandidate" style="padding: 14px;">
-        <a-descriptions :column="4" bordered size="small">
-          <a-descriptions-item label="学生ID">{{ currentCandidate.student_id }}</a-descriptions-item>
-          <a-descriptions-item label="姓名">{{ currentCandidate.name }}</a-descriptions-item>
-          <a-descriptions-item label="专业" :span="2">{{ currentCandidate.major }}</a-descriptions-item>
-          <a-descriptions-item label="学历" :span="2">{{ currentCandidate.education }}</a-descriptions-item>
-          <a-descriptions-item label="匹配度" :span="2">
-            <a-progress :percent="Math.round(currentCandidate.match_score * 100)" :stroke-color="getScoreColor(currentCandidate.match_score)" />
-          </a-descriptions-item>
-        </a-descriptions>
-        
-        <a-divider>匹配技能</a-divider>
-        <div>
-          <a-tag v-for="skill in currentCandidate.matched_skills" :key="skill" color="green" style="margin: 4px;">
-            {{ skill }}
-          </a-tag>
+      <div v-if="currentCandidate" style="padding: 10px;">
+        <!-- 顶部：基础信息 + 匹配度环形图 -->
+        <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+          <!-- 左侧：基础信息卡片 -->
+          <div style="flex: 1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 18px; color: white;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <div style="font-size: 22px; font-weight: 600; margin-bottom: 8px;">{{ currentCandidate.name }}</div>
+                <div style="opacity: 0.9; font-size: 13px; margin-bottom: 4px;">🆔 {{ currentCandidate.student_id }}</div>
+                <div style="opacity: 0.9; font-size: 13px; margin-bottom: 4px;">🎓 {{ currentCandidate.education }} · {{ currentCandidate.major }}</div>
+              </div>
+              <!-- 匹配度环形图 -->
+              <div style="width: 90px; height: 90px;">
+                <v-chart :option="matchRingOption" autoresize style="width: 100%; height: 100%;" />
+              </div>
+            </div>
+          </div>
+          
+          <!-- 右侧：统计数据 -->
+          <div style="display: flex; flex-direction: column; gap: 8px; width: 140px;">
+            <div style="background: #f6ffed; border-radius: 8px; padding: 12px; text-align: center; flex: 1;">
+              <div style="font-size: 24px; font-weight: 700; color: #52c41a;">{{ currentCandidate.matched_skills?.length || 0 }}</div>
+              <div style="font-size: 11px; color: #666;">匹配技能数</div>
+            </div>
+            <div style="background: #e6f7ff; border-radius: 8px; padding: 12px; text-align: center; flex: 1;">
+              <div style="font-size: 24px; font-weight: 700; color: #1890ff;">{{ skillCategories.length }}</div>
+              <div style="font-size: 11px; color: #666;">技能类别</div>
+            </div>
+          </div>
         </div>
+        
+        <!-- 中部：技能雷达图 + 技能条形图 -->
+        <a-row :gutter="16">
+          <a-col :span="12">
+            <a-card size="small" title="📈 技能分类分布">
+              <div style="height: 220px;">
+                <v-chart :option="radarOption" autoresize style="width: 100%; height: 100%;" />
+              </div>
+            </a-card>
+          </a-col>
+          <a-col :span="12">
+            <a-card size="small" title="🏆 技能匹配详情">
+              <div style="height: 220px;">
+                <v-chart :option="barOption" autoresize style="width: 100%; height: 100%;" />
+              </div>
+            </a-card>
+          </a-col>
+        </a-row>
+        
+        <!-- 底部：技能标签云 -->
+        <a-card size="small" title="✨ 匹配技能一览" style="margin-top: 12px;">
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <a-tag 
+              v-for="(skill, index) in currentCandidate.matched_skills" 
+              :key="skill" 
+              :color="getSkillTagColor(index)"
+              style="margin: 0; font-size: 13px; padding: 4px 10px;"
+            >
+              {{ skill }}
+            </a-tag>
+            <span v-if="!currentCandidate.matched_skills?.length" style="color: #999;">暂无匹配技能</span>
+          </div>
+        </a-card>
       </div>
     </a-modal>
     
@@ -178,6 +224,14 @@ import { ref, computed } from 'vue'
 import { message } from 'ant-design-vue'
 import { SearchOutlined } from '@ant-design/icons-vue'
 import { enterpriseApi } from '@/api'
+import VChart from 'vue-echarts'
+import { use } from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
+import { PieChart, RadarChart, BarChart } from 'echarts/charts'
+import { TitleComponent, TooltipComponent, LegendComponent, RadarComponent, GridComponent } from 'echarts/components'
+
+// 注册 ECharts 组件
+use([CanvasRenderer, PieChart, RadarChart, BarChart, TitleComponent, TooltipComponent, LegendComponent, RadarComponent, GridComponent])
 
 const jobId = ref('')
 const topK = ref(20)
@@ -206,15 +260,157 @@ const columns = [
   { title: '学历', dataIndex: 'education', key: 'education', width: 80 },
   { title: '匹配度', key: 'match_score', width: 150 },
   { title: '匹配技能', key: 'skills', width: 220 },
-  { title: '能力图', key: 'radar', width: 110 },
+  { title: '能力图 ', key: 'radar', width: 110 },
   { title: '操作', key: 'action', width: 150, fixed: 'right' }
 ]
+
+// 技能分类映射
+const skillCategoryMap = {
+  '编程语言': ['python', 'java', 'javascript', 'c++', 'c#', 'go', 'ruby', 'php', 'swift', 'kotlin', 'rust', 'typescript', 'scala', 'c语言', 'shell', 'sql'],
+  '前端技术': ['vue', 'react', 'angular', 'html', 'css', 'webpack', 'node', 'jquery', 'bootstrap', 'typescript'],
+  '后端技术': ['spring', 'django', 'flask', 'express', 'mybatis', 'hibernate', 'redis', 'nginx', 'docker', 'kubernetes'],
+  '数据技术': ['mysql', 'mongodb', 'postgresql', 'oracle', 'elasticsearch', 'hbase', 'hive', 'spark', 'hadoop', 'flink'],
+  '人工智能': ['机器学习', '深度学习', 'tensorflow', 'pytorch', 'keras', 'nlp', '自然语言', '计算机视觉', 'opencv', '神经网络']
+}
+
+// 技能分类计算
+const skillCategories = computed(() => {
+  if (!currentCandidate.value?.matched_skills) return []
+  
+  const skills = currentCandidate.value.matched_skills
+  const categories = {}
+  
+  for (const skill of skills) {
+    if (!skill) continue
+    const skillLower = skill.toLowerCase()
+    let matched = false
+    
+    for (const [category, keywords] of Object.entries(skillCategoryMap)) {
+      if (keywords.some(kw => skillLower.includes(kw) || kw.includes(skillLower))) {
+        categories[category] = (categories[category] || 0) + 1
+        matched = true
+        break
+      }
+    }
+    
+    if (!matched) {
+      categories['其他技能'] = (categories['其他技能'] || 0) + 1
+    }
+  }
+  
+  return Object.entries(categories).map(([name, count]) => ({ name, count }))
+})
+
+// 匹配度环形图配置
+const matchRingOption = computed(() => {
+  const percent = Math.round((currentCandidate.value?.match_score || 0) * 100)
+  return {
+    series: [{
+      type: 'pie',
+      radius: ['65%', '85%'],
+      center: ['50%', '50%'],
+      silent: true,
+      label: {
+        show: true,
+        position: 'center',
+        formatter: `${percent}%`,
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#fff'
+      },
+      data: [
+        { value: percent, itemStyle: { color: percent >= 70 ? '#52c41a' : percent >= 50 ? '#1890ff' : '#faad14' } },
+        { value: 100 - percent, itemStyle: { color: 'rgba(255,255,255,0.2)' } }
+      ]
+    }]
+  }
+})
+
+// 雷达图配置
+const radarOption = computed(() => {
+  const categories = skillCategories.value
+  if (categories.length === 0) {
+    return {
+      title: { text: '暂无技能数据', left: 'center', top: 'center', textStyle: { color: '#999', fontSize: 14 } }
+    }
+  }
+  
+  const maxCount = Math.max(...categories.map(c => c.count), 3)
+  
+  return {
+    tooltip: { trigger: 'item' },
+    radar: {
+      indicator: categories.map(c => ({ name: c.name, max: maxCount })),
+      radius: '65%',
+      axisName: { color: '#666', fontSize: 11 },
+      splitArea: { areaStyle: { color: ['#f0f5ff', '#e6f7ff', '#f6ffed', '#fff7e6'] } }
+    },
+    series: [{
+      type: 'radar',
+      data: [{
+        value: categories.map(c => c.count),
+        name: '技能分布',
+        areaStyle: { color: 'rgba(102, 126, 234, 0.4)' },
+        lineStyle: { color: '#667eea', width: 2 },
+        itemStyle: { color: '#667eea' }
+      }]
+    }]
+  }
+})
+
+// 条形图配置
+const barOption = computed(() => {
+  const skills = currentCandidate.value?.matched_skills || []
+  const displaySkills = skills.slice(0, 8)
+  
+  if (displaySkills.length === 0) {
+    return {
+      title: { text: '暂无技能数据', left: 'center', top: 'center', textStyle: { color: '#999', fontSize: 14 } }
+    }
+  }
+  
+  return {
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    grid: { left: '3%', right: '10%', top: '5%', bottom: '3%', containLabel: true },
+    xAxis: { type: 'value', show: false },
+    yAxis: {
+      type: 'category',
+      data: displaySkills.reverse(),
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: { color: '#333', fontSize: 11 }
+    },
+    series: [{
+      type: 'bar',
+      data: displaySkills.map((_, i) => ({
+        value: displaySkills.length - i,
+        itemStyle: {
+          color: {
+            type: 'linear',
+            x: 0, y: 0, x2: 1, y2: 0,
+            colorStops: [
+              { offset: 0, color: '#667eea' },
+              { offset: 1, color: '#764ba2' }
+            ]
+          },
+          borderRadius: [0, 4, 4, 0]
+        }
+      })),
+      barWidth: 14,
+      label: { show: true, position: 'right', color: '#666', fontSize: 10, formatter: '{c}' }
+    }]
+  }
+})
 
 const getScoreColor = (score) => {
   if (score >= 0.8) return '#52c41a'
   if (score >= 0.6) return '#1890ff'
   return '#faad14'
 }
+
+// 技能标签颜色
+const skillTagColors = ['green', 'blue', 'purple', 'cyan', 'orange', 'magenta', 'volcano', 'geekblue']
+const getSkillTagColor = (index) => skillTagColors[index % skillTagColors.length]
 
 const scoutTalents = async () => {
   if (!jobId.value) {

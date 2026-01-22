@@ -1365,7 +1365,7 @@ def scout_talents(request: ScoutTalentsRequest):
             "top_k": request.top_k
         })
     
-    print(f"DEBUG scout-talents: Found {len(results)} candidates")
+    print(f"DEBUG scout-talents: Found {len(results)} candidates, education_filter={request.education_filter}")
     
     # 格式化返回数据以匹配前端预期
     candidates = []
@@ -1380,6 +1380,11 @@ def scout_talents(request: ScoutTalentsRequest):
             "match_score": match_score,
             "matched_skills": matched
         })
+    
+    # 学历筛选：如果设置了 education_filter，过滤不匹配的候选人
+    if request.education_filter:
+        candidates = [c for c in candidates if c["education"] == request.education_filter]
+        print(f"DEBUG scout-talents: After education filter '{request.education_filter}', {len(candidates)} candidates remain")
     
     return {"candidates": candidates}
 
