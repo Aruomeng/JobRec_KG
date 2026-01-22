@@ -1427,36 +1427,61 @@ def xray_resume(request: ResumeXRayRequest):
 # 高校端API
 @app.get("/api/university/skill-gap")
 def analyze_skill_gap(top_k: int = 20):
-    # 实现Gap分析逻辑
+    """
+    技能缺口分析：
+    - 市场需求 = 职位对该技能的需求数
+    - 课程供给 = 开设该技能相关课程的数量
+    - 缺口分数 = 需求 / 供给（供给越少缺口越大）
+    """
     query = """
-    // 获取学生技能分布
-    MATCH (s:Student)-[:HAS_SKILL]->(sk:Skill)
-    WITH sk.name AS skill, COUNT(s) AS student_count
+    // 获取市场技能需求（职位数量）
+    MATCH (j:Job)-[:REQUIRES_SKILL]->(sk:Skill)
+    WITH sk.name AS skill, COUNT(DISTINCT j) AS market_demand
+    WHERE market_demand >= 50  // 只看有一定需求量的技能
     
-    // 获取职位技能需求
-    MATCH (j:Job)-[:REQUIRES_SKILL]->(sk:Skill {name: skill})
-    WITH skill, student_count, COUNT(j) AS job_count
+    // 获取课程供给（有多少门课程教这个技能）
+    OPTIONAL MATCH (c:Course)-[:TEACHES_SKILL]->(sk2:Skill {name: skill})
+    WITH skill, market_demand, COUNT(DISTINCT c) AS supply_count
     
-    // 计算Gap
-    WITH skill, student_count, job_count, (job_count - student_count) AS gap
-    ORDER BY gap DESC
+    // 计算缺口分数（需求高但供给低的缺口大）
+    WITH skill, market_demand, supply_count,
+         CASE WHEN supply_count = 0 THEN market_demand 
+              ELSE toFloat(market_demand) / supply_count 
+         END AS gap_score
+    ORDER BY gap_score DESC
     LIMIT $top_k
     
-    RETURN skill, student_count, job_count, gap
+    // 获取相关课程名称
+    OPTIONAL MATCH (c:Course)-[:TEACHES_SKILL]->(sk:Skill {name: skill})
+    RETURN skill, market_demand, supply_count, gap_score, 
+           COLLECT(DISTINCT c.name)[0..3] AS supply_courses
     """
     
     results = neo4j_conn.query(query, parameters={"top_k": top_k})
     
     # 格式化返回数据以匹配前端预期
     gaps = []
+    max_gap = max([r["gap_score"] for r in results], default=1) if results else 1
+    
     for r in results:
+        supply_count = r["supply_count"] or 0
+        supply_courses = r["supply_courses"] or []
+        
+        # 生成行动建议
+        if supply_count == 0:
+            action = "🔴 急需开设相关课程"
+        elif supply_count <= 2:
+            action = "🟠 建议增开更多课程"
+        else:
+            action = "🟢 加强现有课程深度"
+        
         gap_item = {
             "skill": r["skill"],
-            "demand": r["job_count"],
-            "supply": r["student_count"],
-            "gap_score": min(r["gap"] / 100, 1.0),  # 归一化
-            "supply_courses": [],  # 暂时为空，可以后续查询
-            "action": "建议开设相关课程" if r["gap"] > 100 else "加强现有课程"
+            "market_demand": r["market_demand"],  # 市场需求（职位数）
+            "supply_courses": supply_count,  # 课程供给数
+            "gap_score": round(r["gap_score"] / max_gap * 100, 1),  # 归一化到0-100
+            "teaching_courses": supply_courses,  # 开设该技能的课程列表
+            "action": action
         }
         gaps.append(gap_item)
     
@@ -1464,26 +1489,89 @@ def analyze_skill_gap(top_k: int = 20):
 
 @app.get("/api/university/course-health")
 def evaluate_courses(limit: int = 30):
-    # 实现课程健康度逻辑 - 简化查询避免复杂关系
+    """
+    课程健康度评估：
+    - 选课人数 = TAKES关系数量
+    - 教授技能数 = TEACHES_SKILL关系数量
+    - 就业关联度 = 课程技能与热门职位需求的匹配度
+    - 薪资贡献 = 基于技能需求量估算
+    """
     query = """
     MATCH (c:Course)
-    OPTIONAL MATCH (c)-[:TEACHES]->(sk:Skill)
-    WITH c, COUNT(DISTINCT sk) AS skill_count
-    RETURN c.name AS name, skill_count
-    ORDER BY skill_count DESC
+    
+    // 选课人数
+    OPTIONAL MATCH (s:Student)-[:TAKES|ENROLLED_IN]->(c)
+    WITH c, COUNT(DISTINCT s) AS enrollment
+    
+    // 教授技能
+    OPTIONAL MATCH (c)-[:TEACHES_SKILL]->(sk:Skill)
+    WITH c, enrollment, COLLECT(DISTINCT sk.name) AS skills, COUNT(DISTINCT sk) AS skill_count
+    
+    // 计算就业关联度（技能被职位需求的程度）
+    UNWIND CASE WHEN SIZE(skills) > 0 THEN skills ELSE [null] END AS skill_name
+    OPTIONAL MATCH (j:Job)-[:REQUIRES_SKILL]->(sk2:Skill {name: skill_name})
+    WITH c, enrollment, skill_count, skills,
+         SUM(CASE WHEN j IS NOT NULL THEN 1 ELSE 0 END) AS total_job_matches
+    
+    // 关联度 = 职位匹配总数 / 技能数（归一化）
+    WITH c, enrollment, skill_count, skills, total_job_matches,
+         CASE WHEN skill_count > 0 
+              THEN toFloat(total_job_matches) / (skill_count * 100)
+              ELSE 0 
+         END AS relevance_raw
+    
+    RETURN c.name AS name, 
+           enrollment, 
+           skill_count, 
+           skills[0..5] AS top_skills,
+           total_job_matches,
+           relevance_raw
+    ORDER BY enrollment DESC, total_job_matches DESC
     LIMIT $limit
     """
     
     results = neo4j_conn.query(query, parameters={"limit": limit})
     
-    # 格式化返回数据以匹配前端预期
+    # 格式化返回数据
     courses = []
+    max_relevance = max([r["relevance_raw"] for r in results], default=1) if results else 1
+    if max_relevance == 0:
+        max_relevance = 1
+    
     for i, r in enumerate(results):
+        enrollment = r["enrollment"] or 0
+        skill_count = r["skill_count"] or 0
+        job_matches = r["total_job_matches"] or 0
+        
+        # 就业关联度归一化到0-1
+        job_relevance = min(1.0, r["relevance_raw"] / max_relevance) if max_relevance > 0 else 0.3
+        
+        # 薪资贡献估算（基于技能需求量）
+        if job_matches > 500:
+            salary_impact = round(0.1 + (job_matches / 10000), 2)
+        elif job_matches > 100:
+            salary_impact = round(0.05 + (job_matches / 20000), 2)
+        elif job_matches > 0:
+            salary_impact = round(job_matches / 50000, 2)
+        else:
+            salary_impact = -0.05
+        
+        # 趋势判断（基于选课人数和就业关联度）
+        if enrollment >= 35 and job_relevance >= 0.5:
+            trend = "📈 上升"
+        elif enrollment >= 20 or job_relevance >= 0.3:
+            trend = "➡️ 稳定"
+        else:
+            trend = "📉 下降"
+        
         course_item = {
             "name": r["name"],
-            "skill_count": r["skill_count"] or 0,
-            "job_relevance": max(0.3, min(0.95, 0.9 - i * 0.02)),  # 模拟相关度
-            "trend": ["上升", "稳定", "下降"][i % 3]  # 模拟趋势
+            "enrollment": enrollment,
+            "skill_count": skill_count,
+            "top_skills": r["top_skills"] or [],
+            "job_relevance": round(job_relevance, 2),
+            "salary_impact": salary_impact,
+            "trend": trend
         }
         courses.append(course_item)
     
@@ -1491,60 +1579,81 @@ def evaluate_courses(limit: int = 30):
 
 @app.get("/api/university/reform-suggestions")
 def get_reform_suggestions():
-    """实现改革建议逻辑"""
+    """
+    改革建议：基于技能缺口分析生成
+    - 急需技能：市场需求高但课程供给少
+    - 低效课程：选课人少且就业关联度低
+    """
     try:
-        # 获取技能缺口最大的前10个技能
-        gap_query = """
-        MATCH (s:Student)-[:HAS_SKILL]->(sk:Skill)
-        WITH sk.name AS skill, COUNT(s) AS student_count
-        MATCH (j:Job)-[:REQUIRES_SKILL]->(sk2:Skill {name: skill})
-        WITH skill, student_count, COUNT(j) AS job_count
-        WITH skill, (job_count - student_count) AS gap
-        WHERE gap > 0
-        ORDER BY gap DESC
+        # 1. 获取急需技能（市场需求高但无课程供给的技能）
+        urgent_query = """
+        MATCH (j:Job)-[:REQUIRES_SKILL]->(sk:Skill)
+        WITH sk.name AS skill, COUNT(DISTINCT j) AS demand
+        WHERE demand >= 100
+        
+        OPTIONAL MATCH (c:Course)-[:TEACHES_SKILL]->(sk2:Skill {name: skill})
+        WITH skill, demand, COUNT(DISTINCT c) AS course_count
+        WHERE course_count <= 1
+        
+        RETURN skill, demand, course_count
+        ORDER BY demand DESC
         LIMIT 10
-        RETURN skill, gap
         """
+        urgent_skills = neo4j_conn.query(urgent_query)
         
-        skill_gaps = neo4j_conn.query(gap_query)
+        # 2. 获取低效课程（选课少且技能需求量低）
+        low_eff_query = """
+        MATCH (c:Course)
+        OPTIONAL MATCH (s:Student)-[:TAKES|ENROLLED_IN]->(c)
+        WITH c, COUNT(DISTINCT s) AS enrollment
+        WHERE enrollment < 20
         
-        if not skill_gaps:
-            return {
-                "summary": "当前数据不足以生成改革建议",
-                "new_courses": [],
-                "enhance_courses": []
-            }
+        OPTIONAL MATCH (c)-[:TEACHES_SKILL]->(sk:Skill)<-[:REQUIRES_SKILL]-(j:Job)
+        WITH c.name AS course, enrollment, COUNT(DISTINCT j) AS job_demand
         
-        # 生成建议
-        new_courses = []
-        enhance_courses = []
+        RETURN course, enrollment, 
+               CASE WHEN job_demand > 0 THEN toFloat(enrollment) / (job_demand / 100.0) ELSE 0 END AS relevance
+        ORDER BY relevance ASC
+        LIMIT 10
+        """
+        low_eff_courses = neo4j_conn.query(low_eff_query)
         
-        for gap in skill_gaps:
-            skill = gap.get("skill", "未知技能")
-            gap_value = gap.get("gap", 0)
-            
-            suggestion = {
-                "skill": skill,
-                "gap": gap_value,
-                "suggestion": f"加强{skill}相关课程教学"
-            }
-            
-            if gap_value > 500:
-                new_courses.append(suggestion["suggestion"])
-            else:
-                enhance_courses.append(suggestion["suggestion"])
+        # 格式化急需技能
+        urgent_list = []
+        for u in urgent_skills:
+            urgent_list.append({
+                "skill": u["skill"],
+                "demand": u["demand"],
+                "course_count": u["course_count"]
+            })
+        
+        # 格式化低效课程
+        low_relevance_list = []
+        for l in low_eff_courses:
+            low_relevance_list.append({
+                "course": l["course"],
+                "relevance": round(l["relevance"] if l["relevance"] else 0, 2)
+            })
+        
+        # 生成总结
+        if urgent_list or low_relevance_list:
+            summary = f"分析发现 {len(urgent_list)} 个急需开设课程的技能，{len(low_relevance_list)} 门需要评估的低效课程。建议重点关注 Python、Java、AI 等热门技术领域的课程建设。"
+        else:
+            summary = "当前课程体系较为健康，建议持续关注市场需求变化。"
         
         return {
-            "summary": f"发现{len(skill_gaps)}个技能存在供需缺口，建议优化课程设置",
-            "new_courses": new_courses[:5],
-            "enhance_courses": enhance_courses[:5]
+            "summary": summary,
+            "urgent_skills": urgent_list,
+            "low_relevance_courses": low_relevance_list
         }
     except Exception as e:
         print(f"reform-suggestions error: {e}")
+        import traceback
+        traceback.print_exc()
         return {
             "summary": "数据分析中，请稍后再试",
-            "new_courses": [],
-            "enhance_courses": []
+            "urgent_skills": [],
+            "low_relevance_courses": []
         }
 
 # 通用API
