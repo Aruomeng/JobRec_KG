@@ -95,74 +95,86 @@
     <!-- 推荐结果 -->
     <a-spin :spinning="loading">
       <div class="job-grid">
-        <a-card 
+        <div 
           v-for="(job, index) in paginatedJobs" 
           :key="job.job_id"
-          class="job-card hover-card"
+          class="job-card-modern"
           :style="{ animationDelay: `${index * 0.05}s` }"
-          hoverable
           @click="goToDetail(job)"
         >
-          <!-- 匹配度分数 -->
-          <div class="match-score" v-if="job.match_score">
-            <a-progress 
-              type="circle" 
-              :percent="Math.round((job.match_rate || 0) * 100)" 
-              :width="50"
-              :stroke-color="getScoreColor(job.match_score)"
-            />
-          </div>
-          
-          <!-- 职位信息 -->
-          <div class="job-info">
-            <h3 class="job-title">{{ formatTitle(job.title) }}</h3>
-            <p class="job-salary">💰 {{ formatSalary(job.salary) }}</p>
-            <p class="job-company">🏢 {{ job.company || '未知公司' }}</p>
-            <div class="job-meta">
-              <span v-if="job.city">📍 {{ job.city }}</span>
-              <a-divider type="vertical" v-if="job.city && job.education" />
-              <span v-if="job.education">🎓 {{ job.education }}</span>
+          <!-- 卡片头部：职位名称和匹配度 -->
+          <div class="job-card-header">
+            <div class="job-header-content">
+              <h3 class="job-title-modern">{{ formatTitle(job.title) }}</h3>
+              <div class="job-company-modern">
+                <span class="company-icon">🏢</span>
+                {{ job.company || '未知公司' }}
+              </div>
+            </div>
+            <!-- 匹配度环形图 -->
+            <div class="match-ring" v-if="job.match_score">
+              <a-progress 
+                type="circle" 
+                :percent="Math.round((job.match_rate || 0) * 100)" 
+                :width="56"
+                :stroke-width="8"
+                :stroke-color="getScoreGradient(job.match_score)"
+              >
+                <template #format="percent">
+                  <span class="match-percent">{{ percent }}</span>
+                </template>
+              </a-progress>
             </div>
           </div>
           
-          <!-- 技能标签 (显示职位要求的技能) -->
-          <div class="skill-tags" v-if="job.required_skills?.length">
-            <a-tag 
-              v-for="skill in job.required_skills.slice(0, 5)" 
-              :key="skill" 
-              :color="job.matched_skills?.includes(skill) ? 'success' : 'blue'"
-            >
-              <template v-if="job.matched_skills?.includes(skill)">✓ </template>{{ skill }}
-            </a-tag>
-            <a-tag v-if="job.required_skills.length > 5" color="default">
-              +{{ job.required_skills.length - 5 }}
-            </a-tag>
+          <!-- 薪资突出显示 -->
+          <div class="salary-highlight">
+            <span class="salary-amount">{{ formatSalary(job.salary) }}</span>
+            <span class="salary-unit" v-if="job.salary && job.salary !== '面议'">/月</span>
+          </div>
+          
+          <!-- 职位元信息标签 -->
+          <div class="job-meta-tags">
+            <span class="meta-tag location" v-if="job.city">
+              <span class="tag-icon">📍</span>{{ job.city }}
+            </span>
+            <span class="meta-tag education" v-if="job.education">
+              <span class="tag-icon">🎓</span>{{ job.education }}
+            </span>
+            <span class="meta-tag industry" v-if="job.industry">
+              <span class="tag-icon">🏭</span>{{ job.industry }}
+            </span>
+          </div>
+          
+          <!-- 技能标签区域 -->
+          <div class="skill-section" v-if="job.required_skills?.length">
+            <div class="skill-label">技能要求</div>
+            <div class="skill-tags-modern">
+              <a-tag 
+                v-for="skill in job.required_skills.slice(0, 4)" 
+                :key="skill" 
+                :class="['skill-tag', job.matched_skills?.includes(skill) ? 'matched' : 'unmatched']"
+              >
+                <span class="skill-check" v-if="job.matched_skills?.includes(skill)">✓</span>
+                {{ skill }}
+              </a-tag>
+              <a-tag v-if="job.required_skills.length > 4" class="skill-tag more">
+                +{{ job.required_skills.length - 4 }}
+              </a-tag>
+            </div>
           </div>
           
           <!-- 推荐理由 -->
-          <div class="job-reason" v-if="job.explanation">
-            {{ job.explanation }}
+          <div class="job-reason-modern" v-if="job.explanation">
+            <div class="reason-icon">💡</div>
+            <div class="reason-text">{{ job.explanation }}</div>
           </div>
           
-          <!-- 洞察模式: 推理路径 (Beta) -->
-          <div v-if="job.insight?.skill_paths?.length" style="margin-top: 12px; background: #f0f7ff; padding: 8px; border-radius: 4px; border: 1px dashed #91caff;">
-            <div style="font-size: 12px; font-weight: bold; color: #1890ff; margin-bottom: 4px;">
-              🎯 洞察模式：AI推理路径
-            </div>
-            <div v-for="(path, idx) in job.insight.skill_paths" :key="idx" style="font-size: 12px; margin-bottom: 2px;">
-              <span style="color: #666;">您掌握的</span>
-              <template v-if="path.direct_match">
-                <span style="font-weight: bold; color: #52c41a;">直接技能</span>
-              </template>
-              <template v-else>
-                 课程 <span style="font-weight: bold; color: #722ed1;">{{ path.sources.join(', ') }}</span>
-              </template>
-              <span style="color: #666;"> -> 赋予了技能 </span>
-              <a-tag color="blue" style="margin: 0 4px">{{ path.skill }}</a-tag>
-              <span style="color: #666;"> -> 匹配职位需求</span>
-            </div>
+          <!-- 底部操作区 -->
+          <div class="job-card-footer">
+            <span class="view-detail">查看详情 →</span>
           </div>
-        </a-card>
+        </div>
       </div>
       
       <a-empty v-if="!loading && displayJobs.length === 0" description="暂无推荐，请完善个人信息获取个性化推荐" />
@@ -328,169 +340,189 @@
     <!-- 技能诊断弹窗 -->
     <a-modal 
       v-model:open="diagnosisVisible" 
-      title="🔬 技能诊断报告"
-      width="920px"
+      title=""
+      width="980px"
       :footer="null"
-      :body-style="{ padding: '18px' }"
+      :body-style="{ padding: '0' }"
+      class="diagnosis-modal"
     >
-      <div v-if="diagnosis">
-        <!-- 顶部：紧凑横向布局 -->
-        <div style="display: flex; gap: 12px; margin-bottom: 16px; height: 150px;">
-          <!-- 左侧：期望职业 -->
-          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; padding: 14px; color: white; width: 140px; display: flex; flex-direction: column; justify-content: center;">
-            <div style="font-size: 14px; opacity: 0.9;">期望职业</div>
-            <div style="font-size: 22px; font-weight: 600; margin-top: 4px;">{{ diagnosis.expected_position || '未设置' }}</div>
-            <div v-if="diagnosis.major" style="font-size: 10px; opacity: 0.9; margin-top: 26px;">
-              {{ diagnosis.education }} · {{ diagnosis.major }}
+      <div v-if="diagnosis" class="diagnosis-container">
+        <!-- 顶部渐变头部：左侧信息 + 右侧田字形统计 -->
+        <div class="diagnosis-header-compact">
+          <!-- 左侧：期望职业 + 匹配度 -->
+          <div class="header-left">
+            <div class="expect-job-compact">
+              <span class="label">期望职业</span>
+              <span class="value">{{ diagnosis.expected_position || '未设置' }}</span>
+              <span class="user-info" v-if="diagnosis.major">{{ diagnosis.education }} · {{ diagnosis.major }}</span>
+            </div>
+            <div class="match-circle-compact">
+              <a-progress 
+                type="circle" 
+                :percent="diagnosis.position_analysis?.match_rate || 0"
+                :size="100"
+                :stroke-width="10"
+                :stroke-color="getMatchGradientDiagnosis(diagnosis.position_analysis?.match_rate || 0)"
+              >
+                <template #format="percent">
+                  <div class="match-inner-compact">
+                    <span class="match-num">{{ percent }}</span>
+                    <span class="match-unit">%</span>
+                  </div>
+                </template>
+              </a-progress>
+              <div class="match-label-compact">匹配度</div>
             </div>
           </div>
           
-          <!-- 中间：匹配度环形图（放大） -->
-          <div style="display: flex; align-items: center; justify-content: center; width: 120px;">
-            <a-progress 
-              type="circle" 
-              :percent="diagnosis.position_analysis?.match_rate || 0"
-              :size="100"
-              :stroke-width="10"
-              :stroke-color="{ '0%': '#667eea', '100%': '#52c41a' }"
-            >
-              <template #format="percent">
-                <span style="font-size: 22px; font-weight: 700;">{{ percent }}%</span>
-                <div style="font-size: 10px; color: #666;">匹配度</div>
-              </template>
-            </a-progress>
-          </div>
-          
-          <!-- 统计数据：竖直排列 -->
-          <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px; width: 70px;">
-            <div style="text-align: center; padding: 4px 8px; background: #f6ffed; border-radius: 6px; flex: 1; display: flex; flex-direction: column; justify-content: center;">
-              <div style="font-size: 16px; font-weight: 700; color: #52c41a;">{{ diagnosis.skills_analysis?.all_skills?.length || 0 }}</div>
-              <div style="font-size: 9px; color: #666;">总技能</div>
+          <!-- 右侧：田字形统计卡片 -->
+          <div class="stats-grid">
+            <div class="stat-mini green">
+              <span class="stat-num">{{ diagnosis.skills_analysis?.all_skills?.length || 0 }}</span>
+              <span class="stat-label">总技能</span>
             </div>
-            <div style="text-align: center; padding: 4px 8px; background: #e6f7ff; border-radius: 6px; flex: 1; display: flex; flex-direction: column; justify-content: center;">
-              <div style="font-size: 16px; font-weight: 700; color: #1890ff;">{{ diagnosis.position_analysis?.matched_skills?.length || 0 }}</div>
-              <div style="font-size: 9px; color: #666;">已匹配</div>
+            <div class="stat-mini blue">
+              <span class="stat-num">{{ diagnosis.position_analysis?.matched_skills?.length || 0 }}</span>
+              <span class="stat-label">已匹配</span>
             </div>
-            <div style="text-align: center; padding: 4px 8px; background: #fff1f0; border-radius: 6px; flex: 1; display: flex; flex-direction: column; justify-content: center;">
-              <div style="font-size: 16px; font-weight: 700; color: #f5222d;">{{ diagnosis.position_analysis?.missing_skills?.length || 0 }}</div>
-              <div style="font-size: 9px; color: #666;">待学习</div>
+            <div class="stat-mini red">
+              <span class="stat-num">{{ diagnosis.position_analysis?.missing_skills?.length || 0 }}</span>
+              <span class="stat-label">待学习</span>
             </div>
-            <div style="text-align: center; padding: 4px 8px; background: #fff7e6; border-radius: 6px; flex: 1; display: flex; flex-direction: column; justify-content: center;">
-              <div style="font-size: 14px; font-weight: 700; color: #fa8c16;">{{ diagnosis.market_analysis?.market_match_rate || 0 }}%</div>
-              <div style="font-size: 9px; color: #666;">市场</div>
+            <div class="stat-mini orange">
+              <span class="stat-num">{{ diagnosis.market_analysis?.market_match_rate || 0 }}%</span>
+              <span class="stat-label">市场</span>
             </div>
-          </div>
-          
-          <!-- 右侧：技能分类分布 -->
-          <div style="background: #fafafa; border-radius: 8px; padding: 10px 12px; flex: 1;">
-            <div style="font-size: 11px; color: #666; margin-bottom: 6px; font-weight: 500;">📊 技能分布</div>
-            <div v-for="cat in skillCategories" :key="cat.name" style="margin-bottom: 4px;">
-              <div style="display: flex; justify-content: space-between; font-size: 10px; color: #666;">
-                <span>{{ cat.name }}</span>
-                <span>{{ cat.count }}项</span>
-              </div>
-              <a-progress :percent="cat.percent" :show-info="false" :stroke-width="5" :stroke-color="cat.color" size="small" />
-            </div>
-            <div v-if="!skillCategories.length" style="text-align: center; color: #999; font-size: 10px; padding: 20px 0;">暂无分类数据</div>
           </div>
         </div>
-
-        <!-- Tabs 切换详情 - 固定高度 -->
-        <a-tabs v-model:activeKey="diagnosisTab" size="small">
-          <!-- 技能分析 Tab -->
-          <a-tab-pane key="skills" tab="📊 技能分析">
-            <div style="height: 120px;">
-              <a-row :gutter="12">
-                <a-col :span="12">
-                  <a-card size="small" style="height: 120px;">
-                    <template #title><span style="color: #52c41a; font-size: 13px;">✅ 已掌握技能</span></template>
-                    <div style="display: flex; flex-wrap: wrap; gap: 5px; max-height: 82px; overflow-y: auto;">
-                      <a-tag v-for="skill in diagnosis.position_analysis?.matched_skills?.slice(0, 10)" :key="skill" color="success" size="small">{{ skill }}</a-tag>
-                      <span v-if="!diagnosis.position_analysis?.matched_skills?.length" style="color: #999; font-size: 12px;">暂无匹配</span>
-                    </div>
-                  </a-card>
-                </a-col>
-                <a-col :span="12">
-                  <a-card size="small" style="height: 120px;">
-                    <template #title><span style="color: #f5222d; font-size: 13px;">❌ 技能缺口</span></template>
-                    <div style="display: flex; flex-wrap: wrap; gap: 5px; max-height: 82px; overflow-y: auto;">
-                      <a-tag v-for="skill in diagnosis.position_analysis?.missing_skills?.slice(0, 10)" :key="skill" color="error" size="small">{{ skill }}</a-tag>
-                      <span v-if="!diagnosis.position_analysis?.missing_skills?.length" style="color: #52c41a; font-size: 12px;">🎉 完美匹配</span>
-                    </div>
-                  </a-card>
-                </a-col>
-              </a-row>
-            </div>
-          </a-tab-pane>
-
-          <!-- 同行对比 Tab -->
-          <a-tab-pane key="peers" tab="👥 同行对比">
-            <div style="height: 120px; display: flex; align-items: center;">
-              <a-row :gutter="20" align="middle" style="width: 100%;">
-                <a-col :span="8" style="text-align: center;">
-                  <a-progress type="circle" :percent="Math.min(100, (diagnosis.skills_analysis?.all_skills?.length || 0) / Math.max(1, diagnosis.peer_comparison?.avg_skills_count || 1) * 100)" :size="75" :stroke-width="8">
-                    <template #format>
-                      <span style="font-size: 18px; font-weight: 600;">{{ diagnosis.skills_analysis?.all_skills?.length || 0 }}</span>
-                    </template>
-                  </a-progress>
-                  <div style="font-size: 12px; color: #666; margin-top: 4px;">您的技能</div>
-                </a-col>
-                <a-col :span="8" style="text-align: center;">
-                  <a-progress type="circle" :percent="100" :size="75" :stroke-width="8" stroke-color="#722ed1">
-                    <template #format>
-                      <span style="font-size: 18px; font-weight: 600;">{{ diagnosis.peer_comparison?.avg_skills_count || 0 }}</span>
-                    </template>
-                  </a-progress>
-                  <div style="font-size: 12px; color: #666; margin-top: 4px;">同行平均</div>
-                </a-col>
-                <a-col :span="8">
-                  <div style="font-size: 12px; color: #666; margin-bottom: 6px; font-weight: 500;">同行热门技能</div>
-                  <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-                    <a-tag v-for="skill in diagnosis.peer_comparison?.top_skills_in_peers?.slice(0, 5)" :key="skill" color="purple" size="small">{{ skill }}</a-tag>
-                  </div>
-                </a-col>
-              </a-row>
-            </div>
-          </a-tab-pane>
-
-          <!-- 推荐课程 Tab -->
-          <a-tab-pane key="courses" tab="📚 推荐课程">
-            <div style="height: 120px;">
-              <a-row :gutter="10">
-                <a-col v-for="course in diagnosis.recommended_courses?.slice(0, 4)" :key="course.name" :span="6">
-                  <a-card size="small" hoverable style="text-align: center; height: 100%;">
-                    <div style="font-weight: 500; font-size: 12px; margin-bottom: 4px;">{{ course.name }}</div>
-                    <div style="display: flex; flex-wrap: wrap; gap: 2px; justify-content: center;">
-                      <a-tag v-for="skill in course.covers?.slice(0, 2)" :key="skill" color="blue" size="small" style="font-size: 10px;">{{ skill }}</a-tag>
-                    </div>
-                  </a-card>
-                </a-col>
-                <a-col v-if="!diagnosis.recommended_courses?.length" :span="24">
-                  <div style="text-align: center; color: #999; padding: 40px 0; font-size: 13px;">暂无推荐课程</div>
-                </a-col>
-              </a-row>
-            </div>
-          </a-tab-pane>
-
-
-        </a-tabs>
-
-        <!-- 底部：诊断结论 -->
-        <a-card size="small" style="margin-top: 12px; background: #fafafa;">
+        
+        <!-- 主体区域 -->
+        <div class="diagnosis-body">
           <a-row :gutter="16">
-            <a-col :span="24">
-              <a-alert :message="diagnosis.diagnosis?.overall" :type="diagnosis.position_analysis?.match_rate >= 50 ? 'success' : 'info'" show-icon style="margin-bottom: 10px;" />
+            <!-- 左侧：技能分布雷达图 -->
+            <a-col :span="10">
+              <div class="section-card">
+                <div class="section-title">📊 技能分布</div>
+                <div class="skill-chart-area" style="height: 200px;">
+                  <v-chart :option="skillRadarOption" autoresize style="width: 100%; height: 100%;" />
+                </div>
+              </div>
             </a-col>
-            <a-col :span="12">
-              <div style="font-size: 13px; font-weight: 600; color: #52c41a; margin-bottom: 6px;">💪 您的优势</div>
-              <div v-for="(s, i) in diagnosis.diagnosis?.strengths?.slice(0, 2)" :key="i" style="font-size: 12px; color: #333; margin-bottom: 3px;">• {{ s }}</div>
-            </a-col>
-            <a-col :span="12">
-              <div style="font-size: 13px; font-weight: 600; color: #fa8c16; margin-bottom: 6px;">📝 提升建议</div>
-              <div v-for="(s, i) in diagnosis.diagnosis?.suggestions?.slice(0, 2)" :key="i" style="font-size: 12px; color: #333; margin-bottom: 3px;">• {{ s }}</div>
+            
+            <!-- 右侧：技能匹配详情 -->
+            <a-col :span="14">
+              <div class="section-card">
+                <div class="section-title">🎯 技能匹配详情</div>
+                <div class="skill-match-grid">
+                  <div class="skill-group matched">
+                    <div class="group-header">
+                      <span class="icon">✅</span>
+                      <span class="text">已掌握技能</span>
+                      <span class="count">{{ diagnosis.position_analysis?.matched_skills?.length || 0 }}</span>
+                    </div>
+                    <div class="skill-tags">
+                      <span v-for="skill in diagnosis.position_analysis?.matched_skills?.slice(0, 8)" :key="skill" class="skill-tag matched">
+                        {{ skill }}
+                      </span>
+                      <span v-if="(diagnosis.position_analysis?.matched_skills?.length || 0) > 8" class="skill-tag more">
+                        +{{ diagnosis.position_analysis.matched_skills.length - 8 }}
+                      </span>
+                      <span v-if="!diagnosis.position_analysis?.matched_skills?.length" class="empty-text">暂无匹配技能</span>
+                    </div>
+                  </div>
+                  <div class="skill-group missing">
+                    <div class="group-header">
+                      <span class="icon">📚</span>
+                      <span class="text">待学习技能</span>
+                      <span class="count">{{ diagnosis.position_analysis?.missing_skills?.length || 0 }}</span>
+                    </div>
+                    <div class="skill-tags">
+                      <span v-for="skill in diagnosis.position_analysis?.missing_skills?.slice(0, 8)" :key="skill" class="skill-tag missing">
+                        {{ skill }}
+                      </span>
+                      <span v-if="(diagnosis.position_analysis?.missing_skills?.length || 0) > 8" class="skill-tag more">
+                        +{{ diagnosis.position_analysis.missing_skills.length - 8 }}
+                      </span>
+                      <span v-if="!diagnosis.position_analysis?.missing_skills?.length" class="empty-text success">🎉 完美匹配</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </a-col>
           </a-row>
-        </a-card>
+          
+          <!-- 同行对比与课程推荐 -->
+          <a-row :gutter="16" style="margin-top: 16px;">
+            <!-- 同行对比 -->
+            <a-col :span="10">
+              <div class="section-card">
+                <div class="section-title">👥 同行对比</div>
+                <div class="peer-compare">
+                  <div class="compare-item">
+                    <div class="compare-ring">
+                      <a-progress type="circle" :percent="Math.min(100, ((diagnosis.skills_analysis?.all_skills?.length || 0) / Math.max(1, diagnosis.peer_comparison?.avg_skills_count || 1)) * 100)" :size="60" :stroke-width="8" stroke-color="#1890ff">
+                        <template #format>
+                          <span style="font-size: 16px; font-weight: 600;">{{ diagnosis.skills_analysis?.all_skills?.length || 0 }}</span>
+                        </template>
+                      </a-progress>
+                    </div>
+                    <div class="compare-label">您的技能</div>
+                  </div>
+                  <div class="compare-vs">VS</div>
+                  <div class="compare-item">
+                    <div class="compare-ring">
+                      <a-progress type="circle" :percent="100" :size="60" :stroke-width="8" stroke-color="#722ed1">
+                        <template #format>
+                          <span style="font-size: 16px; font-weight: 600;">{{ diagnosis.peer_comparison?.avg_skills_count || 0 }}</span>
+                        </template>
+                      </a-progress>
+                    </div>
+                    <div class="compare-label">同行平均</div>
+                  </div>
+                </div>
+                <div class="peer-skills">
+                  <div class="peer-skills-label">同行热门技能：</div>
+                  <div class="peer-skills-tags">
+                    <a-tag v-for="skill in diagnosis.peer_comparison?.top_skills_in_peers?.slice(0, 5)" :key="skill" color="purple" size="small">{{ skill }}</a-tag>
+                  </div>
+                </div>
+              </div>
+            </a-col>
+            
+            <!-- 推荐课程 -->
+            <a-col :span="14">
+              <div class="section-card">
+                <div class="section-title">📚 推荐课程</div>
+                <div class="course-grid">
+                  <div v-for="course in diagnosis.recommended_courses?.slice(0, 4)" :key="course.name" class="course-card">
+                    <div class="course-name">{{ course.name }}</div>
+                    <div class="course-skills">
+                      <a-tag v-for="skill in course.covers?.slice(0, 2)" :key="skill" color="blue" size="small">{{ skill }}</a-tag>
+                    </div>
+                  </div>
+                  <div v-if="!diagnosis.recommended_courses?.length" class="course-empty">
+                    🎉 您已掌握核心技能
+                  </div>
+                </div>
+              </div>
+            </a-col>
+          </a-row>
+        </div>
+        
+        <!-- 底部诊断结论 -->
+        <div class="diagnosis-footer">
+          <a-alert :message="diagnosis.diagnosis?.overall" :type="diagnosis.position_analysis?.match_rate >= 50 ? 'success' : 'info'" show-icon style="margin-bottom: 12px;" />
+          <div class="conclusion-grid">
+            <div class="conclusion-item strengths">
+              <div class="conclusion-title">💪 您的优势</div>
+              <div v-for="(s, i) in diagnosis.diagnosis?.strengths?.slice(0, 2)" :key="i" class="conclusion-text">• {{ s }}</div>
+            </div>
+            <div class="conclusion-item suggestions">
+              <div class="conclusion-title">📝 提升建议</div>
+              <div v-for="(s, i) in diagnosis.diagnosis?.suggestions?.slice(0, 2)" :key="i" class="conclusion-text">• {{ s }}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </a-modal>
   </div>
@@ -506,6 +538,14 @@ import { useRouter } from 'vue-router'
 import { message, notification } from 'ant-design-vue'
 import { InboxOutlined, UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { studentApi, commonApi } from '@/api'
+import VChart from 'vue-echarts'
+import { use } from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
+import { RadarChart } from 'echarts/charts'
+import { TitleComponent, TooltipComponent, RadarComponent } from 'echarts/components'
+
+// 注册 ECharts 组件
+use([CanvasRenderer, RadarChart, TitleComponent, TooltipComponent, RadarComponent])
 
 const router = useRouter()
 
@@ -697,11 +737,59 @@ const skillCategories = computed(() => {
     .slice(0, 4)
 })
 
+// 技能雷达图配置
+const skillRadarOption = computed(() => {
+  const cats = skillCategories.value
+  if (!cats.length) {
+    return {
+      radar: { indicator: [{ name: '暂无数据', max: 100 }] },
+      series: [{ type: 'radar', data: [{ value: [0] }] }]
+    }
+  }
+  
+  return {
+    tooltip: {},
+    radar: {
+      indicator: cats.map(c => ({ name: c.name, max: 100 })),
+      radius: '65%',
+      splitNumber: 4,
+      axisName: { color: '#333', fontSize: 12 },
+      splitArea: { areaStyle: { color: ['rgba(102, 126, 234, 0.1)', 'rgba(102, 126, 234, 0.2)'] } }
+    },
+    series: [{
+      type: 'radar',
+      data: [{
+        value: cats.map(c => c.percent),
+        name: '技能分布',
+        areaStyle: { color: 'rgba(102, 126, 234, 0.4)' },
+        lineStyle: { color: '#667eea', width: 2 },
+        itemStyle: { color: '#667eea' }
+      }]
+    }]
+  }
+})
+
+// 诊断匹配度渐变色
+const getMatchGradientDiagnosis = (percent) => {
+  if (percent >= 70) return { '0%': '#52c41a', '100%': '#13c2c2' }
+  if (percent >= 50) return { '0%': '#1890ff', '100%': '#722ed1' }
+  if (percent >= 30) return { '0%': '#faad14', '100%': '#fa8c16' }
+  return { '0%': '#ff4d4f', '100%': '#f5222d' }
+}
+
 const getScoreColor = (score) => {
   if (score >= 0.8) return '#52c41a'
   if (score >= 0.6) return '#1890ff'
   if (score >= 0.4) return '#faad14'
   return '#ff4d4f'
+}
+
+// 匹配度渐变色
+const getScoreGradient = (score) => {
+  if (score >= 0.7) return { '0%': '#52c41a', '100%': '#13c2c2' }
+  if (score >= 0.5) return { '0%': '#1890ff', '100%': '#722ed1' }
+  if (score >= 0.3) return { '0%': '#faad14', '100%': '#fa8c16' }
+  return { '0%': '#ff4d4f', '100%': '#f5222d' }
 }
 
 const formatSalary = (salary) => {
@@ -1044,39 +1132,246 @@ onMounted(() => {
 .student-dashboard {
   max-width: 1400px;
   margin: 0 auto;
-}
-
-.welcome-banner {
-  background: linear-gradient(135deg, #1890ff 0%, #722ed1 100%);
-  border-radius: 16px;
-  padding: 40px;
-  margin-bottom: 24px;
-  color: white;
-}
-
-.welcome-content h1 {
-  font-size: 28px;
-  margin-bottom: 12px;
-  color: white;
-}
-
-.welcome-content p {
-  font-size: 16px;
-  opacity: 0.9;
-  margin-bottom: 20px;
+  padding: 0 16px;
 }
 
 .filter-card {
   margin-bottom: 24px;
   border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
+/* 岗位卡片网格 */
 .job-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 20px;
 }
 
+/* 现代化岗位卡片 */
+.job-card-modern {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.job-card-modern:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+  border-color: #1890ff;
+}
+
+/* 卡片头部 */
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.job-header-content {
+  flex: 1;
+  padding-right: 12px;
+}
+
+.job-title-modern {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.job-company-modern {
+  font-size: 14px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.company-icon {
+  font-size: 12px;
+}
+
+/* 匹配度环形图 */
+.match-ring {
+  flex-shrink: 0;
+}
+
+.match-percent {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* 薪资突出显示 */
+.salary-highlight {
+  margin-bottom: 12px;
+}
+
+.salary-amount {
+  font-size: 22px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #52c41a 0%, #13c2c2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.salary-unit {
+  font-size: 13px;
+  color: #999;
+  margin-left: 2px;
+}
+
+/* 职位元信息标签 */
+.job-meta-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 12px;
+  color: #666;
+  background: #f5f5f5;
+}
+
+.meta-tag.location {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.meta-tag.education {
+  background: #f9f0ff;
+  color: #722ed1;
+}
+
+.meta-tag.industry {
+  background: #fff7e6;
+  color: #fa8c16;
+}
+
+.tag-icon {
+  font-size: 11px;
+}
+
+/* 技能区域 */
+.skill-section {
+  margin-bottom: 14px;
+}
+
+.skill-label {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.skill-tags-modern {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skill-tag {
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  padding: 2px 8px !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+.skill-tag.matched {
+  background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%) !important;
+  color: white !important;
+}
+
+.skill-tag.unmatched {
+  background: #f0f0f0 !important;
+  color: #666 !important;
+}
+
+.skill-tag.more {
+  background: #e6f7ff !important;
+  color: #1890ff !important;
+}
+
+.skill-check {
+  margin-right: 2px;
+}
+
+/* 推荐理由 */
+.job-reason-modern {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  background: linear-gradient(135deg, #f0f7ff 0%, #f6ffed 100%);
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.reason-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.reason-text {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* 底部操作区 */
+.job-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12px;
+  border-top: 1px solid #f5f5f5;
+}
+
+.view-detail {
+  font-size: 13px;
+  color: #1890ff;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.job-card-modern:hover .view-detail {
+  color: #722ed1;
+  transform: translateX(4px);
+}
+
+/* 分页容器 */
+.pagination-container {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 24px;
+}
+
+/* 保留旧样式兼容 */
 .job-card {
   border-radius: 12px;
   position: relative;
@@ -1089,69 +1384,436 @@ onMounted(() => {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
-.match-score {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 10;
-  background: white;
-  border-radius: 8px; /* 方形带小圆角 */
-  padding: 4px;
+/* ========== 技能诊断模态框样式 ========== */
+:deep(.diagnosis-modal .ant-modal-content) {
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 0;
 }
 
-.job-info {
-  margin-bottom: 12px;
+:deep(.diagnosis-modal .ant-modal-body) {
+  padding: 0;
 }
 
-.job-title {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #1890ff;
-  padding-right: 65px; /* 为圆环预留空间 */
-  line-height: 1.4;
-  word-break: break-word;
+:deep(.diagnosis-modal .ant-modal-close) {
+  top: 12px;
+  right: 12px;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.job-salary {
-  font-size: 16px;
-  color: #52c41a;
-  font-weight: 500;
-  margin-bottom: 4px;
+:deep(.diagnosis-modal .ant-modal-close:hover) {
+  background: rgba(255, 255, 255, 0.3);
 }
 
-.job-company {
+.diagnosis-container {
+  background: #f5f7fa;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* 紧凑头部：左侧信息+右侧田字形 */
+.diagnosis-header-compact {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 16px 16px 0 0;
+  gap: 20px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  color: white;
+}
+
+.expect-job-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.expect-job-compact .label {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.expect-job-compact .value {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.expect-job-compact .user-info {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+.match-circle-compact {
+  text-align: center;
+}
+
+.match-inner-compact {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.match-inner-compact .match-num {
+  font-size: 26px;
+  font-weight: 700;
+  color: white;
+}
+
+.match-inner-compact .match-unit {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.match-label-compact {
+  color: white;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+/* 田字形统计卡片 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  width: 180px;
+}
+
+.stat-mini {
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.stat-mini .stat-num {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+}
+
+.stat-mini .stat-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.stat-mini.green { background: rgba(82, 196, 26, 0.3); }
+.stat-mini.blue { background: rgba(24, 144, 255, 0.3); }
+.stat-mini.red { background: rgba(245, 34, 45, 0.3); }
+.stat-mini.orange { background: rgba(250, 140, 22, 0.3); }
+
+/* 保留旧样式兼容 */
+.match-circle-area {
+  text-align: center;
+}
+
+.match-inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.match-inner .match-num {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.match-inner .match-unit {
+  font-size: 14px;
   color: #666;
-  margin-bottom: 4px;
+}
+
+.match-label {
+  color: white;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+/* 统计卡片 */
+.stats-row {
+  display: flex;
+  padding: 16px 24px;
+  gap: 12px;
+  background: white;
+}
+
+.stat-card {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.stat-card .stat-num {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.stat-card .stat-label {
+  font-size: 12px;
+  color: #666;
+}
+
+.stat-card.green {
+  background: #f6ffed;
+}
+.stat-card.green .stat-num { color: #52c41a; }
+
+.stat-card.blue {
+  background: #e6f7ff;
+}
+.stat-card.blue .stat-num { color: #1890ff; }
+
+.stat-card.red {
+  background: #fff1f0;
+}
+.stat-card.red .stat-num { color: #f5222d; }
+
+.stat-card.orange {
+  background: #fff7e6;
+}
+.stat-card.orange .stat-num { color: #fa8c16; }
+
+/* 主体区域 */
+.diagnosis-body {
+  padding: 16px 24px;
+}
+
+.section-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  height: 100%;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1a1a1a;
+}
+
+/* 技能匹配网格 */
+.skill-match-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill-group {
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.skill-group.matched {
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+}
+
+.skill-group.missing {
+  background: #fff7e6;
+  border: 1px solid #ffd591;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.group-header .icon {
   font-size: 14px;
 }
 
-.job-meta {
-  color: #999;
+.group-header .text {
   font-size: 13px;
-  margin-top: 4px;
+  font-weight: 500;
+  color: #333;
+}
+
+.group-header .count {
+  margin-left: auto;
+  background: rgba(0,0,0,0.05);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #666;
 }
 
 .skill-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 6px;
 }
 
-.job-reason {
-  font-size: 13px;
-  color: #666;
-  padding: 12px;
-  background: #f5f5f5;
-  border-radius: 8px;
-  line-height: 1.5;
+.skill-tag {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
-.pagination-container {
-  margin-top: 32px;
+.skill-tag.matched {
+  background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+  color: white;
+}
+
+.skill-tag.missing {
+  background: #ffd591;
+  color: #874d00;
+}
+
+.skill-tag.more {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.empty-text {
+  color: #999;
+  font-size: 12px;
+}
+
+.empty-text.success {
+  color: #52c41a;
+}
+
+/* 同行对比 */
+.peer-compare {
   display: flex;
+  align-items: center;
   justify-content: center;
-  padding-bottom: 24px;
+  gap: 20px;
+  padding: 12px 0;
+}
+
+.compare-item {
+  text-align: center;
+}
+
+.compare-label {
+  font-size: 12px;
+  color: #666;
+  margin-top: 6px;
+}
+
+.compare-vs {
+  font-size: 18px;
+  font-weight: 700;
+  color: #d9d9d9;
+}
+
+.peer-skills {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.peer-skills-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.peer-skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* 课程网格 */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.course-card {
+  background: #fafafa;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.course-name {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.course-skills {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.course-empty {
+  grid-column: span 2;
+  text-align: center;
+  color: #52c41a;
+  padding: 24px;
+  font-size: 14px;
+}
+
+/* 底部诊断结论 */
+.diagnosis-footer {
+  padding: 16px 24px 24px;
+  background: white;
+}
+
+.conclusion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.conclusion-item {
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.conclusion-item.strengths {
+  background: #f6ffed;
+}
+
+.conclusion-item.suggestions {
+  background: #fff7e6;
+}
+
+.conclusion-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.strengths .conclusion-title {
+  color: #52c41a;
+}
+
+.suggestions .conclusion-title {
+  color: #fa8c16;
+}
+
+.conclusion-text {
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 4px;
 }
 </style>

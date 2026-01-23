@@ -1,167 +1,209 @@
 <template>
   <div class="job-detail">
-    <!-- 页面头部 -->
-    <a-page-header 
-      @back="() => $router.back()"
-      :style="{ background: 'white', borderRadius: '8px', marginBottom: '24px' }"
-    >
-      <template #title>
-        <span class="job-header-title">{{ jobData.title || '职位详情' }}</span>
-      </template>
-      <template #subTitle>
-        <a-space>
-          <span>{{ jobData.company }}</span>
-          <a-divider type="vertical" v-if="jobData.city" />
-          <span v-if="jobData.city">📍 {{ jobData.city }}</span>
-        </a-space>
-      </template>
-      <template #extra>
-        <a-tag color="green" size="large" style="font-size: 16px; padding: 6px 12px">
-          💰 {{ formatSalary(jobData.salary) }}
-        </a-tag>
-      </template>
-    </a-page-header>
+    <!-- 沉浸式头部 -->
+    <div class="detail-header">
+      <div class="header-bg"></div>
+      <div class="header-content">
+        <a-button type="text" class="back-btn" @click="() => $router.back()">
+          ← 返回
+        </a-button>
+        <div class="header-main">
+          <div class="header-left">
+            <h1 class="job-title">{{ jobData.title || '职位详情' }}</h1>
+            <div class="company-info">
+              <span class="company-name">🏢 {{ jobData.company }}</span>
+              <span class="divider" v-if="jobData.city">|</span>
+              <span class="city" v-if="jobData.city">📍 {{ jobData.city }}</span>
+            </div>
+          </div>
+          <div class="header-right">
+            <div class="salary-box">
+              <span class="salary-label">薪资</span>
+              <span class="salary-value">{{ formatSalary(jobData.salary) }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 快速标签 -->
+        <div class="quick-tags">
+          <span class="quick-tag education" v-if="jobData.education">
+            🎓 {{ jobData.education }}
+          </span>
+          <span class="quick-tag experience" v-if="jobData.experience">
+            ⏱️ {{ jobData.experience }}
+          </span>
+          <span class="quick-tag industry" v-if="jobData.industry">
+            🏭 {{ jobData.industry }}
+          </span>
+        </div>
+      </div>
+    </div>
     
     <a-spin :spinning="loading">
-      <a-row :gutter="24">
-        <!-- 左侧主要内容 -->
-        <a-col :span="16">
-          <!-- 基本信息卡片 -->
-          <a-card title="📋 职位信息" class="info-card" style="margin-bottom: 24px">
-            <a-descriptions :column="2" bordered>
-              <a-descriptions-item label="职位名称">
-                {{ jobData.title }}
-              </a-descriptions-item>
-              <a-descriptions-item label="所属公司">
-                {{ jobData.company }}
-              </a-descriptions-item>
-              <a-descriptions-item label="工作地点">
-                {{ jobData.city || '不限' }}
-              </a-descriptions-item>
-              <a-descriptions-item label="所属行业">
-                {{ jobData.industry || '不限' }}
-              </a-descriptions-item>
-              <a-descriptions-item label="学历要求">
-                <a-tag :color="getEducationColor(jobData.education)">
-                  {{ jobData.education || '不限' }}
-                </a-tag>
-              </a-descriptions-item>
-              <a-descriptions-item label="工作经验">
-                {{ jobData.experience || '不限' }}
-              </a-descriptions-item>
-              <a-descriptions-item label="薪资范围" :span="2">
-                <span class="salary-text">{{ formatSalary(jobData.salary) }}</span>
-              </a-descriptions-item>
-            </a-descriptions>
-          </a-card>
-          
-          <!-- 技能要求 -->
-          <a-card title="🎯 技能要求" class="info-card" style="margin-bottom: 24px">
-            <div class="skill-tags-large">
-              <a-tag 
-                v-for="skill in jobData.required_skills" 
-                :key="skill"
-                color="blue"
-                style="font-size: 14px; padding: 4px 12px; margin: 6px"
-              >
-                {{ skill }}
-              </a-tag>
-              <a-empty v-if="!jobData.required_skills?.length" description="暂无技能要求" />
+      <div class="detail-body">
+        <a-row :gutter="24">
+          <!-- 左侧主要内容 -->
+          <a-col :span="16">
+            <!-- 技能匹配分析卡片 -->
+            <div class="content-card skill-match-card">
+              <div class="card-header">
+                <span class="card-icon">🎯</span>
+                <span class="card-title">技能匹配分析</span>
+              </div>
+              <div class="skill-match-content">
+                <div class="match-overview">
+                  <div class="match-circle-wrapper">
+                    <a-progress 
+                      type="circle" 
+                      :percent="matchPercent" 
+                      :stroke-color="getMatchGradient(matchPercent)"
+                      :width="100"
+                      :stroke-width="10"
+                    >
+                      <template #format="percent">
+                        <div class="match-circle-inner">
+                          <span class="match-num">{{ percent }}</span>
+                          <span class="match-unit">%</span>
+                        </div>
+                      </template>
+                    </a-progress>
+                    <div class="match-label">综合匹配度</div>
+                  </div>
+                  <div class="match-stats">
+                    <div class="stat-item">
+                      <span class="stat-value matched">{{ matchedSkillCount }}</span>
+                      <span class="stat-label">已匹配技能</span>
+                    </div>
+                    <div class="stat-item">
+                      <span class="stat-value unmatched">{{ unmatchedSkillCount }}</span>
+                      <span class="stat-label">待提升技能</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 技能标签展示 -->
+                <div class="skill-tags-section">
+                  <div class="skill-group" v-if="matchedSkills.length">
+                    <div class="group-label">✅ 已掌握技能</div>
+                    <div class="skill-tags">
+                      <span v-for="skill in matchedSkills" :key="skill" class="skill-tag matched">
+                        {{ skill }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="skill-group" v-if="unmatchedSkills.length">
+                    <div class="group-label">📚 待提升技能</div>
+                    <div class="skill-tags">
+                      <span v-for="skill in unmatchedSkills" :key="skill" class="skill-tag unmatched">
+                        {{ skill }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </a-card>
-          
-          <!-- 职位描述 -->
-          <a-card title="📝 职位描述" class="info-card" style="margin-bottom: 24px">
-            <div class="job-description" v-html="formatDescription(jobData.description)"></div>
-          </a-card>
-          
-          <!-- 福利待遇 -->
-          <a-card title="🎁 福利待遇" class="info-card" style="margin-bottom: 24px" v-if="jobData.benefits">
-            <div class="benefits">
-              {{ jobData.benefits }}
+            
+            <!-- 职位描述卡片 -->
+            <div class="content-card">
+              <div class="card-header">
+                <span class="card-icon">📝</span>
+                <span class="card-title">职位描述</span>
+              </div>
+              <div class="description-content" v-html="formatDescription(jobData.description)"></div>
+              <a-empty v-if="!jobData.description" description="暂无职位描述" />
             </div>
-          </a-card>
-          
-          <!-- 职位知识图谱 (最底部) -->
-          <a-card title="🕸️ 职位知识图谱 (可交互)" class="info-card" style="margin-bottom: 24px">
-            <div id="graph-container" ref="graphContainer" style="width: 100%; height: 500px; background: #fafafa; border-radius: 8px;"></div>
-            <!-- 完整图例 -->
-            <div class="graph-legend" style="margin-top: 16px; display: flex; justify-content: center; gap: 12px; font-size: 12px; color: #555; flex-wrap: wrap;">
-              <span><span style="display:inline-block;width:12px;height:12px;background:#1890ff;border-radius:50%;margin-right:4px;vertical-align:middle;"></span>本职位</span>
-              <span><span style="display:inline-block;width:12px;height:12px;background:#52c41a;border-radius:50%;margin-right:4px;vertical-align:middle;"></span>已匹配技能</span>
-              <span><span style="display:inline-block;width:12px;height:12px;background:#d9d9d9;border-radius:50%;margin-right:4px;vertical-align:middle;"></span>未掌握技能</span>
-              <span><span style="display:inline-block;width:12px;height:12px;background:#faad14;border-radius:50%;margin-right:4px;vertical-align:middle;"></span>公司</span>
-              <span><span style="display:inline-block;width:12px;height:12px;background:#722ed1;border-radius:50%;margin-right:4px;vertical-align:middle;"></span>城市</span>
-              <span><span style="display:inline-block;width:12px;height:12px;background:#13c2c2;border-radius:50%;margin-right:4px;vertical-align:middle;"></span>行业</span>
-              <span><span style="display:inline-block;width:12px;height:12px;background:#fa541c;border-radius:50%;margin-right:4px;vertical-align:middle;"></span>薪资</span>
-              <span><span style="display:inline-block;width:12px;height:12px;background:#eb2f96;border-radius:50%;margin-right:4px;vertical-align:middle;"></span>学历</span>
+            
+            <!-- 福利待遇卡片 -->
+            <div class="content-card" v-if="jobData.benefits">
+              <div class="card-header">
+                <span class="card-icon">🎁</span>
+                <span class="card-title">福利待遇</span>
+              </div>
+              <div class="benefits-content">{{ jobData.benefits }}</div>
             </div>
-          </a-card>
-        </a-col>
-        
-        <!-- 右侧操作 -->
-        <a-col :span="8">
-          <!-- 快速操作 -->
-          <a-card title="⚡ 快速操作" style="margin-bottom: 24px">
-            <a-space direction="vertical" style="width: 100%">
-              <a-button type="primary" block size="large" @click="applyJob">
+            
+            <!-- 职位知识图谱 -->
+            <div class="content-card">
+              <div class="card-header">
+                <span class="card-icon">🕸️</span>
+                <span class="card-title">职位知识图谱</span>
+                <span class="card-badge">可交互</span>
+              </div>
+              <div id="graph-container" ref="graphContainer" class="graph-area"></div>
+              <div class="graph-legend">
+                <span class="legend-item"><span class="dot job"></span>本职位</span>
+                <span class="legend-item"><span class="dot matched"></span>已匹配技能</span>
+                <span class="legend-item"><span class="dot unmatched"></span>未掌握技能</span>
+                <span class="legend-item"><span class="dot company"></span>公司</span>
+                <span class="legend-item"><span class="dot city"></span>城市</span>
+                <span class="legend-item"><span class="dot industry"></span>行业</span>
+              </div>
+            </div>
+          </a-col>
+          
+          <!-- 右侧操作栏 -->
+          <a-col :span="8">
+            <!-- 快速操作卡片 -->
+            <div class="action-card">
+              <a-button type="primary" block size="large" class="action-btn primary" @click="applyJob">
                 📤 投递简历
               </a-button>
-              <a-button block size="large" @click="planCourse">
+              <a-button block size="large" class="action-btn secondary" @click="planCourse">
                 📚 制定学习计划
               </a-button>
-              <a-button block @click="saveJob">
+              <a-button block class="action-btn ghost" @click="saveJob">
                 ⭐ 收藏职位
               </a-button>
-            </a-space>
-          </a-card>
-          
-          <!-- 匹配分析 -->
-          <a-card title="📊 匹配分析" style="margin-bottom: 24px">
-            <div class="match-analysis">
-              <a-progress 
-                :percent="matchPercent" 
-                :stroke-color="getScoreColor(matchPercent / 100)"
-                :format="() => `${matchPercent}%`"
-                :size="120"
-                type="circle"
-              />
-              <p style="text-align: center; margin-top: 16px; color: #666">
-                综合匹配度
-              </p>
-              <a-divider />
-              <p style="font-size: 13px; color: #999">
-                基于您的技能与该职位要求的匹配程度计算
-              </p>
             </div>
-          </a-card>
-          
-          <!-- 相关课程推荐 -->
-          <a-card title="📖 推荐学习">
-            <a-list 
-              :data-source="relatedCourses"
-              size="small"
-            >
-              <template #renderItem="{ item }">
-                <a-list-item>
-                  <a-list-item-meta>
-                    <template #title>{{ item.name }}</template>
-                    <template #description>
-                      <div>覆盖技能: {{ item.skills?.join(', ') }}</div>
-                      <div v-if="item.reason" style="color: #fa8c16; font-size: 12px;">📌 {{ item.reason }}</div>
-                    </template>
-                  </a-list-item-meta>
-                </a-list-item>
-              </template>
-              <template #empty>
-                <div style="text-align: center; color: #999; padding: 16px;">
-                  🎉 您已掌握该职位所需的核心技能！
+            
+            <!-- 职位信息卡片 -->
+            <div class="info-card">
+              <div class="info-header">📋 职位信息</div>
+              <div class="info-list">
+                <div class="info-item">
+                  <span class="info-label">学历要求</span>
+                  <span class="info-value">
+                    <a-tag :color="getEducationColor(jobData.education)">
+                      {{ jobData.education || '不限' }}
+                    </a-tag>
+                  </span>
                 </div>
-              </template>
-            </a-list>
-          </a-card>
-        </a-col>
-      </a-row>
+                <div class="info-item">
+                  <span class="info-label">工作经验</span>
+                  <span class="info-value">{{ jobData.experience || '不限' }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">所属行业</span>
+                  <span class="info-value">{{ jobData.industry || '不限' }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">工作地点</span>
+                  <span class="info-value">{{ jobData.city || '不限' }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 推荐学习卡片 -->
+            <div class="learn-card" v-if="relatedCourses.length">
+              <div class="learn-header">
+                <span class="learn-icon">📖</span>
+                <span class="learn-title">推荐学习</span>
+              </div>
+              <div class="course-list">
+                <div v-for="course in relatedCourses" :key="course.name" class="course-item">
+                  <div class="course-name">{{ course.name }}</div>
+                  <div class="course-skills">覆盖: {{ course.skills?.join(', ') }}</div>
+                  <div class="course-reason" v-if="course.reason">📌 {{ course.reason }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="learn-card congrats" v-else>
+              <div class="congrats-icon">🎉</div>
+              <div class="congrats-text">您已掌握该职位所需的核心技能！</div>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
     </a-spin>
   </div>
 </template>
@@ -196,63 +238,51 @@ const skillToCourse = {
   '机器学习': { name: '机器学习入门', skills: ['机器学习', 'Python'] },
   '深度学习': { name: '深度学习实战', skills: ['深度学习', 'TensorFlow', 'PyTorch'] },
   '算法': { name: '数据结构与算法', skills: ['数据结构', '算法'] },
-  '计算机网络': { name: '计算机网络原理', skills: ['TCP/IP', 'HTTP'] },
-  '前端开发': { name: '前端工程化实践', skills: ['Webpack', 'Vite', '前端优化'] },
-  '后端开发': { name: '后端架构设计', skills: ['微服务', 'API设计'] },
-  'mybatis': { name: 'MyBatis持久层框架', skills: ['MyBatis', 'ORM'] },
-  'postgresql': { name: 'PostgreSQL数据库', skills: ['PostgreSQL', 'SQL'] },
-  'mongodb': { name: 'MongoDB实战', skills: ['MongoDB', 'NoSQL'] },
 }
 
-// 动态生成推荐课程（根据用户缺失的技能）
-const relatedCourses = computed(() => {
+// 用户技能
+const userSkills = computed(() => {
   const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}')
-  const userSkillsRaw = userProfile.skills || []
-  const userSkillsLower = userSkillsRaw.map(s => s.toLowerCase())
-  const requiredSkills = jobData.value.required_skills || []
-  
-  // 模糊匹配函数
-  const isSkillMatched = (requiredSkill) => {
-    const reqLower = requiredSkill.toLowerCase()
-    return userSkillsLower.some(userSkill => 
-      reqLower === userSkill || 
-      reqLower.includes(userSkill) || 
-      userSkill.includes(reqLower)
+  return (userProfile.skills || []).map(s => s.toLowerCase())
+})
+
+// 匹配的技能
+const matchedSkills = computed(() => {
+  const required = jobData.value.required_skills || []
+  return required.filter(skill => 
+    userSkills.value.some(us => 
+      skill.toLowerCase().includes(us) || us.includes(skill.toLowerCase())
     )
-  }
-  
-  // 找出用户缺失的技能（使用模糊匹配）
-  const missingSkills = requiredSkills.filter(skill => !isSkillMatched(skill))
-  
-  // 根据缺失技能推荐课程
+  )
+})
+
+// 未匹配的技能
+const unmatchedSkills = computed(() => {
+  const required = jobData.value.required_skills || []
+  return required.filter(skill => !matchedSkills.value.includes(skill))
+})
+
+const matchedSkillCount = computed(() => matchedSkills.value.length)
+const unmatchedSkillCount = computed(() => unmatchedSkills.value.length)
+
+// 动态生成推荐课程
+const relatedCourses = computed(() => {
   const courses = []
   const addedCourses = new Set()
   
-  for (const skill of missingSkills) {
+  for (const skill of unmatchedSkills.value) {
     const skillLower = skill.toLowerCase()
-    // 查找匹配的课程
     for (const [key, course] of Object.entries(skillToCourse)) {
       if (skillLower.includes(key) || key.includes(skillLower)) {
         if (!addedCourses.has(course.name)) {
-          courses.push({
-            ...course,
-            reason: `补充技能: ${skill}`
-          })
+          courses.push({ ...course, reason: `补充技能: ${skill}` })
           addedCourses.add(course.name)
         }
         break
       }
     }
   }
-  
-  // 如果没有匹配到，提供通用推荐
-  if (courses.length === 0 && requiredSkills.length > 0) {
-    courses.push(
-      { name: '职业技能提升', skills: requiredSkills.slice(0, 3), reason: '该职位核心技能' }
-    )
-  }
-  
-  return courses.slice(0, 5)  // 最多显示5个
+  return courses.slice(0, 4)
 })
 
 const decodedJobId = computed(() => {
@@ -263,27 +293,25 @@ const decodedJobId = computed(() => {
   }
 })
 
+// 工具函数
 const formatSalary = (salary) => {
   if (!salary || salary === 'nan' || salary === 'NaN' || salary === '面议') return '面议'
   return salary
 }
 
 const formatDescription = (text) => {
-  if (!text) return '暂无职位描述'
+  if (!text) return ''
   return text
-    // 将 "1.", "2." 等序号前添加换行 (如果是行首则不添加)
     .replace(/(\d+\.)/g, '<br/><br/>$1')
-    // 替换中文顿号或分号分割的长句 (可选)
     .replace(/([；。])/g, '$1<br/>')
-    // 保护 consecutive breaks
     .replace(/(<br\/>)+/g, '<br/>')
 }
 
-const getScoreColor = (score) => {
-  if (score >= 0.8) return '#52c41a'
-  if (score >= 0.6) return '#1890ff'
-  if (score >= 0.4) return '#faad14'
-  return '#ff4d4f'
+const getMatchGradient = (percent) => {
+  if (percent >= 70) return { '0%': '#52c41a', '100%': '#13c2c2' }
+  if (percent >= 50) return { '0%': '#1890ff', '100%': '#722ed1' }
+  if (percent >= 30) return { '0%': '#faad14', '100%': '#fa8c16' }
+  return { '0%': '#ff4d4f', '100%': '#f5222d' }
 }
 
 const getEducationColor = (edu) => {
@@ -293,83 +321,64 @@ const getEducationColor = (edu) => {
   return 'default'
 }
 
+// 获取职位详情
 const fetchJobDetail = async () => {
   loading.value = true
   try {
     const { data } = await studentApi.getJobDetail(decodedJobId.value)
     
-    // 处理城市显示逻辑
-    // 处理城市显示逻辑
+    // 处理城市显示
     let displayCity = ''
     const cities = data.cities || []
     const queryCity = route.query.city
     
-    // 1. 优先使用查询参数中的城市（用户明确意图）
     if (queryCity && cities.includes(queryCity)) {
-       displayCity = queryCity
-    } 
-    // 2. 尝试从标题或描述中推断（智能匹配）
-    else if (cities.length > 0) {
-      // 简单的文本匹配
-      const textToSearch = (data.title + (data.description || '')).substring(0, 200) // 只搜前200字
+      displayCity = queryCity
+    } else if (cities.length > 0) {
+      const textToSearch = (data.title + (data.description || '')).substring(0, 200)
       const inferredCity = cities.find(city => textToSearch.includes(city))
-      
-      if (inferredCity) {
-        displayCity = inferredCity
-      } else {
-        // 3. 实在无法确定，显示第一个并提示多地
-        displayCity = cities[0]
-        if (cities.length > 1) {
-           displayCity += ` 等${cities.length}个地点`
-        }
+      displayCity = inferredCity || cities[0]
+      if (!inferredCity && cities.length > 1) {
+        displayCity += ` 等${cities.length}个地点`
       }
     } else {
       displayCity = '地点不限'
     }
     
-    jobData.value = {
-      ...data,
-      city: displayCity, // 覆盖单一城市字段用于显示
-      raw_cities: data.cities // 保留原始列表
-    }
+    jobData.value = { ...data, city: displayCity, raw_cities: data.cities }
     
-    const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}')
-    
-    // 计算匹配度：优先使用路由传递的分数（来自推荐结果）
+    // 计算匹配度
     const routeMatchRate = route.query.matchRate
     if (routeMatchRate !== undefined && routeMatchRate !== null) {
-      // 使用推荐系统计算的匹配度（已经是0-1范围的小数）
       matchPercent.value = Math.round(parseFloat(routeMatchRate) * 100)
     } else {
-      // 备选：本地计算（基于 localStorage 中的用户技能）
+      const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}')
       if (userProfile.skills && data.required_skills) {
-        const userSkills = new Set(userProfile.skills)
-        const matched = data.required_skills.filter(s => userSkills.has(s))
+        const userSkillSet = new Set(userProfile.skills)
+        const matched = data.required_skills.filter(s => userSkillSet.has(s))
         matchPercent.value = Math.round((matched.length / Math.max(data.required_skills.length, 1)) * 100)
       }
     }
 
-    // ================== 获取知识图谱数据 ==================
+    // 获取知识图谱
     try {
-       const userSkillsList = userProfile.skills || []
-       // 传递职位的城市给知识图谱（使用推荐列表中显示的城市）
-       const displayCity = jobData.value.city || route.query.city || null
-       const { data: graphData } = await studentApi.getJobGraph(decodedJobId.value, userSkillsList, displayCity)
-       if (graphData && graphData.nodes && graphData.nodes.length > 0) {
-           initGraph(graphData)
-       }
+      const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}')
+      const userSkillsList = userProfile.skills || []
+      const { data: graphData } = await studentApi.getJobGraph(decodedJobId.value, userSkillsList, displayCity)
+      if (graphData?.nodes?.length > 0) {
+        initGraph(graphData)
+      }
     } catch (graphErr) {
-       console.error("加载图谱失败", graphErr)
+      console.error("加载图谱失败", graphErr)
     }
   } catch (error) {
     console.error('获取职位详情失败', error)
-    // 使用query中的备选数据
     jobData.value = {
       title: route.query.title || '未知职位',
       salary: route.query.salary,
       company: route.query.company || '未知公司',
       city: route.query.city || '未知地点',
-      required_skills: []  // 不再硬编码，显示为空
+      required_skills: []
     }
   } finally {
     loading.value = false
@@ -382,145 +391,71 @@ const graphContainer = ref(null)
 
 const initGraph = (data) => {
   if (graph) graph.destroy()
-  
   if (!graphContainer.value) return 
 
   const width = graphContainer.value.scrollWidth || 600
-  const height = graphContainer.value.scrollHeight || 500
+  const height = graphContainer.value.scrollHeight || 400
 
-  // 节点颜色映射
   const nodeColors = {
     'Job': { fill: '#1890ff', stroke: '#096dd9' },
-    'Skill': { fill: '#52c41a', stroke: '#389e0d' },  // 默认技能颜色
-    'SkillMatched': { fill: '#52c41a', stroke: '#237804' },  // 已匹配技能
-    'SkillUnmatched': { fill: '#d9d9d9', stroke: '#8c8c8c' },  // 未匹配技能
+    'SkillMatched': { fill: '#52c41a', stroke: '#237804' },
+    'SkillUnmatched': { fill: '#d9d9d9', stroke: '#8c8c8c' },
     'Course': { fill: '#faad14', stroke: '#d48806' },
     'City': { fill: '#722ed1', stroke: '#531dab' },
     'Industry': { fill: '#13c2c2', stroke: '#08979c' },
     'Company': { fill: '#fa541c', stroke: '#d4380d' }
   }
 
-  // 预处理节点数据，添加样式
   const processedNodes = data.nodes.map(node => {
-    const nodeType = node.label  // 保存原始节点类型（Job, Skill, City等）
+    const nodeType = node.label
     let colorKey = nodeType
-    
-    // 技能节点根据是否匹配设置不同颜色
     if (nodeType === 'Skill') {
       colorKey = node.matched ? 'SkillMatched' : 'SkillUnmatched'
     }
-    const colors = nodeColors[colorKey] || nodeColors['Skill']
-    
-    // 截断过长的名称
-    const displayName = node.name && node.name.length > 15 
-      ? node.name.substring(0, 15) + '...' 
-      : node.name || node.id
+    const colors = nodeColors[colorKey] || nodeColors['SkillUnmatched']
+    const displayName = node.name?.length > 15 ? node.name.substring(0, 15) + '...' : node.name || node.id
     
     return {
       ...node,
-      label: displayName,  // G6 使用 label 作为显示文本
-      nodeType: nodeType,  // 保留原始节点类型
+      label: displayName,
+      nodeType: nodeType,
       size: nodeType === 'Job' ? 60 : 40,
-      style: {
-        fill: colors.fill,
-        stroke: colors.stroke,
-        lineWidth: 2
-      },
+      style: { fill: colors.fill, stroke: colors.stroke, lineWidth: 2 },
       labelCfg: {
-        style: {
-          fill: '#333',
-          fontSize: nodeType === 'Job' ? 14 : 12,
-          fontWeight: nodeType === 'Job' ? 'bold' : 'normal'
-        },
+        style: { fill: '#333', fontSize: nodeType === 'Job' ? 14 : 12, fontWeight: nodeType === 'Job' ? 'bold' : 'normal' },
         position: 'bottom'
       }
     }
   })
 
-  // 关系类型中文映射
-  const edgeTypeLabels = {
-    'REQUIRES': '需要',
-    'LOCATED_IN': '位于',
-    'BELONGS_TO': '所属行业',
-    'TEACHES': '教授',
-    'OFFERED_BY': '提供者'
-  }
+  const edgeTypeLabels = { 'REQUIRES': '需要', 'LOCATED_IN': '位于', 'BELONGS_TO': '所属', 'TEACHES': '教授', 'OFFERED_BY': '提供者' }
 
-  // 预处理边数据
   const processedEdges = data.edges.map(edge => ({
     ...edge,
     label: edgeTypeLabels[edge.type] || edge.type,
-    style: {
-      stroke: '#aaa',
-      lineWidth: 1.5,
-      endArrow: {
-        path: G6.Arrow.triangle(6, 8, 0),
-        fill: '#aaa'
-      }
-    }
+    style: { stroke: '#aaa', lineWidth: 1.5, endArrow: { path: G6.Arrow.triangle(6, 8, 0), fill: '#aaa' } }
   }))
 
   graph = new G6.Graph({
     container: graphContainer.value,
     width,
     height,
-    modes: {
-      default: ['drag-canvas', 'zoom-canvas', 'drag-node', 'activate-relations'],
-    },
-    layout: {
-      type: 'force',
-      preventOverlap: true,
-      nodeSpacing: 50,
-      linkDistance: 180,
-      nodeStrength: -120,
-      edgeStrength: 0.2,
-      collideStrength: 0.8
-    },
-    defaultEdge: {
-      type: 'quadratic',
-      labelCfg: {
-        autoRotate: true,
-        style: {
-           fill: '#666',
-           fontSize: 10
-        }
-      }
-    }
+    modes: { default: ['drag-canvas', 'zoom-canvas', 'drag-node', 'activate-relations'] },
+    layout: { type: 'force', preventOverlap: true, nodeSpacing: 50, linkDistance: 180, nodeStrength: -120, edgeStrength: 0.2 },
+    defaultEdge: { type: 'quadratic', labelCfg: { autoRotate: true, style: { fill: '#666', fontSize: 10 } } }
   })
 
   graph.data({ nodes: processedNodes, edges: processedEdges })
   graph.render()
-  
-  // 窗口大小调整
-  if (typeof window !== 'undefined') {
-    window.onresize = () => {
-      if (!graph || graph.get('destroyed')) return
-      if (!graphContainer.value) return
-      graph.changeSize(graphContainer.value.scrollWidth, graphContainer.value.scrollHeight)
-    }
-  }
 }
 
-onUnmounted(() => {
-  if (graph) {
-    graph.destroy()
-  }
-})
+onUnmounted(() => { if (graph) graph.destroy() })
 
-const applyJob = () => {
-  message.success('已记录您的投递意向！HR将尽快与您联系')
-}
-
-const planCourse = () => {
-  message.info('正在为您生成个性化学习计划...')
-}
-
-const saveJob = () => {
-  message.success('职位已收藏')
-}
+const applyJob = () => message.success('已记录您的投递意向！HR将尽快与您联系')
+const planCourse = () => message.info('正在为您生成个性化学习计划...')
+const saveJob = () => message.success('职位已收藏')
 
 onMounted(() => {
-  // 重置滚动位置到顶部
   window.scrollTo(0, 0)
   fetchJobDetail()
 })
@@ -530,40 +465,441 @@ onMounted(() => {
 .job-detail {
   max-width: 1400px;
   margin: 0 auto;
+  background: #f5f7fa;
+  min-height: 100vh;
 }
 
-.job-header-title {
-  font-size: 22px;
-  font-weight: 600;
+/* 沉浸式头部 */
+.detail-header {
+  position: relative;
+  padding: 24px 32px 32px;
+  margin-bottom: 24px;
 }
 
-.info-card {
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 0 0 24px 24px;
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
+}
+
+.back-btn {
+  color: white !important;
+  margin-bottom: 16px;
+  padding: 0;
+  font-size: 14px;
+}
+
+.back-btn:hover {
+  opacity: 0.8;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.header-left {
+  flex: 1;
+}
+
+.job-title {
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.company-info {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.divider {
+  opacity: 0.5;
+}
+
+.salary-box {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
   border-radius: 12px;
+  padding: 12px 20px;
+  text-align: center;
 }
 
-.salary-text {
-  font-size: 18px;
+.salary-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.salary-value {
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.quick-tags {
+  display: flex;
+  gap: 10px;
+}
+
+.quick-tag {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+/* 主体内容 */
+.detail-body {
+  padding: 0 24px 32px;
+}
+
+/* 内容卡片 */
+.content-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.card-icon {
+  font-size: 20px;
+}
+
+.card-title {
+  font-size: 17px;
   font-weight: 600;
+  color: #1a1a1a;
+}
+
+.card-badge {
+  margin-left: auto;
+  background: #e6f7ff;
+  color: #1890ff;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+}
+
+/* 技能匹配卡片 */
+.skill-match-card {
+  border: 2px solid #f0f0f0;
+}
+
+.match-overview {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 24px;
+}
+
+.match-circle-wrapper {
+  text-align: center;
+}
+
+.match-circle-inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.match-num {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.match-unit {
+  font-size: 14px;
+  color: #666;
+}
+
+.match-label {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #666;
+}
+
+.match-stats {
+  display: flex;
+  gap: 32px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.stat-value.matched {
   color: #52c41a;
 }
 
-.skill-tags-large {
-  padding: 8px 0;
+.stat-value.unmatched {
+  color: #faad14;
 }
 
-.job-description {
+.stat-label {
+  font-size: 13px;
+  color: #666;
+}
+
+/* 技能标签区域 */
+.skill-tags-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skill-group {
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 10px;
+}
+
+.group-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.skill-tag.matched {
+  background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+  color: white;
+}
+
+.skill-tag.unmatched {
+  background: #f0f0f0;
+  color: #666;
+}
+
+/* 职位描述 */
+.description-content {
   line-height: 1.8;
-  white-space: pre-wrap;
   color: #333;
+  font-size: 14px;
 }
 
-.benefits {
+.benefits-content {
   line-height: 1.8;
   color: #666;
 }
 
-.match-analysis {
+/* 知识图谱 */
+.graph-area {
+  width: 100%;
+  height: 400px;
+  background: #fafafa;
+  border-radius: 10px;
+}
+
+.graph-legend {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot.job { background: #1890ff; }
+.dot.matched { background: #52c41a; }
+.dot.unmatched { background: #d9d9d9; }
+.dot.company { background: #fa541c; }
+.dot.city { background: #722ed1; }
+.dot.industry { background: #13c2c2; }
+
+/* 右侧操作卡片 */
+.action-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #1890ff 0%, #722ed1 100%);
+  border: none;
+  height: 48px;
+  font-size: 16px;
+}
+
+.action-btn.secondary {
+  background: #f5f5f5;
+  border: none;
+  color: #333;
+  height: 44px;
+}
+
+.action-btn.ghost {
+  border: 1px solid #d9d9d9;
+  color: #666;
+}
+
+/* 职位信息卡片 */
+.info-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.info-header {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-label {
+  color: #999;
+  font-size: 13px;
+}
+
+.info-value {
+  color: #333;
+  font-size: 13px;
+}
+
+/* 推荐学习卡片 */
+.learn-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.learn-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.learn-icon {
+  font-size: 18px;
+}
+
+.learn-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.course-item {
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.course-name {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.course-skills {
+  font-size: 12px;
+  color: #666;
+}
+
+.course-reason {
+  font-size: 12px;
+  color: #fa8c16;
+  margin-top: 4px;
+}
+
+/* 恭喜卡片 */
+.learn-card.congrats {
   text-align: center;
-  padding: 16px;
+  background: linear-gradient(135deg, #f6ffed 0%, #e6f7ff 100%);
+}
+
+.congrats-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.congrats-text {
+  color: #52c41a;
+  font-weight: 500;
 }
 </style>
