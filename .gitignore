@@ -21,6 +21,7 @@ wheels/
 *.egg
 .env
 .venv
+.sql
 env/
 venv/
 ENV/
