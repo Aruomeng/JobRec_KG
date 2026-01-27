@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     neon_database_url: str = ""
     
     class Config:
-        env_file = "../.env"
+        env_file = "/Users/tianyuhang/代码/jobrec/backend/.env"
 
 # 初始化配置
 settings = Settings()

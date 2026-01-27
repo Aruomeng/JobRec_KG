@@ -24,9 +24,10 @@ class Settings(BaseSettings):
     jwt_secret_key: str
     algorithm: str
     access_token_expire_minutes: int
+    neon_database_url: str = ""
     
     class Config:
-        env_file = "../.env"  # 学生端服务指向上级目录的.env
+        env_file = "/Users/tianyuhang/代码/jobrec/backend/.env"
 
 # 初始化配置
 settings = Settings()
