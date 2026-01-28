@@ -11,9 +11,13 @@
           <div class="header-left">
             <h1 class="job-title">{{ jobData.title || '职位详情' }}</h1>
             <div class="company-info">
-              <span class="company-name">🏢 {{ jobData.company }}</span>
+              <span class="company-name">
+                <BankOutlined /> {{ jobData.company }}
+              </span>
               <span class="divider" v-if="jobData.city">|</span>
-              <span class="city" v-if="jobData.city">📍 {{ jobData.city }}</span>
+              <span class="city" v-if="jobData.city">
+                <EnvironmentOutlined /> {{ jobData.city }}
+              </span>
             </div>
           </div>
           <div class="header-right">
@@ -23,22 +27,22 @@
             </div>
           </div>
         </div>
-        
+
         <!-- 快速标签 -->
         <div class="quick-tags">
           <span class="quick-tag education" v-if="jobData.education">
-            🎓 {{ jobData.education }}
+            <BookOutlined /> {{ jobData.education }}
           </span>
           <span class="quick-tag experience" v-if="jobData.experience">
-            ⏱️ {{ jobData.experience }}
+            <ClockCircleOutlined /> {{ jobData.experience }}
           </span>
           <span class="quick-tag industry" v-if="jobData.industry">
-            🏭 {{ jobData.industry }}
+            <AppstoreOutlined /> {{ jobData.industry }}
           </span>
         </div>
       </div>
     </div>
-    
+
     <a-spin :spinning="loading">
       <div class="detail-body">
         <a-row :gutter="24">
@@ -47,19 +51,14 @@
             <!-- 技能匹配分析卡片 -->
             <div class="content-card skill-match-card">
               <div class="card-header">
-                <span class="card-icon">🎯</span>
+                <AimOutlined class="card-icon" />
                 <span class="card-title">技能匹配分析</span>
               </div>
               <div class="skill-match-content">
                 <div class="match-overview">
                   <div class="match-circle-wrapper">
-                    <a-progress 
-                      type="circle" 
-                      :percent="matchPercent" 
-                      :stroke-color="getMatchGradient(matchPercent)"
-                      :width="100"
-                      :stroke-width="10"
-                    >
+                    <a-progress type="circle" :percent="matchPercent" :stroke-color="getMatchGradient(matchPercent)"
+                      :width="100" :stroke-width="10">
                       <template #format="percent">
                         <div class="match-circle-inner">
                           <span class="match-num">{{ percent }}</span>
@@ -80,11 +79,13 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- 技能标签展示 -->
                 <div class="skill-tags-section">
                   <div class="skill-group" v-if="matchedSkills.length">
-                    <div class="group-label">✅ 已掌握技能</div>
+                    <div class="group-label">
+                      <CheckCircleOutlined /> 已掌握技能
+                    </div>
                     <div class="skill-tags">
                       <span v-for="skill in matchedSkills" :key="skill" class="skill-tag matched">
                         {{ skill }}
@@ -92,7 +93,9 @@
                     </div>
                   </div>
                   <div class="skill-group" v-if="unmatchedSkills.length">
-                    <div class="group-label">📚 待提升技能</div>
+                    <div class="group-label">
+                      <ReadOutlined /> 待提升技能
+                    </div>
                     <div class="skill-tags">
                       <span v-for="skill in unmatchedSkills" :key="skill" class="skill-tag unmatched">
                         {{ skill }}
@@ -102,30 +105,30 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- 职位描述卡片 -->
             <div class="content-card">
               <div class="card-header">
-                <span class="card-icon">📝</span>
+                <FileTextOutlined class="card-icon" />
                 <span class="card-title">职位描述</span>
               </div>
               <div class="description-content" v-html="formatDescription(jobData.description)"></div>
               <a-empty v-if="!jobData.description" description="暂无职位描述" />
             </div>
-            
+
             <!-- 福利待遇卡片 -->
             <div class="content-card" v-if="jobData.benefits">
               <div class="card-header">
-                <span class="card-icon">🎁</span>
+                <GiftOutlined class="card-icon" />
                 <span class="card-title">福利待遇</span>
               </div>
               <div class="benefits-content">{{ jobData.benefits }}</div>
             </div>
-            
+
             <!-- 职位知识图谱 -->
             <div class="content-card">
               <div class="card-header">
-                <span class="card-icon">🕸️</span>
+                <DeploymentUnitOutlined class="card-icon" />
                 <span class="card-title">职位知识图谱</span>
                 <span class="card-badge">可交互</span>
               </div>
@@ -140,25 +143,27 @@
               </div>
             </div>
           </a-col>
-          
+
           <!-- 右侧操作栏 -->
           <a-col :span="8">
             <!-- 快速操作卡片 -->
             <div class="action-card">
               <a-button type="primary" block size="large" class="action-btn primary" @click="applyJob">
-                📤 投递简历
+                <SendOutlined /> 投递简历
               </a-button>
               <a-button block size="large" class="action-btn secondary" @click="planCourse">
-                📚 制定学习计划
+                <ReadOutlined /> 制定学习计划
               </a-button>
               <a-button block class="action-btn ghost" @click="saveJob">
-                ⭐ 收藏职位
+                <StarOutlined /> 收藏职位
               </a-button>
             </div>
-            
+
             <!-- 职位信息卡片 -->
             <div class="info-card">
-              <div class="info-header">📋 职位信息</div>
+              <div class="info-header">
+                <ProfileOutlined /> 职位信息
+              </div>
               <div class="info-list">
                 <div class="info-item">
                   <span class="info-label">学历要求</span>
@@ -182,23 +187,25 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- 推荐学习卡片 -->
             <div class="learn-card" v-if="relatedCourses.length">
               <div class="learn-header">
-                <span class="learn-icon">📖</span>
+                <ReadOutlined class="learn-icon" />
                 <span class="learn-title">推荐学习</span>
               </div>
               <div class="course-list">
                 <div v-for="course in relatedCourses" :key="course.name" class="course-item">
                   <div class="course-name">{{ course.name }}</div>
                   <div class="course-skills">覆盖: {{ course.skills?.join(', ') }}</div>
-                  <div class="course-reason" v-if="course.reason">📌 {{ course.reason }}</div>
+                  <div class="course-reason" v-if="course.reason">
+                    <PushpinOutlined /> {{ course.reason }}
+                  </div>
                 </div>
               </div>
             </div>
             <div class="learn-card congrats" v-else>
-              <div class="congrats-icon">🎉</div>
+              <TrophyOutlined class="congrats-icon" />
               <div class="congrats-text">您已掌握该职位所需的核心技能！</div>
             </div>
           </a-col>
@@ -212,6 +219,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
+import { BankOutlined, EnvironmentOutlined, BookOutlined, ClockCircleOutlined, AppstoreOutlined, AimOutlined, FileTextOutlined, GiftOutlined, DeploymentUnitOutlined, SendOutlined, StarOutlined, ProfileOutlined, ReadOutlined, PushpinOutlined, TrophyOutlined, CheckCircleOutlined } from '@ant-design/icons-vue'
 import { studentApi } from '@/api'
 import G6 from '@antv/g6'
 
@@ -249,8 +257,8 @@ const userSkills = computed(() => {
 // 匹配的技能
 const matchedSkills = computed(() => {
   const required = jobData.value.required_skills || []
-  return required.filter(skill => 
-    userSkills.value.some(us => 
+  return required.filter(skill =>
+    userSkills.value.some(us =>
       skill.toLowerCase().includes(us) || us.includes(skill.toLowerCase())
     )
   )
@@ -269,7 +277,7 @@ const unmatchedSkillCount = computed(() => unmatchedSkills.value.length)
 const relatedCourses = computed(() => {
   const courses = []
   const addedCourses = new Set()
-  
+
   for (const skill of unmatchedSkills.value) {
     const skillLower = skill.toLowerCase()
     for (const [key, course] of Object.entries(skillToCourse)) {
@@ -326,12 +334,12 @@ const fetchJobDetail = async () => {
   loading.value = true
   try {
     const { data } = await studentApi.getJobDetail(decodedJobId.value)
-    
+
     // 处理城市显示
     let displayCity = ''
     const cities = data.cities || []
     const queryCity = route.query.city
-    
+
     if (queryCity && cities.includes(queryCity)) {
       displayCity = queryCity
     } else if (cities.length > 0) {
@@ -344,9 +352,9 @@ const fetchJobDetail = async () => {
     } else {
       displayCity = '地点不限'
     }
-    
+
     jobData.value = { ...data, city: displayCity, raw_cities: data.cities }
-    
+
     // 计算匹配度
     const routeMatchRate = route.query.matchRate
     if (routeMatchRate !== undefined && routeMatchRate !== null) {
@@ -391,7 +399,7 @@ const graphContainer = ref(null)
 
 const initGraph = (data) => {
   if (graph) graph.destroy()
-  if (!graphContainer.value) return 
+  if (!graphContainer.value) return
 
   const width = graphContainer.value.scrollWidth || 600
   const height = graphContainer.value.scrollHeight || 400
@@ -414,7 +422,7 @@ const initGraph = (data) => {
     }
     const colors = nodeColors[colorKey] || nodeColors['SkillUnmatched']
     const displayName = node.name?.length > 15 ? node.name.substring(0, 15) + '...' : node.name || node.id
-    
+
     return {
       ...node,
       label: displayName,
@@ -758,12 +766,29 @@ onMounted(() => {
   border-radius: 50%;
 }
 
-.dot.job { background: #1890ff; }
-.dot.matched { background: #52c41a; }
-.dot.unmatched { background: #d9d9d9; }
-.dot.company { background: #fa541c; }
-.dot.city { background: #722ed1; }
-.dot.industry { background: #13c2c2; }
+.dot.job {
+  background: #1890ff;
+}
+
+.dot.matched {
+  background: #52c41a;
+}
+
+.dot.unmatched {
+  background: #d9d9d9;
+}
+
+.dot.company {
+  background: #fa541c;
+}
+
+.dot.city {
+  background: #722ed1;
+}
+
+.dot.industry {
+  background: #13c2c2;
+}
 
 /* 右侧操作卡片 */
 .action-card {

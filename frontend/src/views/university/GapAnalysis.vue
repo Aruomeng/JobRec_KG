@@ -1,31 +1,28 @@
 <template>
   <div class="university-portal">
     <!-- 页面标题 -->
-    <a-page-header
-      title="📊 高校智能分析平台"
-      sub-title="课程供给 vs 市场需求全景透视"
-      :style="{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        marginBottom: '24px',
-        borderRadius: '12px',
-        color: 'white',
-      }"
-    >
+    <a-page-header sub-title="课程供给 vs 市场需求全景透视" :style="{
+      background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+      marginBottom: '24px',
+      borderRadius: '16px',
+      color: 'white',
+      boxShadow: '0 4px 20px rgba(79, 172, 254, 0.25)',
+    }">
       <template #extra>
         <a-button type="primary" ghost @click="fetchData" :loading="loading">
-          🔄 刷新数据
+          <SyncOutlined :spin="loading" /> 刷新数据
         </a-button>
+      </template>
+      <template #title>
+        <BarChartOutlined /> 高校智能分析平台
       </template>
     </a-page-header>
 
     <!-- 顶部统计卡片 + 环形图 -->
     <a-row :gutter="16" class="stat-row">
       <a-col :span="6">
-        <div
-          class="stat-card-modern"
-          style="background: linear-gradient(135deg, #fa8c16 0%, #f5222d 100%)"
-        >
-          <div class="stat-icon">🔥</div>
+        <div class="stat-card-modern" style="background: linear-gradient(135deg, #fa8c16 0%, #f5222d 100%)">
+          <FireOutlined class="stat-icon" />
           <div class="stat-content">
             <div class="stat-value">{{ gaps.length }}</div>
             <div class="stat-label">技能缺口</div>
@@ -33,11 +30,8 @@
         </div>
       </a-col>
       <a-col :span="6">
-        <div
-          class="stat-card-modern"
-          style="background: linear-gradient(135deg, #1890ff 0%, #722ed1 100%)"
-        >
-          <div class="stat-icon">📚</div>
+        <div class="stat-card-modern" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)">
+          <BookOutlined class="stat-icon" />
           <div class="stat-content">
             <div class="stat-value">{{ courses.length }}</div>
             <div class="stat-label">课程总数</div>
@@ -45,11 +39,8 @@
         </div>
       </a-col>
       <a-col :span="6">
-        <div
-          class="stat-card-modern"
-          style="background: linear-gradient(135deg, #52c41a 0%, #13c2c2 100%)"
-        >
-          <div class="stat-icon">✅</div>
+        <div class="stat-card-modern" style="background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%)">
+          <CheckCircleOutlined class="stat-icon" />
           <div class="stat-content">
             <div class="stat-value">{{ highRelevanceCourses }}</div>
             <div class="stat-label">高关联课程</div>
@@ -57,11 +48,8 @@
         </div>
       </a-col>
       <a-col :span="6">
-        <div
-          class="stat-card-modern"
-          style="background: linear-gradient(135deg, #ff4d4f 0%, #cf1322 100%)"
-        >
-          <div class="stat-icon">⚠️</div>
+        <div class="stat-card-modern" style="background: linear-gradient(135deg, #ff4d4f 0%, #cf1322 100%)">
+          <WarningOutlined class="stat-icon" />
           <div class="stat-content">
             <div class="stat-value">{{ lowRelevanceCourses }}</div>
             <div class="stat-label">低效课程</div>
@@ -73,55 +61,41 @@
     <!-- Tab切换 -->
     <a-tabs v-model:activeKey="activeTab" size="large" type="card">
       <!-- Gap分析 -->
-      <a-tab-pane key="gap" tab="🔥 技能缺口分析">
+      <a-tab-pane key="gap"><template #tab>
+          <FireOutlined /> 技能缺口分析
+        </template>
         <a-spin :spinning="loading">
           <a-row :gutter="16">
             <!-- 左侧：技能缺口条形图 -->
             <a-col :span="14">
-              <a-card
-                title="📊 技能市场需求 TOP 15"
-                :bordered="false"
-                class="chart-card"
-              >
+              <a-card :bordered="false" class="chart-card">
+                <template #title>
+                  <BarChartOutlined /> 技能市场需求 TOP 15
+                </template>
                 <div style="height: 400px">
-                  <v-chart
-                    :option="gapBarOption"
-                    autoresize
-                    style="width: 100%; height: 100%"
-                  />
+                  <v-chart :option="gapBarOption" autoresize style="width: 100%; height: 100%" />
                 </div>
               </a-card>
             </a-col>
 
             <!-- 右侧：缺口分布饼图 + 急需技能列表 -->
             <a-col :span="10">
-              <a-card
-                title="🎯 课程供给分布"
-                :bordered="false"
-                class="chart-card"
-                style="margin-bottom: 16px"
-              >
+              <a-card :bordered="false" class="chart-card" style="margin-bottom: 16px">
+                <template #title>
+                  <AimOutlined /> 课程供给分布
+                </template>
                 <div style="height: 180px">
-                  <v-chart
-                    :option="supplyPieOption"
-                    autoresize
-                    style="width: 100%; height: 100%"
-                  />
+                  <v-chart :option="supplyPieOption" autoresize style="width: 100%; height: 100%" />
                 </div>
               </a-card>
 
-              <a-card
-                title="🚨 急需开设课程的技能"
-                :bordered="false"
-                class="chart-card"
-              >
+              <a-card :bordered="false" class="chart-card">
+                <template #title>
+                  <AlertOutlined /> 急需开设课程的技能
+                </template>
                 <div class="urgent-skill-list">
-                  <div
-                    v-for="(gap, index) in urgentGaps"
-                    :key="gap.skill"
-                    class="urgent-skill-item"
-                    :style="{ animationDelay: `${index * 0.1}s` }"
-                  >
+                  <div v-for="(gap, index) in urgentGaps" :key="gap.skill" class="urgent-skill-item"
+                    :style="{ animationDelay: `${index * 0.1}s` }">
                     <div class="skill-rank">{{ index + 1 }}</div>
                     <div class="skill-info">
                       <div class="skill-name">{{ gap.skill }}</div>
@@ -145,39 +119,31 @@
       </a-tab-pane>
 
       <!-- 课程健康度 -->
-      <a-tab-pane key="health" tab="📈 课程健康度">
+      <a-tab-pane key="health"><template #tab>
+          <RiseOutlined /> 课程健康度
+        </template>
         <a-spin :spinning="loading">
           <a-row :gutter="16">
             <!-- 左侧：课程健康度雷达图 -->
             <a-col :span="10">
-              <a-card
-                title="🎯 课程综合评估"
-                :bordered="false"
-                class="chart-card"
-              >
+              <a-card :bordered="false" class="chart-card">
+                <template #title>
+                  <AimOutlined /> 课程综合评估
+                </template>
                 <div style="height: 320px">
-                  <v-chart
-                    :option="courseRadarOption"
-                    autoresize
-                    style="width: 100%; height: 100%"
-                  />
+                  <v-chart :option="courseRadarOption" autoresize style="width: 100%; height: 100%" />
                 </div>
               </a-card>
             </a-col>
 
             <!-- 右侧：课程趋势分布 -->
             <a-col :span="14">
-              <a-card
-                title="📊 课程选课热度 TOP 10"
-                :bordered="false"
-                class="chart-card"
-              >
+              <a-card :bordered="false" class="chart-card">
+                <template #title>
+                  <BarChartOutlined /> 课程选课热度 TOP 10
+                </template>
                 <div style="height: 320px">
-                  <v-chart
-                    :option="enrollmentBarOption"
-                    autoresize
-                    style="width: 100%; height: 100%"
-                  />
+                  <v-chart :option="enrollmentBarOption" autoresize style="width: 100%; height: 100%" />
                 </div>
               </a-card>
             </a-col>
@@ -186,21 +152,16 @@
           <!-- 课程列表卡片 -->
           <a-row :gutter="16" style="margin-top: 16px">
             <a-col :span="24">
-              <a-card title="📚 课程详情" :bordered="false" class="chart-card">
+              <a-card :bordered="false" class="chart-card">
+                <template #title>
+                  <BookOutlined /> 课程详情
+                </template>
                 <div class="course-grid">
-                  <div
-                    v-for="course in courses.slice(0, 12)"
-                    :key="course.name"
-                    class="course-item"
-                    :class="getCourseClass(course)"
-                  >
+                  <div v-for="course in courses.slice(0, 12)" :key="course.name" class="course-item"
+                    :class="getCourseClass(course)">
                     <div class="course-header">
                       <span class="course-name">{{ course.name }}</span>
-                      <a-tag
-                        :color="getTrendTagColor(course.trend)"
-                        size="small"
-                        >{{ course.trend }}</a-tag
-                      >
+                      <a-tag :color="getTrendTagColor(course.trend)" size="small">{{ course.trend }}</a-tag>
                     </div>
                     <div class="course-stats">
                       <div class="course-stat">
@@ -212,23 +173,16 @@
                         <span class="stat-desc">技能数</span>
                       </div>
                       <div class="course-stat">
-                        <span
-                          class="stat-num"
-                          :style="{
-                            color: getRelevanceColor(course.job_relevance),
-                          }"
-                        >
+                        <span class="stat-num" :style="{
+                          color: getRelevanceColor(course.job_relevance),
+                        }">
                           {{ Math.round(course.job_relevance * 100) }}%
                         </span>
                         <span class="stat-desc">关联度</span>
                       </div>
                     </div>
-                    <a-progress
-                      :percent="Math.round(course.job_relevance * 100)"
-                      :stroke-color="getRelevanceColor(course.job_relevance)"
-                      :show-info="false"
-                      size="small"
-                    />
+                    <a-progress :percent="Math.round(course.job_relevance * 100)"
+                      :stroke-color="getRelevanceColor(course.job_relevance)" :show-info="false" size="small" />
                   </div>
                 </div>
               </a-card>
@@ -238,13 +192,15 @@
       </a-tab-pane>
 
       <!-- 改革建议 -->
-      <a-tab-pane key="reform" tab="💡 改革建议">
+      <a-tab-pane key="reform"><template #tab>
+          <BulbOutlined /> 改革建议
+        </template>
         <a-spin :spinning="loading">
           <div v-if="reformSuggestions">
             <!-- 总结卡片 -->
             <a-card class="summary-card" :bordered="false">
               <div class="summary-content">
-                <div class="summary-icon">💡</div>
+                <BulbOutlined class="summary-icon" />
                 <div class="summary-text">{{ reformSuggestions.summary }}</div>
               </div>
             </a-card>
@@ -252,56 +208,37 @@
             <a-row :gutter="16" style="margin-top: 16px">
               <!-- 急需技能柱状图 -->
               <a-col :span="12">
-                <a-card
-                  title="🔥 急需技能市场需求"
-                  :bordered="false"
-                  class="chart-card"
-                >
+                <a-card :bordered="false" class="chart-card">
+                  <template #title>
+                    <FireOutlined /> 急需技能市场需求
+                  </template>
                   <div style="height: 300px">
-                    <v-chart
-                      :option="urgentSkillBarOption"
-                      autoresize
-                      style="width: 100%; height: 100%"
-                    />
+                    <v-chart :option="urgentSkillBarOption" autoresize style="width: 100%; height: 100%" />
                   </div>
                 </a-card>
               </a-col>
 
               <!-- 低效课程列表 -->
               <a-col :span="12">
-                <a-card
-                  title="⚠️ 需要评估的课程"
-                  :bordered="false"
-                  class="chart-card"
-                >
+                <a-card :bordered="false" class="chart-card">
+                  <template #title>
+                    <WarningOutlined /> 需要评估的课程
+                  </template>
                   <div class="low-eff-list">
-                    <div
-                      v-for="(
-                        item, index
-                      ) in reformSuggestions.low_relevance_courses"
-                      :key="item.course"
-                      class="low-eff-item"
-                    >
+                    <div v-for="(
+item, index
+                      ) in reformSuggestions.low_relevance_courses" :key="item.course" class="low-eff-item">
                       <div class="low-eff-rank" :class="'rank-' + (index + 1)">
                         {{ index + 1 }}
                       </div>
                       <div class="low-eff-info">
                         <div class="low-eff-name">{{ item.course }}</div>
-                        <a-progress
-                          :percent="Math.round(item.relevance * 100)"
-                          :stroke-color="
-                            item.relevance > 0.3 ? '#faad14' : '#ff4d4f'
-                          "
-                          size="small"
-                          :format="() => `${Math.round(item.relevance * 100)}%`"
-                        />
+                        <a-progress :percent="Math.round(item.relevance * 100)" :stroke-color="item.relevance > 0.3 ? '#faad14' : '#ff4d4f'
+                          " size="small" :format="() => `${Math.round(item.relevance * 100)}%`" />
                       </div>
                       <a-tag color="volcano">需评估</a-tag>
                     </div>
-                    <a-empty
-                      v-if="!reformSuggestions.low_relevance_courses?.length"
-                      description="暂无低效课程"
-                    />
+                    <a-empty v-if="!reformSuggestions.low_relevance_courses?.length" description="暂无低效课程" />
                   </div>
                 </a-card>
               </a-col>
@@ -316,6 +253,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { message } from "ant-design-vue";
+import { BarChartOutlined, BookOutlined, CheckCircleOutlined, WarningOutlined, FireOutlined, AimOutlined, AlertOutlined, SyncOutlined, RiseOutlined, BulbOutlined } from "@ant-design/icons-vue";
 import { universityApi } from "@/api";
 import VChart from "vue-echarts";
 import { use } from "echarts/core";
@@ -389,39 +327,39 @@ const gapBarOption = computed(() => {
               color:
                 g.supply_courses === 0
                   ? {
+                    type: "linear",
+                    x: 0,
+                    y: 0,
+                    x2: 1,
+                    y2: 0,
+                    colorStops: [
+                      { offset: 0, color: "#ff4d4f" },
+                      { offset: 1, color: "#f5222d" },
+                    ],
+                  }
+                  : g.supply_courses <= 2
+                    ? {
                       type: "linear",
                       x: 0,
                       y: 0,
                       x2: 1,
                       y2: 0,
                       colorStops: [
-                        { offset: 0, color: "#ff4d4f" },
-                        { offset: 1, color: "#f5222d" },
+                        { offset: 0, color: "#faad14" },
+                        { offset: 1, color: "#fa8c16" },
                       ],
                     }
-                  : g.supply_courses <= 2
-                    ? {
-                        type: "linear",
-                        x: 0,
-                        y: 0,
-                        x2: 1,
-                        y2: 0,
-                        colorStops: [
-                          { offset: 0, color: "#faad14" },
-                          { offset: 1, color: "#fa8c16" },
-                        ],
-                      }
                     : {
-                        type: "linear",
-                        x: 0,
-                        y: 0,
-                        x2: 1,
-                        y2: 0,
-                        colorStops: [
-                          { offset: 0, color: "#52c41a" },
-                          { offset: 1, color: "#389e0d" },
-                        ],
-                      },
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 1,
+                      y2: 0,
+                      colorStops: [
+                        { offset: 0, color: "#52c41a" },
+                        { offset: 1, color: "#389e0d" },
+                      ],
+                    },
               borderRadius: [0, 4, 4, 0],
             },
           }))
@@ -527,11 +465,11 @@ const courseRadarOption = computed(() => {
     : 0;
   const avgSkillCount = courses.value.length
     ? courses.value.reduce((a, c) => a + c.skill_count, 0) /
-      courses.value.length
+    courses.value.length
     : 0;
   const avgRelevance = courses.value.length
     ? courses.value.reduce((a, c) => a + c.job_relevance, 0) /
-      courses.value.length
+    courses.value.length
     : 0;
   const upTrend = courses.value.filter((c) => c.trend.includes("上升")).length;
   const stableTrend = courses.value.filter((c) =>
@@ -664,6 +602,21 @@ onMounted(fetchData);
 </script>
 
 <style scoped>
+/* 主题按钮 - 青蓝色 */
+:deep(.ant-btn-primary) {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(79, 172, 254, 0.35);
+  transition: all 0.25s ease;
+  color: #0c4a6e !important;
+}
+
+:deep(.ant-btn-primary:hover) {
+  background: linear-gradient(135deg, #38a8f5 0%, #00dae8 100%) !important;
+  box-shadow: 0 4px 16px rgba(79, 172, 254, 0.45);
+  transform: translateY(-1px);
+}
+
 .university-portal {
   max-width: 1400px;
   margin: 0 auto;
@@ -741,6 +694,7 @@ onMounted(fetchData);
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -845,9 +799,10 @@ onMounted(fetchData);
 
 /* 总结卡片 */
 .summary-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  border-radius: 16px;
   color: white;
+  box-shadow: 0 4px 20px rgba(79, 172, 254, 0.25);
 }
 
 .summary-content {
@@ -897,9 +852,11 @@ onMounted(fetchData);
 .rank-1 {
   background: #ff4d4f;
 }
+
 .rank-2 {
   background: #fa8c16;
 }
+
 .rank-3 {
   background: #faad14;
 }
@@ -914,12 +871,19 @@ onMounted(fetchData);
 }
 
 :deep(.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab) {
-  border-radius: 8px 8px 0 0;
-  background: #fafafa;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+  border: 1px solid rgba(3, 105, 161, 0.1);
+  transition: all 0.2s ease-out;
+}
+
+:deep(.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab:hover) {
+  background: #E0F2FE;
 }
 
 :deep(.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active) {
   background: white;
+  border-bottom-color: white;
 }
 
 :deep(.ant-page-header-heading-title),

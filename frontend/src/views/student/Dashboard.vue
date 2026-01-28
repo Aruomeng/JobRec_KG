@@ -17,19 +17,25 @@
         </a-col>
         <a-col :span="5">
           <a-button type="primary" size="large" block @click="fetchPersonalizedJobs">
-            🔍 获取个性化推荐
+            <SearchOutlined /> 获取个性化推荐
           </a-button>
         </a-col>
         <a-col :span="4">
           <a-select v-model:value="recommendMode" size="large" style="width: 100%">
-            <a-select-option value="kg">📊 知识图谱</a-select-option>
-            <a-select-option value="ai">🤖 AI推荐</a-select-option>
-            <a-select-option value="hybrid">🔮 三层漏斗</a-select-option>
+            <a-select-option value="kg">
+              <BarChartOutlined /> 知识图谱
+            </a-select-option>
+            <a-select-option value="ai">
+              <RobotOutlined /> AI推荐
+            </a-select-option>
+            <a-select-option value="hybrid">
+              <ThunderboltOutlined /> 三层漏斗
+            </a-select-option>
           </a-select>
         </a-col>
         <a-col :span="4">
           <a-button size="large" @click="showSkillDiagnosis" block>
-            🔬 技能诊断
+            <ExperimentOutlined /> 技能诊断
           </a-button>
         </a-col>
       </a-row>
@@ -45,8 +51,12 @@
 
     <!-- Tab切换 -->
     <a-tabs v-model:activeKey="activeTab" size="large" style="margin-bottom: 16px">
-      <a-tab-pane key="hot" tab="🔥 热门推荐" />
-      <a-tab-pane key="personalized" tab="🎯 为你推荐" :disabled="!userProfile.skills?.length" />
+      <a-tab-pane key="hot"><template #tab>
+          <FireOutlined /> 热门推荐
+        </template></a-tab-pane>
+      <a-tab-pane key="personalized" :disabled="!userProfile.skills?.length"><template #tab>
+          <AimOutlined /> 为你推荐
+        </template></a-tab-pane>
     </a-tabs>
 
     <!-- 推荐结果 -->
@@ -59,7 +69,7 @@
             <div class="job-header-content">
               <h3 class="job-title-modern">{{ formatTitle(job.title) }}</h3>
               <div class="job-company-modern">
-                <span class="company-icon">🏢</span>
+                <BankOutlined class="company-icon" />
                 {{ job.company || '未知公司' }}
               </div>
             </div>
@@ -83,13 +93,13 @@
           <!-- 职位元信息标签 -->
           <div class="job-meta-tags">
             <span class="meta-tag location" v-if="job.city">
-              <span class="tag-icon">📍</span>{{ job.city }}
+              <EnvironmentOutlined class="tag-icon" />{{ job.city }}
             </span>
             <span class="meta-tag education" v-if="job.education">
-              <span class="tag-icon">🎓</span>{{ job.education }}
+              <BookOutlined class="tag-icon" />{{ job.education }}
             </span>
             <span class="meta-tag industry" v-if="job.industry">
-              <span class="tag-icon">🏭</span>{{ job.industry }}
+              <AppstoreOutlined class="tag-icon" />{{ job.industry }}
             </span>
           </div>
 
@@ -110,7 +120,7 @@
 
           <!-- 推荐理由 -->
           <div class="job-reason-modern" v-if="job.explanation">
-            <div class="reason-icon">💡</div>
+            <BulbOutlined class="reason-icon" />
             <div class="reason-text">{{ job.explanation }}</div>
           </div>
 
@@ -132,7 +142,10 @@
     </a-spin>
 
     <!-- 登录弹窗 -->
-    <a-modal v-model:open="showLoginModal" title="🔑 学生登录" :footer="null" width="400px">
+    <a-modal v-model:open="showLoginModal" :footer="null" width="400px">
+      <template #title>
+        <KeyOutlined /> 学生登录
+      </template>
       <a-form :model="loginForm" layout="vertical" @finish="handleLogin">
         <a-alert message="未登录仅可使用 AI/KG 推荐，登录后解锁漏斗推荐！" type="info" show-icon style="margin-bottom: 24px" />
 
@@ -161,7 +174,7 @@
     </a-modal>
 
     <!-- 个人信息弹窗 -->
-    <a-modal v-model:open="showProfileModal" title="✏️ 完善个人信息" width="800px" @ok="saveProfile">
+    <a-modal v-model:open="showProfileModal" title="完善个人信息" width="800px" @ok="saveProfile">
       <a-form layout="vertical">
         <!-- 第一行：基础信息 -->
         <a-row :gutter="16">
@@ -227,7 +240,10 @@
     </a-modal>
 
     <!-- 简历上传弹窗 -->
-    <a-modal v-model:open="showResumeUpload" title="📄 上传简历 (支持PDF/Word)" :footer="null">
+    <a-modal v-model:open="showResumeUpload" :footer="null">
+      <template #title>
+        <FileTextOutlined /> 上传简历 (支持PDF/Word)
+      </template>
       <a-upload-dragger name="file" :multiple="false" :customRequest="handleResumeUpload" accept=".pdf,.docx,.doc,.txt">
         <p class="ant-upload-drag-icon">
           <inbox-outlined />
@@ -247,13 +263,18 @@
             <span class="position">{{ diagnosis.expected_position || '未设置' }}</span>
             <span class="edu">{{ diagnosis.education }} · {{ diagnosis.major }}</span>
           </div>
-          <div class="diag-match">
-            <a-progress type="circle" :percent="diagnosis.position_analysis?.match_rate || 0" :size="56"
-              :stroke-width="6" :stroke-color="getMatchGradientDiagnosis(diagnosis.position_analysis?.match_rate || 0)">
+          <div class="diag-match-wrapper">
+            <a-progress type="circle" :percent="diagnosis.position_analysis?.match_rate || 0" :size="80"
+              :stroke-width="8" :trail-color="'rgba(255,255,255,0.25)'"
+              :stroke-color="{ '0%': '#22C55E', '100%': '#06B6D4' }">
               <template #format="percent">
-                <span class="match-val">{{ percent }}%</span>
+                <div class="match-ring-inner">
+                  <span class="match-num">{{ percent }}</span>
+                  <span class="match-unit">%</span>
+                </div>
               </template>
             </a-progress>
+            <div class="match-label">匹配度</div>
           </div>
           <div class="diag-stats">
             <div class="stat"><span class="n green">{{ diagnosis.skills_analysis?.all_skills?.length || 0 }}</span><span
@@ -272,13 +293,17 @@
           <!-- 左列：雷达图+同行对比 -->
           <div class="col col-left">
             <div class="card">
-              <div class="card-title">📊 技能分布</div>
-              <div style="height: 140px;">
+              <div class="card-title">
+                <PieChartOutlined /> 技能分布
+              </div>
+              <div style="height: 180px;">
                 <v-chart :option="skillRadarOption" autoresize style="width: 100%; height: 100%;" />
               </div>
             </div>
             <div class="card">
-              <div class="card-title">👥 同行对比</div>
+              <div class="card-title">
+                <TeamOutlined /> 同行对比
+              </div>
               <div class="peer-row">
                 <div class="peer-item">
                   <a-progress type="circle"
@@ -308,11 +333,15 @@
           <!-- 中列：技能匹配 -->
           <div class="col col-mid">
             <div class="card full">
-              <div class="card-title">🎯 技能匹配</div>
+              <div class="card-title">
+                <AimOutlined /> 技能匹配
+              </div>
               <div class="skill-section matched">
-                <div class="skill-head">✅ 已掌握 <span class="cnt">{{ diagnosis.position_analysis?.matched_skills?.length
-                  || 0
-                }}</span></div>
+                <div class="skill-head">
+                  <CheckCircleOutlined /> 已掌握 <span class="cnt">{{ diagnosis.position_analysis?.matched_skills?.length
+                    || 0
+                    }}</span>
+                </div>
                 <div class="tags">
                   <span v-for="skill in diagnosis.position_analysis?.matched_skills?.slice(0, 10)" :key="skill"
                     class="tag green">{{ skill }}</span>
@@ -321,9 +350,11 @@
                 </div>
               </div>
               <div class="skill-section missing">
-                <div class="skill-head">📚 待学习 <span class="cnt">{{ diagnosis.position_analysis?.missing_skills?.length
-                  || 0
-                }}</span></div>
+                <div class="skill-head">
+                  <BookOutlined /> 待学习 <span class="cnt">{{ diagnosis.position_analysis?.missing_skills?.length
+                    || 0
+                    }}</span>
+                </div>
                 <div class="tags">
                   <span v-for="skill in diagnosis.position_analysis?.missing_skills?.slice(0, 10)" :key="skill"
                     class="tag orange">{{ skill }}</span>
@@ -337,23 +368,31 @@
           <!-- 右列：课程推荐+建议 -->
           <div class="col col-right">
             <div class="card">
-              <div class="card-title">📚 推荐课程</div>
+              <div class="card-title">
+                <BookOutlined /> 推荐课程
+              </div>
               <div class="course-list">
                 <div v-for="course in diagnosis.recommended_courses?.slice(0, 3)" :key="course.name"
                   class="course-item">
                   <span class="c-name">{{ course.name }}</span>
                   <a-tag v-for="s in course.covers?.slice(0, 1)" :key="s" size="small" color="blue">{{ s }}</a-tag>
                 </div>
-                <div v-if="!diagnosis.recommended_courses?.length" class="course-empty">🎉 技能完备</div>
+                <div v-if="!diagnosis.recommended_courses?.length" class="course-empty">
+                  <TrophyOutlined /> 技能完备
+                </div>
               </div>
             </div>
             <div class="card">
-              <div class="card-title">💡 诊断建议</div>
+              <div class="card-title">
+                <BulbOutlined /> 诊断建议
+              </div>
               <div class="advice">
                 <div v-for="(s, i) in diagnosis.diagnosis?.suggestions?.slice(0, 2)" :key="i" class="advice-item">• {{ s
                 }}
                 </div>
-                <div v-if="!diagnosis.diagnosis?.suggestions?.length" class="advice-item success">🎉 继续保持!</div>
+                <div v-if="!diagnosis.diagnosis?.suggestions?.length" class="advice-item success">
+                  <TrophyOutlined /> 继续保持!
+                </div>
               </div>
             </div>
           </div>
@@ -371,7 +410,7 @@ defineOptions({
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { message, notification } from 'ant-design-vue'
-import { InboxOutlined, UserOutlined, LockOutlined } from '@ant-design/icons-vue'
+import { InboxOutlined, UserOutlined, LockOutlined, SearchOutlined, BarChartOutlined, RobotOutlined, ThunderboltOutlined, ExperimentOutlined, BankOutlined, EnvironmentOutlined, BookOutlined, AppstoreOutlined, BulbOutlined, FireOutlined, AimOutlined, CheckCircleOutlined, EditOutlined, PieChartOutlined, CheckOutlined, TeamOutlined, TrophyOutlined, KeyOutlined, FileTextOutlined } from '@ant-design/icons-vue'
 import { studentApi, commonApi } from '@/api'
 import VChart from 'vue-echarts'
 import { use } from 'echarts/core'
@@ -707,7 +746,7 @@ const fetchHotJobs = async () => {
 // 监听推荐模式，未登录时拦截漏斗模式
 watch(recommendMode, (newMode) => {
   if (newMode === 'hybrid' && !isLoggedIn.value) {
-    message.warning('⚠️ 三层漏斗推荐仅对登录用户开放，请先登录！')
+    message.warning('三层漏斗推荐仅对登录用户开放，请先登录！')
     showLoginModal.value = true
     // 延迟重置为 KG 模式，避免 UI 直接切换显示未授权内容
     setTimeout(() => {
@@ -1000,10 +1039,27 @@ onMounted(() => {
   padding: 0 16px;
 }
 
+/* 主题按钮 - 紫蓝色 */
+:deep(.ant-btn-primary) {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.35);
+  transition: all 0.25s ease;
+}
+
+:deep(.ant-btn-primary:hover) {
+  background: linear-gradient(135deg, #5a6fd6 0%, #6a4190 100%) !important;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.45);
+  transform: translateY(-1px);
+}
+
 .filter-card {
   margin-bottom: 24px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(102, 126, 234, 0.08);
 }
 
 /* 岗位卡片网格 */
@@ -1013,23 +1069,38 @@ onMounted(() => {
   gap: 20px;
 }
 
-/* 现代化岗位卡片 */
+/* 现代化岗位卡片 - Design System */
 .job-card-modern {
   background: white;
   border-radius: 16px;
   padding: 20px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid #f0f0f0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  animation: fadeInUp 0.5s ease-out forwards;
+  transition: all 0.25s ease-out;
+  border: 1px solid rgba(3, 105, 161, 0.08);
+  box-shadow: 0 2px 12px rgba(3, 105, 161, 0.06);
+  animation: fadeInUp 0.4s ease-out forwards;
   opacity: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.job-card-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-out;
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
 
   to {
@@ -1039,9 +1110,13 @@ onMounted(() => {
 }
 
 .job-card-modern:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
-  border-color: #1890ff;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(3, 105, 161, 0.15);
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+.job-card-modern:hover::before {
+  transform: scaleX(1);
 }
 
 /* 卡片头部 */
@@ -1065,6 +1140,7 @@ onMounted(() => {
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1100,7 +1176,7 @@ onMounted(() => {
 .salary-amount {
   font-size: 22px;
   font-weight: 700;
-  background: linear-gradient(135deg, #52c41a 0%, #13c2c2 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1124,26 +1200,32 @@ onMounted(() => {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 4px 10px;
-  border-radius: 16px;
+  padding: 5px 12px;
+  border-radius: 20px;
   font-size: 12px;
-  color: #666;
-  background: #f5f5f5;
+  font-weight: 500;
+  color: #64748B;
+  background: #F8FAFC;
+  transition: all 0.2s ease-out;
+}
+
+.meta-tag:hover {
+  transform: translateY(-1px);
 }
 
 .meta-tag.location {
-  background: #e6f7ff;
-  color: #1890ff;
+  background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
+  color: #0369A1;
 }
 
 .meta-tag.education {
-  background: #f9f0ff;
-  color: #722ed1;
+  background: linear-gradient(135deg, #F3E8FF 0%, #E9D5FF 100%);
+  color: #7C3AED;
 }
 
 .meta-tag.industry {
-  background: #fff7e6;
-  color: #fa8c16;
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  color: #D97706;
 }
 
 .tag-icon {
@@ -1268,113 +1350,206 @@ onMounted(() => {
 }
 
 :deep(.diagnosis-modal .ant-modal-close) {
-  top: 8px;
-  right: 8px;
+  top: 12px;
+  right: 12px;
   color: white;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.25s ease;
+  z-index: 10;
 }
 
 :deep(.diagnosis-modal .ant-modal-close:hover) {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.5);
+  transform: scale(1.1);
 }
 
+/* ========== 技能诊断弹窗 - 全新设计 ========== */
 .diagnosis-compact {
-  background: #f0f2f5;
-  border-radius: 12px;
+  background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  animation: diagFadeIn 0.4s ease-out;
+}
+
+@keyframes diagFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* 顶部条 - 玻璃拟态 */
+.diag-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  position: relative;
   overflow: hidden;
 }
 
-/* 紧凑头部 */
-.diag-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.diag-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
 }
 
 .diag-title {
   color: white;
-  min-width: 120px;
+  min-width: 140px;
+  position: relative;
+  z-index: 1;
 }
 
 .diag-title .position {
   display: block;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .diag-title .edu {
-  font-size: 10px;
-  opacity: 0.8;
+  font-size: 12px;
+  opacity: 0.9;
+  margin-top: 4px;
+  display: block;
 }
 
-.diag-match {
+.diag-match-wrapper {
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  animation: matchFadeIn 0.6s ease-out;
 }
 
-.diag-match .match-val {
-  font-size: 14px;
-  font-weight: 700;
+@keyframes matchFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.match-ring-inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.match-ring-inner .match-num {
+  font-size: 24px;
+  font-weight: 800;
   color: white;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.match-ring-inner .match-unit {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-left: 2px;
+}
+
+.match-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
 }
 
 .diag-stats {
   display: flex;
-  gap: 6px;
+  gap: 10px;
   margin-left: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .diag-stats .stat {
   text-align: center;
-  padding: 4px 10px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.diag-stats .stat:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .diag-stats .n {
   display: block;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 700;
   color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .diag-stats .n.green {
-  color: #b7eb8f;
+  color: #86efac;
 }
 
 .diag-stats .n.blue {
-  color: #91d5ff;
+  color: #7dd3fc;
 }
 
 .diag-stats .n.orange {
-  color: #ffd591;
+  color: #fdba74;
 }
 
 .diag-stats .n.purple {
-  color: #d3adf7;
+  color: #c4b5fd;
 }
 
 .diag-stats .l {
-  font-size: 9px;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 2px;
+  display: block;
 }
 
 /* 三列布局主体 */
 .diag-body {
   display: flex;
-  gap: 10px;
-  padding: 10px;
-  max-height: 400px;
+  gap: 16px;
+  padding: 16px;
+  max-height: 480px;
+  overflow-y: auto;
 }
 
 .col {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .col-left {
@@ -1389,11 +1564,55 @@ onMounted(() => {
   width: 34%;
 }
 
+/* 卡片 - 玻璃拟态 */
 .card {
-  background: white;
-  border-radius: 8px;
-  padding: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 14px;
   flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 16px rgba(3, 105, 161, 0.08);
+  transition: all 0.3s ease;
+  animation: cardSlideUp 0.5s ease-out backwards;
+}
+
+.col-left .card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.col-left .card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.col-mid .card {
+  animation-delay: 0.15s;
+}
+
+.col-right .card:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.col-right .card:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+@keyframes cardSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(3, 105, 161, 0.15);
+  border-color: rgba(14, 165, 233, 0.3);
 }
 
 .card.full {
@@ -1401,10 +1620,17 @@ onMounted(() => {
 }
 
 .card-title {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  margin-bottom: 8px;
-  color: #333;
+  margin-bottom: 12px;
+  color: #0369A1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-title .anticon {
+  color: #0EA5E9;
 }
 
 /* 同行对比 */
@@ -1412,144 +1638,217 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 6px 0;
+  gap: 16px;
+  padding: 10px 0;
 }
 
 .peer-item {
   text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.peer-item:hover {
+  transform: scale(1.08);
 }
 
 .peer-n {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .peer-l {
-  font-size: 10px;
-  color: #666;
+  font-size: 11px;
+  color: #64748b;
   display: block;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 .vs {
-  font-size: 12px;
-  color: #ccc;
+  font-size: 14px;
+  color: #94a3b8;
   font-weight: 700;
+  padding: 4px 8px;
+  background: #f1f5f9;
+  border-radius: 6px;
 }
 
 .peer-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 6px;
+  gap: 6px;
+  margin-top: 8px;
+  justify-content: center;
 }
 
 /* 技能匹配 */
 .skill-section {
-  padding: 8px;
-  border-radius: 6px;
-  margin-bottom: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.skill-section:hover {
+  transform: scale(1.01);
 }
 
 .skill-section.matched {
-  background: #f6ffed;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 1px solid rgba(34, 197, 94, 0.2);
 }
 
 .skill-section.missing {
-  background: #fff7e6;
+  background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 50%, #ffedd5 100%);
+  border: 1px solid rgba(249, 115, 22, 0.2);
 }
 
 .skill-head {
-  font-size: 12px;
-  font-weight: 500;
-  margin-bottom: 6px;
-  color: #333;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.skill-section.matched .skill-head {
+  color: #166534;
+}
+
+.skill-section.missing .skill-head {
+  color: #c2410c;
 }
 
 .skill-head .cnt {
-  background: rgba(0, 0, 0, 0.06);
-  padding: 1px 6px;
-  border-radius: 8px;
-  font-size: 10px;
-  margin-left: 4px;
+  background: rgba(0, 0, 0, 0.08);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  margin-left: 6px;
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 6px;
 }
 
 .tag {
-  padding: 2px 8px;
-  border-radius: 3px;
-  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  cursor: default;
+}
+
+.tag:hover {
+  transform: translateY(-2px) scale(1.05);
 }
 
 .tag.green {
-  background: linear-gradient(135deg, #52c41a, #389e0d);
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
   color: white;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
 }
 
 .tag.orange {
-  background: #ffd591;
-  color: #874d00;
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
 }
 
 .tag.more {
-  background: #e6f7ff;
-  color: #1890ff;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
 }
 
 /* 课程列表 */
 .course-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .course-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 8px;
-  background: #fafafa;
-  border-radius: 4px;
+  padding: 10px 12px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.course-item:hover {
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+  border-color: #7dd3fc;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
 }
 
 .c-name {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #334155;
 }
 
 .course-empty {
   text-align: center;
-  color: #52c41a;
-  padding: 12px;
-  font-size: 12px;
+  color: #22c55e;
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 /* 建议 */
 .advice {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 .advice-item {
-  font-size: 11px;
-  color: #333;
-  line-height: 1.4;
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.5;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 3px solid #0ea5e9;
+  transition: all 0.25s ease;
+}
+
+.advice-item:hover {
+  background: #e0f2fe;
+  border-left-color: #0369A1;
+  transform: translateX(4px);
 }
 
 .advice-item.success {
-  color: #52c41a;
+  color: #22c55e;
   text-align: center;
-  padding: 8px;
+  padding: 14px;
+  border-left: none;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 </style>

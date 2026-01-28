@@ -1,23 +1,19 @@
 <template>
   <div class="enterprise-portal">
     <!-- 页面标题 -->
-    <a-page-header 
-      title="🎯 智能人才召回" 
-      sub-title="根据职位要求，快速匹配最佳候选人"
-      :style="{ background: 'white', marginBottom: '24px', borderRadius: '8px' }"
-    />
-    
+    <a-page-header sub-title="根据职位要求，快速匹配最佳候选人"
+      :style="{ background: 'white', marginBottom: '24px', borderRadius: '8px' }">
+      <template #title>
+        <AimOutlined /> 智能人才召回
+      </template>
+    </a-page-header>
+
     <!-- 搜索区域 -->
     <a-card class="search-card" :bordered="false">
       <a-row :gutter="16" align="middle">
         <a-col :span="10">
-          <a-input-search
-            v-model:value="jobId"
-            placeholder="输入职位ID、技能关键词（如Python、Java）"
-            enter-button="搜索人才"
-            size="large"
-            @search="scoutTalents"
-          >
+          <a-input-search v-model:value="jobId" placeholder="输入职位ID、技能关键词（如Python、Java）" enter-button="搜索人才"
+            size="large" @search="scoutTalents">
             <template #prefix>
               <SearchOutlined />
             </template>
@@ -39,37 +35,27 @@
         </a-col>
       </a-row>
     </a-card>
-    
+
     <!-- 候选人列表 -->
     <a-spin :spinning="loading">
-      <a-table 
-        :columns="columns" 
-        :data-source="paginatedCandidates" 
-        :row-key="record => record.student_id"
-        :pagination="false"
-        :scroll="{ x: 1200 }"
-        bordered
-      >
+      <a-table :columns="columns" :data-source="paginatedCandidates" :row-key="record => record.student_id"
+        :pagination="false" :scroll="{ x: 1200 }" bordered>
         <!-- 匹配度 -->
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'match_score'">
             <div style="display: flex; align-items: center; justify-content: center;">
-              <a-progress 
-                :percent="Math.round(record.match_score * 100)" 
-                :stroke-color="getScoreColor(record.match_score)"
-                :show-info="true"
-                style="width: 100px; margin: 0;"
-              />
+              <a-progress :percent="Math.round(record.match_score * 100)"
+                :stroke-color="getScoreColor(record.match_score)" :show-info="true" style="width: 100px; margin: 0;" />
             </div>
           </template>
-          
+
           <!-- 雷达图 -->
           <template v-else-if="column.key === 'radar'">
             <a-button size="small" type="primary" ghost @click="showRadar(record)">
               查看能力图
             </a-button>
           </template>
-          
+
           <!-- 技能 -->
           <template v-else-if="column.key === 'skills'">
             <div style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
@@ -81,7 +67,7 @@
               </a-tag>
             </div>
           </template>
-          
+
           <!-- 操作 -->
           <template v-else-if="column.key === 'action'">
             <a-space>
@@ -93,38 +79,36 @@
           </template>
         </template>
       </a-table>
-      
+
       <!-- 分页组件 -->
       <div class="pagination-container" v-if="candidates.length > 0">
-        <a-pagination
-          v-model:current="currentPage"
-          v-model:pageSize="pageSize"
-          :total="candidates.length"
-          :pageSizeOptions="['10', '20', '50']"
-          show-size-changer
-          show-quick-jumper
-          :show-total="total => `共 ${total} 名候选人`"
-        />
+        <a-pagination v-model:current="currentPage" v-model:pageSize="pageSize" :total="candidates.length"
+          :pageSizeOptions="['10', '20', '50']" show-size-changer show-quick-jumper
+          :show-total="total => `共 ${total} 名候选人`" />
       </div>
     </a-spin>
-    
+
     <!-- 能力图弹窗 -->
-    <a-modal 
-      v-model:open="radarVisible" 
-      :title="`📊 ${currentCandidate?.name || ''} 的能力分析`"
-      width="800px"
-      :footer="null"
-    >
+    <a-modal v-model:open="radarVisible" width="800px" :footer="null">
+      <template #title>
+        <PieChartOutlined /> {{ currentCandidate?.name || '' }} 的能力分析
+      </template>
       <div v-if="currentCandidate" style="padding: 10px;">
         <!-- 顶部：基础信息 + 匹配度环形图 -->
         <div style="display: flex; gap: 20px; margin-bottom: 20px;">
           <!-- 左侧：基础信息卡片 -->
-          <div style="flex: 1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 18px; color: white;">
+          <div
+            style="flex: 1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 18px; color: white;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">
               <div>
                 <div style="font-size: 22px; font-weight: 600; margin-bottom: 8px;">{{ currentCandidate.name }}</div>
-                <div style="opacity: 0.9; font-size: 13px; margin-bottom: 4px;">🆔 {{ currentCandidate.student_id }}</div>
-                <div style="opacity: 0.9; font-size: 13px; margin-bottom: 4px;">🎓 {{ currentCandidate.education }} · {{ currentCandidate.major }}</div>
+                <div style="opacity: 0.9; font-size: 13px; margin-bottom: 4px;">
+                  <IdcardOutlined /> {{ currentCandidate.student_id }}
+                </div>
+                <div style="opacity: 0.9; font-size: 13px; margin-bottom: 4px;">
+                  <BookOutlined /> {{ currentCandidate.education }} · {{
+                    currentCandidate.major }}
+                </div>
               </div>
               <!-- 匹配度环形图 -->
               <div style="width: 90px; height: 90px;">
@@ -132,11 +116,13 @@
               </div>
             </div>
           </div>
-          
+
           <!-- 右侧：统计数据 -->
           <div style="display: flex; flex-direction: column; gap: 8px; width: 140px;">
             <div style="background: #f6ffed; border-radius: 8px; padding: 12px; text-align: center; flex: 1;">
-              <div style="font-size: 24px; font-weight: 700; color: #52c41a;">{{ currentCandidate.matched_skills?.length || 0 }}</div>
+              <div style="font-size: 24px; font-weight: 700; color: #52c41a;">{{ currentCandidate.matched_skills?.length
+                ||
+                0 }}</div>
               <div style="font-size: 11px; color: #666;">匹配技能数</div>
             </div>
             <div style="background: #e6f7ff; border-radius: 8px; padding: 12px; text-align: center; flex: 1;">
@@ -145,34 +131,39 @@
             </div>
           </div>
         </div>
-        
+
         <!-- 中部：技能雷达图 + 技能条形图 -->
         <a-row :gutter="16">
           <a-col :span="12">
-            <a-card size="small" title="📈 技能分类分布">
+            <a-card size="small">
+              <template #title>
+                <RiseOutlined /> 技能分类分布
+              </template>
               <div style="height: 220px;">
                 <v-chart :option="radarOption" autoresize style="width: 100%; height: 100%;" />
               </div>
             </a-card>
           </a-col>
           <a-col :span="12">
-            <a-card size="small" title="🏆 技能匹配详情">
+            <a-card size="small">
+              <template #title>
+                <TrophyOutlined /> 技能匹配详情
+              </template>
               <div style="height: 220px;">
                 <v-chart :option="barOption" autoresize style="width: 100%; height: 100%;" />
               </div>
             </a-card>
           </a-col>
         </a-row>
-        
+
         <!-- 底部：技能标签云 -->
-        <a-card size="small" title="✨ 匹配技能一览" style="margin-top: 12px;">
+        <a-card size="small" style="margin-top: 12px;">
+          <template #title>
+            <StarOutlined /> 匹配技能一览
+          </template>
           <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-            <a-tag 
-              v-for="(skill, index) in currentCandidate.matched_skills" 
-              :key="skill" 
-              :color="getSkillTagColor(index)"
-              style="margin: 0; font-size: 13px; padding: 4px 10px;"
-            >
+            <a-tag v-for="(skill, index) in currentCandidate.matched_skills" :key="skill"
+              :color="getSkillTagColor(index)" style="margin: 0; font-size: 13px; padding: 4px 10px;">
               {{ skill }}
             </a-tag>
             <span v-if="!currentCandidate.matched_skills?.length" style="color: #999;">暂无匹配技能</span>
@@ -180,14 +171,12 @@
         </a-card>
       </div>
     </a-modal>
-    
+
     <!-- 简历透视弹窗 -->
-    <a-modal 
-      v-model:open="xrayVisible" 
-      title="🔬 简历透视分析"
-      width="800px"
-      :footer="null"
-    >
+    <a-modal v-model:open="xrayVisible" width="800px" :footer="null">
+      <template #title>
+        <ExperimentOutlined /> 简历透视分析
+      </template>
       <div v-if="resumeInsight">
         <a-row :gutter="24">
           <a-col :span="12">
@@ -207,13 +196,9 @@
             </a-card>
           </a-col>
         </a-row>
-        
-        <a-statistic 
-          title="技能匹配率" 
-          :value="Math.round((resumeInsight.match_rate || 0) * 100)" 
-          suffix="%" 
-          style="margin-top: 16px; text-align: center;"
-        />
+
+        <a-statistic title="技能匹配率" :value="Math.round((resumeInsight.match_rate || 0) * 100)" suffix="%"
+          style="margin-top: 16px; text-align: center;" />
       </div>
     </a-modal>
   </div>
@@ -222,7 +207,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { message } from 'ant-design-vue'
-import { SearchOutlined } from '@ant-design/icons-vue'
+import { SearchOutlined, AimOutlined, PieChartOutlined, BookOutlined, RiseOutlined, StarOutlined, IdcardOutlined, TrophyOutlined, ExperimentOutlined } from '@ant-design/icons-vue'
 import { enterpriseApi } from '@/api'
 import VChart from 'vue-echarts'
 import { use } from 'echarts/core'
@@ -276,15 +261,15 @@ const skillCategoryMap = {
 // 技能分类计算
 const skillCategories = computed(() => {
   if (!currentCandidate.value?.matched_skills) return []
-  
+
   const skills = currentCandidate.value.matched_skills
   const categories = {}
-  
+
   for (const skill of skills) {
     if (!skill) continue
     const skillLower = skill.toLowerCase()
     let matched = false
-    
+
     for (const [category, keywords] of Object.entries(skillCategoryMap)) {
       if (keywords.some(kw => skillLower.includes(kw) || kw.includes(skillLower))) {
         categories[category] = (categories[category] || 0) + 1
@@ -292,12 +277,12 @@ const skillCategories = computed(() => {
         break
       }
     }
-    
+
     if (!matched) {
       categories['其他技能'] = (categories['其他技能'] || 0) + 1
     }
   }
-  
+
   return Object.entries(categories).map(([name, count]) => ({ name, count }))
 })
 
@@ -334,9 +319,9 @@ const radarOption = computed(() => {
       title: { text: '暂无技能数据', left: 'center', top: 'center', textStyle: { color: '#999', fontSize: 14 } }
     }
   }
-  
+
   const maxCount = Math.max(...categories.map(c => c.count), 3)
-  
+
   return {
     tooltip: { trigger: 'item' },
     radar: {
@@ -362,13 +347,13 @@ const radarOption = computed(() => {
 const barOption = computed(() => {
   const skills = currentCandidate.value?.matched_skills || []
   const displaySkills = skills.slice(0, 8)
-  
+
   if (displaySkills.length === 0) {
     return {
       title: { text: '暂无技能数据', left: 'center', top: 'center', textStyle: { color: '#999', fontSize: 14 } }
     }
   }
-  
+
   return {
     tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
     grid: { left: '3%', right: '10%', top: '5%', bottom: '3%', containLabel: true },
@@ -417,12 +402,12 @@ const scoutTalents = async () => {
     message.warning('请输入职位ID或技能关键词')
     return
   }
-  
+
   loading.value = true
   try {
     const { data } = await enterpriseApi.scoutTalents(
-      jobId.value, 
-      topK.value, 
+      jobId.value,
+      topK.value,
       educationFilter.value
     )
     candidates.value = data.candidates
@@ -456,35 +441,112 @@ const xrayResume = async (record) => {
   margin: 0 auto;
 }
 
+/* 搜索卡片 - Glassmorphism */
 .search-card {
   margin-bottom: 24px;
-  border-radius: 12px;
-  border-left: 4px solid #722ed1;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(240, 147, 251, 0.15);
+  box-shadow: 0 4px 20px rgba(245, 87, 108, 0.08);
+  position: relative;
+  overflow: hidden;
 }
 
+.search-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* 表格样式增强 */
 :deep(.ant-table) {
   font-size: 13px;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 :deep(.ant-table-thead > tr > th) {
-  background: #fafafa;
+  background: linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%) !important;
   font-weight: 600;
-  padding: 8px 12px !important;
+  color: #831843;
+  padding: 12px 16px !important;
+  border-bottom: 2px solid rgba(240, 147, 251, 0.2) !important;
 }
 
 :deep(.ant-table-tbody > tr > td) {
-  padding: 8px 12px !important;
+  padding: 10px 16px !important;
+  transition: all 0.2s ease-out;
+}
+
+:deep(.ant-table-tbody > tr:hover > td) {
+  background: rgba(240, 147, 251, 0.04) !important;
+}
+
+:deep(.ant-table-row) {
+  transition: all 0.2s ease-out;
+}
+
+:deep(.ant-table-row:hover) {
+  transform: scale(1.002);
+  box-shadow: 0 2px 8px rgba(240, 147, 251, 0.12);
 }
 
 :deep(.ant-progress) {
   margin-bottom: 0 !important;
 }
 
+:deep(.ant-progress-bg) {
+  background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%) !important;
+}
+
+/* 分页容器 */
 .pagination-container {
   margin-top: 24px;
   display: flex;
   justify-content: center;
   padding-bottom: 16px;
 }
-</style>
 
+/* 能力图弹窗增强 */
+:deep(.ant-modal-content) {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+:deep(.ant-modal-header) {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border-bottom: none;
+  padding: 16px 24px;
+}
+
+:deep(.ant-modal-title) {
+  color: white !important;
+  font-weight: 600;
+}
+
+/* 按钮增强 */
+:deep(.ant-btn-primary) {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border: none;
+  box-shadow: 0 2px 8px rgba(245, 87, 108, 0.25);
+  transition: all 0.2s ease-out;
+}
+
+:deep(.ant-btn-primary:hover) {
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+  box-shadow: 0 4px 16px rgba(245, 87, 108, 0.35);
+  transform: translateY(-1px);
+}
+
+/* 标签增强 */
+:deep(.ant-tag) {
+  border-radius: 6px;
+  font-weight: 500;
+  border: none;
+}
+</style>

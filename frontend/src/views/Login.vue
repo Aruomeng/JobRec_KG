@@ -16,7 +16,7 @@
             <div class="login-header" :style="{ background: themeGradient }">
                 <transition name="content-fade" mode="out-in">
                     <div class="header-content" :key="role">
-                        <div class="logo-icon">{{ roleIcon }}</div>
+                        <component :is="roleIconComponent" class="logo-icon-svg" />
                         <h1>智途 AI</h1>
                         <p>{{ roleTitle }}</p>
                     </div>
@@ -54,7 +54,7 @@
                         <div v-for="r in roles" :key="r.key" @click="switchRole(r.key)"
                             :class="['role-tab', { active: role === r.key }]"
                             :style="role === r.key ? { background: themeColor, color: '#fff' } : {}">
-                            <span class="tab-icon">{{ r.icon }}</span>
+                            <component :is="getRoleIconComponent(r.key)" class="tab-icon-svg" />
                             <span class="tab-text">{{ r.label }}</span>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
 import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
-import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
+import { UserOutlined, LockOutlined, ReadOutlined, BankOutlined, BookOutlined } from '@ant-design/icons-vue'
 import axios from 'axios'
 
 const route = useRoute()
@@ -77,30 +77,30 @@ const router = useRouter()
 const role = computed(() => route.params.role || 'student')
 
 const roles = [
-    { key: 'student', label: '学生', icon: '📚' },
-    { key: 'enterprise', label: '企业', icon: '🏢' },
-    { key: 'university', label: '高校', icon: '🎓' }
+    { key: 'student', label: '学生', iconComponent: ReadOutlined },
+    { key: 'enterprise', label: '企业', iconComponent: BankOutlined },
+    { key: 'university', label: '高校', iconComponent: BookOutlined }
 ]
 
 const themeConfig = {
     student: {
         color: '#667eea',
         gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        icon: '📚',
+        iconComponent: ReadOutlined,
         title: '学生就业服务平台',
         bg: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
     },
     enterprise: {
         color: '#f093fb',
         gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-        icon: '🏢',
+        iconComponent: BankOutlined,
         title: '企业人才招聘平台',
         bg: 'linear-gradient(135deg, #1e1e2f 0%, #2d132c 50%, #4a1942 100%)'
     },
     university: {
         color: '#4facfe',
         gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-        icon: '🎓',
+        iconComponent: BookOutlined,
         title: '高校就业管理平台',
         bg: 'linear-gradient(135deg, #0c1618 0%, #1c3334 50%, #1d4e5f 100%)'
     }
@@ -108,9 +108,11 @@ const themeConfig = {
 
 const themeColor = computed(() => themeConfig[role.value]?.color)
 const themeGradient = computed(() => themeConfig[role.value]?.gradient)
-const roleIcon = computed(() => themeConfig[role.value]?.icon)
+const roleIconComponent = computed(() => themeConfig[role.value]?.iconComponent)
 const roleTitle = computed(() => themeConfig[role.value]?.title)
 const dynamicBackground = computed(() => themeConfig[role.value]?.bg)
+
+const getRoleIconComponent = (key) => themeConfig[key]?.iconComponent
 
 // 六边形样式生成器 - 使用固定种子避免切换时重新生成
 const hexagonSeeds = Array.from({ length: 25 }, (_, i) => ({
@@ -296,16 +298,30 @@ const handleLogin = async () => {
     }
 }
 
-/* 登录卡片 */
+/* 登录卡片 - Glassmorphism */
 .login-card {
     width: 100%;
-    max-width: 400px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.35),
+        0 8px 32px rgba(3, 105, 161, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     z-index: 10;
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.login-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 32px 100px rgba(0, 0, 0, 0.4),
+        0 12px 40px rgba(3, 105, 161, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .login-header {
@@ -314,10 +330,15 @@ const handleLogin = async () => {
     color: white;
 }
 
-.logo-icon {
+.logo-icon-svg {
     font-size: 56px;
     margin-bottom: 12px;
-    display: inline-block;
+    display: block;
+    color: white;
+}
+
+.tab-icon-svg {
+    font-size: 18px;
 }
 
 .login-header h1 {
@@ -338,17 +359,37 @@ const handleLogin = async () => {
 }
 
 .login-btn {
-    height: 48px;
+    height: 52px;
     font-size: 16px;
     font-weight: 600;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(3, 105, 161, 0.3);
+    transition: all 0.25s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%, rgba(255, 255, 255, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.25s ease-out;
 }
 
 .login-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(3, 105, 161, 0.4);
+}
+
+.login-btn:hover::after {
+    opacity: 1;
+}
+
+.login-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(3, 105, 161, 0.3);
 }
 
 /* 角色切换 */
@@ -365,23 +406,29 @@ const handleLogin = async () => {
 .role-tab {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 10px 16px;
-    border-radius: 20px;
-    background: #f0f2f5;
-    color: #666;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 24px;
+    background: rgba(240, 249, 255, 0.8);
+    color: #64748B;
     font-size: 14px;
+    font-weight: 500;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease-out;
+    cursor: pointer;
+    border: 1px solid rgba(3, 105, 161, 0.1);
 }
 
 .role-tab:hover {
-    background: #e6e8eb;
+    background: rgba(224, 242, 254, 0.9);
+    border-color: rgba(3, 105, 161, 0.2);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(3, 105, 161, 0.1);
 }
 
 .role-tab.active {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 16px rgba(3, 105, 161, 0.25);
+    border-color: transparent;
 }
 
 .tab-icon {
@@ -432,14 +479,27 @@ const handleLogin = async () => {
     opacity: 0;
 }
 
-/* 去掉Ant Design输入框边框 */
+/* 输入框样式增强 */
 :deep(.ant-input-affix-wrapper) {
-    border-radius: 8px;
-    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    border: 1px solid rgba(3, 105, 161, 0.15);
+    background: rgba(240, 249, 255, 0.5);
+    transition: all 0.25s ease-out;
 }
 
-:deep(.ant-input-affix-wrapper:hover),
+:deep(.ant-input-affix-wrapper:hover) {
+    border-color: rgba(14, 165, 233, 0.4);
+    background: rgba(240, 249, 255, 0.8);
+}
+
+:deep(.ant-input-affix-wrapper-focused),
 :deep(.ant-input-affix-wrapper:focus) {
-    border-color: v-bind(themeColor);
+    border-color: #0EA5E9;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12), 0 2px 8px rgba(3, 105, 161, 0.1);
+}
+
+:deep(.ant-input) {
+    font-family: 'Poppins', sans-serif;
 }
 </style>

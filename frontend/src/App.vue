@@ -2,14 +2,14 @@
   <a-config-provider :locale="zhCN">
     <a-layout class="app-layout">
       <!-- 顶部导航（仅主页面显示，登录页不显示） -->
-      <a-layout-header v-if="!isLoginPage" class="app-header">
+      <a-layout-header v-if="!isLoginPage" :class="['app-header', `app-header-${currentRole}`]">
         <div class="logo">
-          <span class="logo-icon">🎓</span>
+          <RocketOutlined class="logo-icon" />
           <span class="logo-text">{{ currentTitle }}</span>
         </div>
         <div class="header-right" v-if="isLoggedIn">
           <a-tag color="rgba(255,255,255,0.2)" style="border: 1px solid rgba(255,255,255,0.3); color: white;">
-            🆔 {{ userInfo?.student_id || userInfo?.user_id || '-' }}
+            <IdcardOutlined /> {{ userInfo?.student_id || userInfo?.user_id || '-' }}
           </a-tag>
           <span class="user-name">{{ userInfo?.name || userInfo?.display_name || '用户' }}</span>
           <a-button type="link" @click="showProfileModal" class="header-btn">
@@ -43,7 +43,7 @@
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { Modal } from 'ant-design-vue'
-import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
+import { ExclamationCircleOutlined, RocketOutlined, IdcardOutlined } from '@ant-design/icons-vue'
 import { createVNode } from 'vue'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
 
@@ -71,6 +71,14 @@ const currentTitle = computed(() => {
   if (route.path.startsWith('/enterprise')) return '智途AI · 企业人才招聘'
   if (route.path.startsWith('/university')) return '智途AI · 高校就业管理'
   return '智途AI就业推荐系统'
+})
+
+// 当前角色(用于主题色)
+const currentRole = computed(() => {
+  if (route.path.startsWith('/student')) return 'student'
+  if (route.path.startsWith('/enterprise')) return 'enterprise'
+  if (route.path.startsWith('/university')) return 'university'
+  return 'student'
 })
 
 // 编辑资料 - 触发子组件的资料弹窗
@@ -101,16 +109,41 @@ const handleLogout = () => {
 </script>
 
 <style scoped>
+/* ========== Design System Variables ========== */
 .app-layout {
+  --color-primary: #0369A1;
+  --color-secondary: #0EA5E9;
+  --color-cta: #22C55E;
+  --color-bg: #F0F9FF;
+  --color-text: #0C4A6E;
+  --color-text-muted: #64748B;
+  --color-surface: #FFFFFF;
+  --color-border: rgba(255, 255, 255, 0.2);
+
+  --shadow-sm: 0 2px 8px rgba(3, 105, 161, 0.08);
+  --shadow-md: 0 4px 16px rgba(3, 105, 161, 0.12);
+  --shadow-lg: 0 8px 32px rgba(3, 105, 161, 0.16);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --transition-fast: 0.15s ease-out;
+  --transition-normal: 0.25s ease-out;
+
   min-height: 100vh;
+  font-family: 'Poppins', 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* ========== Glassmorphism Header ========== */
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 0 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0 32px;
   position: fixed;
   top: 0;
   left: 0;
@@ -118,16 +151,36 @@ const handleLogout = () => {
   z-index: 1000;
   width: 100%;
   height: 64px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 学生端 - 紫蓝色 */
+.app-header-student {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.9) 100%);
+  box-shadow: 0 4px 24px rgba(102, 126, 234, 0.25);
+}
+
+/* 企业端 - 粉红色 */
+.app-header-enterprise {
+  background: linear-gradient(135deg, rgba(240, 147, 251, 0.95) 0%, rgba(245, 87, 108, 0.9) 100%);
+  box-shadow: 0 4px 24px rgba(245, 87, 108, 0.25);
+}
+
+/* 高校端 - 青蓝色 */
+.app-header-university {
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.95) 0%, rgba(0, 242, 254, 0.9) 100%);
+  box-shadow: 0 4px 24px rgba(79, 172, 254, 0.25);
 }
 
 .logo {
   display: flex;
   align-items: center;
+  gap: 12px;
 }
 
 .logo-icon {
-  font-size: 28px;
-  margin-right: 12px;
+  font-size: 26px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .logo-text {
@@ -135,33 +188,41 @@ const handleLogout = () => {
   font-weight: 600;
   color: white;
   white-space: nowrap;
+  letter-spacing: -0.02em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .user-name {
   color: white;
-  margin: 0 8px;
+  margin: 0 4px;
   font-weight: 500;
+  font-size: 14px;
 }
 
 .header-btn {
-  color: rgba(255, 255, 255, 0.85) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
   font-size: 14px;
-  padding: 4px 12px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  background: transparent;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
 }
 
 .header-btn:hover {
   color: white !important;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .header-btn:active {
@@ -170,15 +231,16 @@ const handleLogout = () => {
 }
 
 .logout-btn:hover {
-  background: rgba(255, 100, 100, 0.3) !important;
-  color: #ffcccc !important;
+  background: rgba(239, 68, 68, 0.4) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  color: #fef2f2 !important;
 }
 
+/* ========== Main Content ========== */
 .app-content {
   padding: 24px;
   padding-top: 88px;
-  /* 64px header + 24px spacing */
-  background: #f5f7fa;
+  background: linear-gradient(180deg, var(--color-bg) 0%, #E0F2FE 100%);
   min-height: calc(100vh - 64px);
 }
 
@@ -189,9 +251,180 @@ const handleLogout = () => {
   background: transparent;
 }
 
+/* ========== Footer ========== */
 .app-footer {
   text-align: center;
-  background: #f5f7fa;
-  color: #999;
+  background: linear-gradient(180deg, #E0F2FE 0%, #F0F9FF 100%);
+  color: var(--color-text-muted);
+  padding: 24px;
+  font-size: 13px;
+  border-top: 1px solid rgba(3, 105, 161, 0.1);
+}
+</style>
+
+<!-- Global Styles (Unscoped) -->
+<style>
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Global Font Family */
+body {
+  font-family: 'Poppins', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========== Overlay Scrollbar (Floating) ========== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(3, 105, 161, 0.3) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(3, 105, 161, 0.2);
+  border-radius: 3px;
+  transition: background 0.2s ease-out;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(3, 105, 161, 0.4);
+}
+
+/* Show scrollbar only on hover */
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background: rgba(3, 105, 161, 0.25);
+}
+
+*:hover::-webkit-scrollbar-thumb:hover {
+  background: rgba(3, 105, 161, 0.45);
+}
+
+/* Overlay scrollbar for specific containers */
+.ant-modal-body,
+.ant-table-body,
+.ant-select-dropdown,
+.ant-dropdown {
+  overflow: overlay !important;
+}
+
+/* ========== Global Button Enhancements ========== */
+.ant-btn {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease-out;
+}
+
+.ant-btn-primary {
+  background: linear-gradient(135deg, #0369A1 0%, #0EA5E9 100%);
+  border: none;
+  box-shadow: 0 2px 8px rgba(3, 105, 161, 0.25);
+}
+
+.ant-btn-primary:hover {
+  background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%);
+  box-shadow: 0 4px 16px rgba(3, 105, 161, 0.35);
+  transform: translateY(-1px);
+}
+
+/* ========== Global Card Enhancements ========== */
+.ant-card {
+  border-radius: 12px;
+  border: 1px solid rgba(3, 105, 161, 0.08);
+  box-shadow: 0 2px 12px rgba(3, 105, 161, 0.06);
+  transition: all 0.25s ease-out;
+}
+
+.ant-card:hover {
+  box-shadow: 0 4px 20px rgba(3, 105, 161, 0.12);
+}
+
+/* ========== Global Modal Enhancements ========== */
+.ant-modal-content {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.ant-modal-header {
+  background: linear-gradient(135deg, #0369A1 0%, #0EA5E9 100%);
+  border-bottom: none;
+  padding: 16px 24px;
+}
+
+.ant-modal-title {
+  color: white !important;
+  font-weight: 600;
+}
+
+.ant-modal-close {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ant-modal-close:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ========== Global Input Enhancements ========== */
+.ant-input,
+.ant-select-selector,
+.ant-picker {
+  border-radius: 8px !important;
+  transition: all 0.2s ease-out !important;
+}
+
+.ant-input:focus,
+.ant-input-focused,
+.ant-select-focused .ant-select-selector,
+.ant-picker-focused {
+  border-color: #0EA5E9 !important;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15) !important;
+}
+
+/* ========== Global Table Enhancements ========== */
+.ant-table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ant-table-thead>tr>th {
+  background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%) !important;
+  font-weight: 600;
+  color: #0C4A6E;
+}
+
+.ant-table-tbody>tr:hover>td {
+  background: rgba(14, 165, 233, 0.04) !important;
+}
+
+/* ========== Global Tag Enhancements ========== */
+.ant-tag {
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* ========== Respect Reduced Motion ========== */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 </style>
