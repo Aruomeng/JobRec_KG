@@ -11,6 +11,13 @@ CREATE TABLE IF NOT EXISTS users (
     role TEXT NOT NULL CHECK (role IN ('student', 'enterprise', 'university')),
     neo4j_id TEXT,
     email TEXT,
+    -- 企业端扩展字段
+    company_name TEXT,
+    industry TEXT,
+    company_scale TEXT,
+    city TEXT,
+    contact_info TEXT,
+    description TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

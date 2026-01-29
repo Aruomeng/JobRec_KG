@@ -82,6 +82,40 @@ class ResumeXRayRequest(BaseModel):
     student_id: str
     job_id: str
 
+# =========== 企业个人中心 - 数据模型 ===========
+
+class EnterpriseProfileUpdate(BaseModel):
+    """企业资料更新请求"""
+    company_name: Optional[str] = None
+    industry: Optional[str] = None
+    company_scale: Optional[str] = None
+    city: Optional[str] = None
+    contact_info: Optional[str] = None
+    description: Optional[str] = None
+
+class JobCreate(BaseModel):
+    """职位创建请求"""
+    title: str
+    description: str
+    education: str = "不限"
+    experience: str = "不限"
+    salary_min: int = 0
+    salary_max: int = 0
+    skills: List[str] = []
+    city: Optional[str] = None
+
+class JobUpdate(BaseModel):
+    """职位更新请求"""
+    title: Optional[str] = None
+    description: Optional[str] = None
+    education: Optional[str] = None
+    experience: Optional[str] = None
+    salary_min: Optional[int] = None
+    salary_max: Optional[int] = None
+    skills: Optional[List[str]] = None
+    city: Optional[str] = None
+    status: Optional[str] = None  # active/inactive
+
 # 工具函数
 def sanitize_data(data):
     if isinstance(data, dict):
@@ -249,6 +283,334 @@ def xray_resume(request: ResumeXRayRequest):
         "missing_skills": missing_skills,
         "match_rate": match_rate
     }
+
+# ==================== 企业个人中心API ====================
+
+@app.get("/api/enterprise/profile")
+def get_enterprise_profile(user_id: str):
+    """获取企业资料"""
+    try:
+        conn = get_neon_connection()
+        cur = conn.cursor()
+        
+        cur.execute("""
+            SELECT id, username, display_name, company_name, industry, 
+                   company_scale, city, contact_info, description
+            FROM users 
+            WHERE id = %s AND role = 'enterprise'
+        """, (user_id,))
+        
+        user = cur.fetchone()
+        cur.close()
+        conn.close()
+        
+        if not user:
+            raise HTTPException(status_code=404, detail="企业用户不存在")
+        
+        return {
+            "code": 200,
+            "data": {
+                "user_id": str(user[0]),
+                "username": user[1],
+                "display_name": user[2],
+                "company_name": user[3] or "",
+                "industry": user[4] or "",
+                "company_scale": user[5] or "",
+                "city": user[6] or "",
+                "contact_info": user[7] or "",
+                "description": user[8] or ""
+            }
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"获取资料失败: {str(e)}")
+
+@app.put("/api/enterprise/profile")
+def update_enterprise_profile(user_id: str, request: EnterpriseProfileUpdate):
+    """更新企业资料"""
+    try:
+        conn = get_neon_connection()
+        cur = conn.cursor()
+        
+        # 构建动态更新语句
+        updates = []
+        params = []
+        
+        if request.company_name is not None:
+            updates.append("company_name = %s")
+            params.append(request.company_name)
+        if request.industry is not None:
+            updates.append("industry = %s")
+            params.append(request.industry)
+        if request.company_scale is not None:
+            updates.append("company_scale = %s")
+            params.append(request.company_scale)
+        if request.city is not None:
+            updates.append("city = %s")
+            params.append(request.city)
+        if request.contact_info is not None:
+            updates.append("contact_info = %s")
+            params.append(request.contact_info)
+        if request.description is not None:
+            updates.append("description = %s")
+            params.append(request.description)
+        
+        if updates:
+            updates.append("updated_at = NOW()")
+            params.append(user_id)
+            
+            sql = f"UPDATE users SET {', '.join(updates)} WHERE id = %s AND role = 'enterprise'"
+            cur.execute(sql, params)
+            conn.commit()
+        
+        # 如果提供了公司名，同步到Neo4j的Company节点
+        if request.company_name:
+            neo4j_conn.query("""
+                MERGE (c:Company {name: $name})
+                SET c.scale = $scale,
+                    c.updated_at = datetime()
+            """, {
+                "name": request.company_name,
+                "scale": request.company_scale or ""
+            })
+            
+            # 如果有城市，建立LOCATED_IN关系
+            if request.city:
+                neo4j_conn.query("""
+                    MERGE (city:City {name: $city})
+                """, {"city": request.city})
+                
+                neo4j_conn.query("""
+                    MATCH (c:Company {name: $company})
+                    MATCH (city:City {name: $city})
+                    MERGE (c)-[:LOCATED_IN]->(city)
+                """, {"company": request.company_name, "city": request.city})
+            
+            # 如果有行业，建立关系
+            if request.industry:
+                neo4j_conn.query("""
+                    MERGE (i:Industry {name: $industry})
+                """, {"industry": request.industry})
+        
+        cur.close()
+        conn.close()
+        
+        return {"code": 200, "message": "资料更新成功"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"更新资料失败: {str(e)}")
+
+@app.post("/api/enterprise/jobs")
+def create_job(user_id: str, request: JobCreate):
+    """发布职位 - 创建Neo4j Job节点和关系"""
+    try:
+        # 先获取企业信息
+        conn = get_neon_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT company_name, city FROM users WHERE id = %s", (user_id,))
+        result = cur.fetchone()
+        cur.close()
+        conn.close()
+        
+        if not result or not result[0]:
+            raise HTTPException(status_code=400, detail="请先完善企业资料(设置公司名称)")
+        
+        company_name = result[0]
+        company_city = result[1] or request.city
+        
+        # 生成唯一的职位URL作为ID
+        import uuid
+        import time
+        job_url = f"enterprise_{user_id}_{int(time.time())}_{uuid.uuid4().hex[:8]}"
+        
+        # 在Neo4j中创建Job节点
+        neo4j_conn.query("""
+            MERGE (j:Job {url: $url})
+            SET j.title = $title,
+                j.description = $description,
+                j.education = $education,
+                j.experience = $experience,
+                j.salary_min = $salary_min,
+                j.salary_max = $salary_max,
+                j.salary = $salary_text,
+                j.created_by = $user_id,
+                j.created_at = datetime(),
+                j.status = 'active'
+        """, {
+            "url": job_url,
+            "title": request.title,
+            "description": request.description,
+            "education": request.education,
+            "experience": request.experience,
+            "salary_min": request.salary_min,
+            "salary_max": request.salary_max,
+            "salary_text": f"{request.salary_min}-{request.salary_max}K" if request.salary_max > 0 else "面议",
+            "user_id": user_id
+        })
+        
+        # 建立 OFFERED_BY 关系
+        neo4j_conn.query("""
+            MATCH (j:Job {url: $url})
+            MATCH (c:Company {name: $company})
+            MERGE (j)-[:OFFERED_BY]->(c)
+        """, {"url": job_url, "company": company_name})
+        
+        # 建立 REQUIRES_SKILL 关系
+        for skill in request.skills:
+            skill = skill.strip()
+            if skill:
+                neo4j_conn.query("MERGE (s:Skill {name: $name})", {"name": skill})
+                neo4j_conn.query("""
+                    MATCH (j:Job {url: $url})
+                    MATCH (s:Skill {name: $skill})
+                    MERGE (j)-[:REQUIRES_SKILL]->(s)
+                """, {"url": job_url, "skill": skill})
+        
+        # 如果有城市，建立关系
+        if company_city:
+            neo4j_conn.query("""
+                MATCH (j:Job {url: $url})
+                MATCH (c:Company)-[:LOCATED_IN]->(city:City)
+                WHERE c.name = $company
+                MERGE (j)-[:LOCATED_IN]->(city)
+            """, {"url": job_url, "company": company_name})
+        
+        return {
+            "code": 200,
+            "message": "职位发布成功",
+            "data": {"job_id": job_url}
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"发布职位失败: {str(e)}")
+
+@app.get("/api/enterprise/jobs")
+def list_jobs(user_id: str):
+    """获取企业发布的职位列表"""
+    try:
+        result = neo4j_conn.query("""
+            MATCH (j:Job)
+            WHERE j.created_by = $user_id
+            OPTIONAL MATCH (j)-[:OFFERED_BY]->(c:Company)
+            OPTIONAL MATCH (j)-[:REQUIRES_SKILL]->(s:Skill)
+            RETURN j.url as job_id, j.title as title, j.description as description,
+                   j.education as education, j.experience as experience,
+                   j.salary_min as salary_min, j.salary_max as salary_max,
+                   j.salary as salary, j.status as status, j.created_at as created_at,
+                   c.name as company_name, collect(s.name) as skills
+            ORDER BY j.created_at DESC
+        """, {"user_id": user_id})
+        
+        jobs = []
+        for record in result:
+            jobs.append({
+                "job_id": record["job_id"],
+                "title": record["title"],
+                "description": record["description"] or "",
+                "education": record["education"] or "不限",
+                "experience": record["experience"] or "不限",
+                "salary_min": record["salary_min"] or 0,
+                "salary_max": record["salary_max"] or 0,
+                "salary": record["salary"] or "面议",
+                "status": record["status"] or "active",
+                "created_at": str(record["created_at"]) if record["created_at"] else "",
+                "company_name": record["company_name"] or "",
+                "skills": [s for s in record["skills"] if s]
+            })
+        
+        return {"code": 200, "data": jobs}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"获取职位列表失败: {str(e)}")
+
+@app.put("/api/enterprise/jobs/{job_id}")
+def update_job(job_id: str, request: JobUpdate):
+    """更新职位信息"""
+    try:
+        # 构建更新语句
+        updates = []
+        params = {"url": job_id}
+        
+        if request.title is not None:
+            updates.append("j.title = $title")
+            params["title"] = request.title
+        if request.description is not None:
+            updates.append("j.description = $description")
+            params["description"] = request.description
+        if request.education is not None:
+            updates.append("j.education = $education")
+            params["education"] = request.education
+        if request.experience is not None:
+            updates.append("j.experience = $experience")
+            params["experience"] = request.experience
+        if request.salary_min is not None:
+            updates.append("j.salary_min = $salary_min")
+            params["salary_min"] = request.salary_min
+        if request.salary_max is not None:
+            updates.append("j.salary_max = $salary_max")
+            params["salary_max"] = request.salary_max
+        if request.salary_min is not None and request.salary_max is not None:
+            updates.append("j.salary = $salary_text")
+            params["salary_text"] = f"{request.salary_min}-{request.salary_max}K" if request.salary_max > 0 else "面议"
+        if request.status is not None:
+            updates.append("j.status = $status")
+            params["status"] = request.status
+        
+        if updates:
+            updates.append("j.updated_at = datetime()")
+            query = f"MATCH (j:Job {{url: $url}}) SET {', '.join(updates)}"
+            neo4j_conn.query(query, params)
+        
+        # 更新技能关系
+        if request.skills is not None:
+            # 删除旧的技能关系
+            neo4j_conn.query("""
+                MATCH (j:Job {url: $url})-[r:REQUIRES_SKILL]->()
+                DELETE r
+            """, {"url": job_id})
+            
+            # 建立新的技能关系
+            for skill in request.skills:
+                skill = skill.strip()
+                if skill:
+                    neo4j_conn.query("MERGE (s:Skill {name: $name})", {"name": skill})
+                    neo4j_conn.query("""
+                        MATCH (j:Job {url: $url})
+                        MATCH (s:Skill {name: $skill})
+                        MERGE (j)-[:REQUIRES_SKILL]->(s)
+                    """, {"url": job_id, "skill": skill})
+        
+        return {"code": 200, "message": "职位更新成功"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"更新职位失败: {str(e)}")
+
+@app.delete("/api/enterprise/jobs/{job_id}")
+def delete_job(job_id: str, user_id: str):
+    """删除职位"""
+    try:
+        # 验证是否是该用户创建的职位
+        result = neo4j_conn.query("""
+            MATCH (j:Job {url: $url})
+            RETURN j.created_by as created_by
+        """, {"url": job_id})
+        
+        if not result:
+            raise HTTPException(status_code=404, detail="职位不存在")
+        
+        if result[0]["created_by"] != user_id:
+            raise HTTPException(status_code=403, detail="无权删除此职位")
+        
+        # 删除职位及其关系
+        neo4j_conn.query("""
+            MATCH (j:Job {url: $url})
+            DETACH DELETE j
+        """, {"url": job_id})
+        
+        return {"code": 200, "message": "职位删除成功"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"删除职位失败: {str(e)}")
 
 # 健康检查
 @app.get("/health")

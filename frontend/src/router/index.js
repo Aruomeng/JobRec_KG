@@ -38,6 +38,12 @@ const routes = [
     component: () => import('@/views/enterprise/CandidateDetail.vue'),
     meta: { title: '候选人详情', theme: 'purple', requiresAuth: true, role: 'enterprise' }
   },
+  {
+    path: '/enterprise/center',
+    name: 'enterpriseCenter',
+    component: () => import('@/views/enterprise/EnterpriseCenter.vue'),
+    meta: { title: '企业中心', theme: 'purple', requiresAuth: true, role: 'enterprise' }
+  },
   // 高校端
   {
     path: '/university',

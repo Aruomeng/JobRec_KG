@@ -31,8 +31,8 @@
         </router-view>
       </a-layout-content>
 
-      <!-- 页脚（登录页不显示） -->
-      <a-layout-footer v-if="!isLoginPage" class="app-footer">
+      <!-- 页脚（登录页和企业中心不显示） -->
+      <a-layout-footer v-if="!isLoginPage && !isEnterpriseCenter" class="app-footer">
         智途AI就业推荐系统 ©2026 基于知识图谱与GraphSAGE
       </a-layout-footer>
     </a-layout>
@@ -52,6 +52,9 @@ const route = useRoute()
 
 // 判断是否是登录页
 const isLoginPage = computed(() => route.path.startsWith('/login'))
+
+// 判断是否是企业中心页
+const isEnterpriseCenter = computed(() => route.path === '/enterprise/center')
 
 // 判断是否已登录
 const isLoggedIn = computed(() => !!localStorage.getItem('token'))
@@ -81,9 +84,20 @@ const currentRole = computed(() => {
   return 'student'
 })
 
-// 编辑资料 - 触发子组件的资料弹窗
+// 编辑资料 - 根据角色跳转
 const showProfileModal = () => {
-  // 通过事件总线或直接调用子组件方法
+  // 企业端跳转到企业中心
+  if (currentRole.value === 'enterprise') {
+    router.push('/enterprise/center')
+    return
+  }
+  // 高校端(暂无个人中心，留作扩展)
+  if (currentRole.value === 'university') {
+    // router.push('/university/center')
+    window.dispatchEvent(new CustomEvent('open-profile-modal'))
+    return
+  }
+  // 学生端触发弹窗
   window.dispatchEvent(new CustomEvent('open-profile-modal'))
 }
 
@@ -240,7 +254,7 @@ const handleLogout = () => {
 .app-content {
   padding: 24px;
   padding-top: 88px;
-  background: linear-gradient(180deg, var(--color-bg) 0%, #E0F2FE 100%);
+  background: #ffffff;
   min-height: calc(100vh - 64px);
 }
 
@@ -254,7 +268,7 @@ const handleLogout = () => {
 /* ========== Footer ========== */
 .app-footer {
   text-align: center;
-  background: linear-gradient(180deg, #E0F2FE 0%, #F0F9FF 100%);
+  background: #ffffff;
   color: var(--color-text-muted);
   padding: 24px;
   font-size: 13px;
