@@ -13,6 +13,9 @@ import psycopg2
 import math
 import sys
 
+# 导入统一配置
+from common import config
+
 # 配置类
 class Settings(BaseSettings):
     neo4j_uri: str
@@ -24,7 +27,7 @@ class Settings(BaseSettings):
     neon_database_url: str = ""
     
     class Config:
-        env_file = "/Users/tianyuhang/代码/jobrec/backend/.env"
+        env_file = str(config.ENV_FILE_PATH)
 
 # 初始化配置
 settings = Settings()

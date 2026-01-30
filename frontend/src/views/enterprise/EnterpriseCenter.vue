@@ -393,15 +393,15 @@ onMounted(() => { fetchProfile(); fetchJobs() })
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
-    border-bottom: 1px solid #f0f0f0;
+    background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo-content {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #f5576c;
+    color: white;
 }
 
 .logo-icon {
@@ -429,13 +429,13 @@ onMounted(() => { fetchProfile(); fetchJobs() })
 }
 
 :deep(.sidebar-menu .ant-menu-item:hover) {
-    background: #fdf2f8 !important;
-    color: #f5576c !important;
+    background: #EFF6FF !important;
+    color: #1E3A5F !important;
 }
 
 :deep(.sidebar-menu .ant-menu-item-selected) {
-    background: #fdf2f8 !important;
-    color: #f5576c !important;
+    background: #EFF6FF !important;
+    color: #1E3A5F !important;
     font-weight: 500;
 }
 
@@ -459,8 +459,8 @@ onMounted(() => { fetchProfile(); fetchJobs() })
 }
 
 .collapse-trigger:hover {
-    color: #f5576c;
-    background: #fdf2f8;
+    color: #1E3A5F;
+    background: #EFF6FF;
 }
 
 /* 内容区 */
@@ -518,7 +518,7 @@ onMounted(() => { fetchProfile(); fetchJobs() })
 }
 
 .job-item:hover {
-    box-shadow: 0 4px 20px rgba(240, 147, 251, 0.15);
+    box-shadow: 0 4px 20px rgba(30, 58, 95, 0.12);
 }
 
 .job-info {
@@ -541,13 +541,13 @@ onMounted(() => { fetchProfile(); fetchJobs() })
 
 /* 主题按钮 */
 :deep(.ant-btn-primary) {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+    background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%) !important;
     border: none !important;
-    box-shadow: 0 2px 8px rgba(245, 87, 108, 0.35);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 :deep(.ant-btn-primary:hover) {
-    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%) !important;
+    background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%) !important;
 }
 
 .fade-enter-active,

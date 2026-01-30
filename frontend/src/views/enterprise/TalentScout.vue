@@ -51,7 +51,7 @@
 
           <!-- 雷达图 -->
           <template v-else-if="column.key === 'radar'">
-            <a-button size="small" type="primary" ghost @click="showRadar(record)">
+            <a-button size="small" type="primary" @click="showRadar(record)">
               查看能力图
             </a-button>
           </template>
@@ -91,14 +91,16 @@
     <!-- 能力图弹窗 -->
     <a-modal v-model:open="radarVisible" width="800px" :footer="null">
       <template #title>
-        <PieChartOutlined /> {{ currentCandidate?.name || '' }} 的能力分析
+        <span style="color: #1F2937;">
+          <PieChartOutlined /> {{ currentCandidate?.name || '' }} 的能力分析
+        </span>
       </template>
       <div v-if="currentCandidate" style="padding: 10px;">
         <!-- 顶部：基础信息 + 匹配度环形图 -->
         <div style="display: flex; gap: 20px; margin-bottom: 20px;">
           <!-- 左侧：基础信息卡片 -->
           <div
-            style="flex: 1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 18px; color: white;">
+            style="flex: 1; background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%); border-radius: 12px; padding: 18px; color: white;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">
               <div>
                 <div style="font-size: 22px; font-weight: 600; margin-bottom: 8px;">{{ currentCandidate.name }}</div>
@@ -335,9 +337,9 @@ const radarOption = computed(() => {
       data: [{
         value: categories.map(c => c.count),
         name: '技能分布',
-        areaStyle: { color: 'rgba(102, 126, 234, 0.4)' },
-        lineStyle: { color: '#667eea', width: 2 },
-        itemStyle: { color: '#667eea' }
+        areaStyle: { color: 'rgba(37, 99, 235, 0.4)' },
+        lineStyle: { color: '#2563EB', width: 2 },
+        itemStyle: { color: '#1E3A5F' }
       }]
     }]
   }
@@ -374,8 +376,8 @@ const barOption = computed(() => {
             type: 'linear',
             x: 0, y: 0, x2: 1, y2: 0,
             colorStops: [
-              { offset: 0, color: '#667eea' },
-              { offset: 1, color: '#764ba2' }
+              { offset: 0, color: '#3B82F6' },
+              { offset: 1, color: '#1E3A5F' }
             ]
           },
           borderRadius: [0, 4, 4, 0]
@@ -393,8 +395,8 @@ const getScoreColor = (score) => {
   return '#faad14'
 }
 
-// 技能标签颜色
-const skillTagColors = ['green', 'blue', 'purple', 'cyan', 'orange', 'magenta', 'volcano', 'geekblue']
+// 技能标签颜色 (统一为2-3种协调色)
+const skillTagColors = ['blue', 'geekblue', 'cyan']
 const getSkillTagColor = (index) => skillTagColors[index % skillTagColors.length]
 
 const scoutTalents = async () => {
@@ -460,7 +462,7 @@ const xrayResume = async (record) => {
   top: 0;
   bottom: 0;
   width: 4px;
-  background: linear-gradient(180deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(180deg, #1E3A5F 0%, #3B82F6 100%);
 }
 
 /* 表格样式增强 */
@@ -471,11 +473,11 @@ const xrayResume = async (record) => {
 }
 
 :deep(.ant-table-thead > tr > th) {
-  background: linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%) !important;
+  background: #F8FAFC !important;
   font-weight: 600;
-  color: #831843;
+  color: #1E3A5F;
   padding: 12px 16px !important;
-  border-bottom: 2px solid rgba(240, 147, 251, 0.2) !important;
+  border-bottom: 2px solid #E2E8F0 !important;
 }
 
 :deep(.ant-table-tbody > tr > td) {
@@ -484,7 +486,7 @@ const xrayResume = async (record) => {
 }
 
 :deep(.ant-table-tbody > tr:hover > td) {
-  background: rgba(240, 147, 251, 0.04) !important;
+  background: #EFF6FF !important;
 }
 
 :deep(.ant-table-row) {
@@ -493,7 +495,7 @@ const xrayResume = async (record) => {
 
 :deep(.ant-table-row:hover) {
   transform: scale(1.002);
-  box-shadow: 0 2px 8px rgba(240, 147, 251, 0.12);
+  box-shadow: 0 2px 8px rgba(30, 58, 95, 0.1);
 }
 
 :deep(.ant-progress) {
@@ -501,7 +503,7 @@ const xrayResume = async (record) => {
 }
 
 :deep(.ant-progress-bg) {
-  background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%) !important;
+  background: linear-gradient(90deg, #3B82F6 0%, #1E3A5F 100%) !important;
 }
 
 /* 分页容器 */
@@ -519,7 +521,7 @@ const xrayResume = async (record) => {
 }
 
 :deep(.ant-modal-header) {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);
   border-bottom: none;
   padding: 16px 24px;
 }
@@ -531,15 +533,15 @@ const xrayResume = async (record) => {
 
 /* 按钮增强 */
 :deep(.ant-btn-primary) {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);
   border: none;
-  box-shadow: 0 2px 8px rgba(245, 87, 108, 0.25);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
   transition: all 0.2s ease-out;
 }
 
 :deep(.ant-btn-primary:hover) {
-  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
-  box-shadow: 0 4px 16px rgba(245, 87, 108, 0.35);
+  background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
   transform: translateY(-1px);
 }
 

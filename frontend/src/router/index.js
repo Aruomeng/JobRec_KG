@@ -58,26 +58,29 @@ const router = createRouter({
   routes
 })
 
-// 认证守卫
+// 认证守卫 (使用 Pinia store)
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token')
-  
-  // 需要认证的页面
-  if (to.meta.requiresAuth && !token) {
-    const role = to.meta.role || 'student'
-    next(`/login/${role}`)
-    return
-  }
-  
-  // 已登录用户访问登录页，跳转到对应端
-  if (to.name === 'login' && token) {
-    const user = JSON.parse(localStorage.getItem('user') || '{}')
-    const role = user.role || to.params.role || 'student'
-    next(`/${role}`)
-    return
-  }
-  
-  next()
+  // 动态导入 store (避免循环依赖)
+  import('@/stores/user').then(({ useUserStore }) => {
+    const userStore = useUserStore()
+    
+    // 需要认证的页面
+    if (to.meta.requiresAuth && !userStore.isLoggedIn) {
+      const role = to.meta.role || 'student'
+      next(`/login/${role}`)
+      return
+    }
+    
+    // 已登录用户访问登录页，跳转到对应端
+    if (to.name === 'login' && userStore.isLoggedIn) {
+      const role = userStore.role || to.params.role || 'student'
+      next(`/${role}`)
+      return
+    }
+    
+    next()
+  })
 })
 
 export default router
+

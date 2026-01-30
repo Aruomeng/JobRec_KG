@@ -5,9 +5,12 @@
         <div class="bg-layer enterprise-bg" :class="{ active: role === 'enterprise' }"></div>
         <div class="bg-layer university-bg" :class="{ active: role === 'university' }"></div>
 
-        <!-- 动态六边形背景 -->
-        <div class="hexagons-container">
-            <div v-for="n in 25" :key="n" class="hexagon" :style="hexagonStyle(n)"></div>
+        <!-- 太空网格前进效果 -->
+        <div class="space-grid-container">
+            <div class="grid-plane"></div>
+            <div class="stars-layer">
+                <div v-for="n in 50" :key="n" class="star" :style="starStyle(n)"></div>
+            </div>
         </div>
 
         <!-- 登录卡片 -->
@@ -43,7 +46,7 @@
                     <a-form-item>
                         <a-button type="primary" html-type="submit" size="large" block :loading="loading"
                             class="login-btn" :style="{ background: themeGradient, border: 'none' }">
-                            <span v-if="!loading">登录</span>
+                            {{ loading ? '登录中...' : '登录' }}
                         </a-button>
                     </a-form-item>
                 </a-form>
@@ -70,9 +73,11 @@ import { useRoute, useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
 import { UserOutlined, LockOutlined, ReadOutlined, BankOutlined, BookOutlined } from '@ant-design/icons-vue'
 import axios from 'axios'
+import { useUserStore } from '@/stores/user'
 
 const route = useRoute()
 const router = useRouter()
+const userStore = useUserStore()
 
 const role = computed(() => route.params.role || 'student')
 
@@ -91,11 +96,11 @@ const themeConfig = {
         bg: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
     },
     enterprise: {
-        color: '#f093fb',
-        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        color: '#3B82F6',
+        gradient: 'linear-gradient(135deg, #3B82F6 0%, #6366F1 100%)',
         iconComponent: BankOutlined,
         title: '企业人才招聘平台',
-        bg: 'linear-gradient(135deg, #1e1e2f 0%, #2d132c 50%, #4a1942 100%)'
+        bg: 'linear-gradient(135deg, #1E293B 0%, #334155 50%, #3B82F6 100%)'
     },
     university: {
         color: '#4facfe',
@@ -114,23 +119,20 @@ const dynamicBackground = computed(() => themeConfig[role.value]?.bg)
 
 const getRoleIconComponent = (key) => themeConfig[key]?.iconComponent
 
-// 六边形样式生成器 - 使用固定种子避免切换时重新生成
-const hexagonSeeds = Array.from({ length: 25 }, (_, i) => ({
-    left: ((i * 37 + 13) % 100),
-    delay: ((i * 23 + 7) % 50) / 10,
-    duration: 18 + ((i * 31 + 11) % 20),
-    size: 8 + ((i * 17 + 5) % 72), // 8px - 80px 更大的尺寸差异
-    opacity: 0.1 + ((i * 19 + 3) % 25) / 100
-}))
-
-const hexagonStyle = (n) => {
-    const seed = hexagonSeeds[n - 1]
+// 星星样式生成器
+const starStyle = (n) => {
+    const left = ((n * 37 + 13) % 100)
+    const top = ((n * 23 + 7) % 100)
+    const delay = ((n * 19 + 3) % 30) / 10
+    const duration = 2 + ((n * 17 + 11) % 30) / 10
+    const size = 1 + ((n * 13 + 5) % 3)
     return {
-        left: `${seed.left}%`,
-        animationDelay: `${seed.delay}s`,
-        animationDuration: `${seed.duration}s`,
-        '--hex-size': `${seed.size}px`,
-        '--hex-opacity': seed.opacity
+        left: `${left}%`,
+        top: `${top}%`,
+        width: `${size}px`,
+        height: `${size}px`,
+        animationDelay: `${delay}s`,
+        animationDuration: `${duration}s`
     }
 }
 
@@ -165,12 +167,8 @@ const handleLogin = async () => {
         })
 
         if (res.data.code === 200) {
-            localStorage.setItem('user', JSON.stringify(res.data.data))
-            localStorage.setItem('token', 'session-' + (res.data.data.student_id || res.data.data.user_id))
-            localStorage.setItem('role', currentRole)
-            if (currentRole === 'student') {
-                localStorage.setItem('studentId', res.data.data.student_id)
-            }
+            // 使用 Pinia store 设置用户状态
+            userStore.login(res.data.data, currentRole)
             message.success('登录成功')
             window.location.href = `/${currentRole}`
         }
@@ -213,15 +211,15 @@ const handleLogin = async () => {
 }
 
 .enterprise-bg {
-    background: linear-gradient(135deg, #1e1e2f 0%, #2d132c 50%, #4a1942 100%);
+    background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 50%, #1E40AF 100%);
 }
 
 .university-bg {
     background: linear-gradient(135deg, #0c1618 0%, #1c3334 50%, #1d4e5f 100%);
 }
 
-/* 六边形科技背景 */
-.hexagons-container {
+/* 太空隧道前进效果 */
+.space-grid-container {
     position: absolute;
     inset: 0;
     overflow: hidden;
@@ -229,72 +227,85 @@ const handleLogin = async () => {
     z-index: 1;
 }
 
-.hexagon {
+.grid-plane {
     position: absolute;
-    bottom: -60px;
-    width: var(--hex-size, 30px);
-    height: var(--hex-size, 30px);
-    background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.2) 0%,
-            rgba(255, 255, 255, 0.05) 100%);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    opacity: var(--hex-opacity, 0.2);
-    animation: hex-float linear infinite;
-    box-shadow:
-        0 0 10px rgba(255, 255, 255, 0.1),
-        inset 0 0 15px rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    inset: 0;
+    background:
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 100px,
+            rgba(255, 255, 255, 0.06) 100px,
+            rgba(255, 255, 255, 0.06) 102px);
+    animation: tunnel-move 2.5s linear infinite;
 }
 
-.hexagon::before {
+.grid-plane::before {
     content: '';
     position: absolute;
-    inset: 2px;
-    background: transparent;
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 50% at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.6) 100%);
 }
 
-/* 部分六边形添加发光效果 */
-.hexagon:nth-child(3n) {
-    box-shadow:
-        0 0 20px rgba(102, 126, 234, 0.3),
-        0 0 40px rgba(102, 126, 234, 0.1);
+.grid-plane::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-linear-gradient(90deg,
+            transparent,
+            transparent 100px,
+            rgba(255, 255, 255, 0.04) 100px,
+            rgba(255, 255, 255, 0.04) 102px);
 }
 
-.hexagon:nth-child(5n) {
-    box-shadow:
-        0 0 20px rgba(79, 172, 254, 0.3),
-        0 0 40px rgba(79, 172, 254, 0.1);
-}
-
-.hexagon:nth-child(7n) {
-    box-shadow:
-        0 0 20px rgba(240, 147, 251, 0.3),
-        0 0 40px rgba(240, 147, 251, 0.1);
-}
-
-@keyframes hex-float {
+@keyframes tunnel-move {
     0% {
-        transform: translateY(0) scale(0.9);
-        opacity: 0;
-    }
-
-    5% {
-        opacity: var(--hex-opacity, 0.2);
-    }
-
-    50% {
-        transform: translateY(-50vh) scale(1);
-    }
-
-    95% {
-        opacity: var(--hex-opacity, 0.2);
+        background-position: 0 0;
     }
 
     100% {
-        transform: translateY(-110vh) scale(0.9);
-        opacity: 0;
+        background-position: 0 102px;
+    }
+}
+
+/* 星星层 */
+.stars-layer {
+    position: absolute;
+    inset: 0;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: star-twinkle ease-in-out infinite;
+}
+
+.star:nth-child(3n) {
+    background: #a5b4fc;
+}
+
+.star:nth-child(5n) {
+    background: #93c5fd;
+}
+
+.star:nth-child(7n) {
+    background: #c4b5fd;
+}
+
+@keyframes star-twinkle {
+
+    0%,
+    100% {
+        opacity: 0.2;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
     }
 }
 
@@ -302,16 +313,16 @@ const handleLogin = async () => {
 .login-card {
     width: 100%;
     max-width: 420px;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(15, 23, 42, 0.75);
     border-radius: 24px;
     overflow: hidden;
     box-shadow:
-        0 25px 80px rgba(0, 0, 0, 0.35),
-        0 8px 32px rgba(3, 105, 161, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+        0 25px 80px rgba(0, 0, 0, 0.5),
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     z-index: 10;
     transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
 }
@@ -319,9 +330,9 @@ const handleLogin = async () => {
 .login-card:hover {
     transform: translateY(-4px);
     box-shadow:
-        0 32px 100px rgba(0, 0, 0, 0.4),
-        0 12px 40px rgba(3, 105, 161, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        0 32px 100px rgba(0, 0, 0, 0.6),
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .login-header {
@@ -356,6 +367,7 @@ const handleLogin = async () => {
 
 .login-body {
     padding: 30px;
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .login-btn {
@@ -482,24 +494,29 @@ const handleLogin = async () => {
 /* 输入框样式增强 */
 :deep(.ant-input-affix-wrapper) {
     border-radius: 12px;
-    border: 1px solid rgba(3, 105, 161, 0.15);
-    background: rgba(240, 249, 255, 0.5);
+    border: 1px solid rgba(100, 116, 139, 0.2);
+    background: transparent !important;
     transition: all 0.25s ease-out;
 }
 
 :deep(.ant-input-affix-wrapper:hover) {
-    border-color: rgba(14, 165, 233, 0.4);
-    background: rgba(240, 249, 255, 0.8);
+    border-color: rgba(100, 116, 139, 0.4);
+    background: rgba(248, 250, 252, 0.5) !important;
 }
 
 :deep(.ant-input-affix-wrapper-focused),
 :deep(.ant-input-affix-wrapper:focus) {
-    border-color: #0EA5E9;
-    background: white;
-    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12), 0 2px 8px rgba(3, 105, 161, 0.1);
+    border-color: #3B82F6;
+    background: rgba(248, 250, 252, 0.8) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
 :deep(.ant-input) {
     font-family: 'Poppins', sans-serif;
+    background: transparent !important;
+}
+
+:deep(.ant-input-password) {
+    background: transparent !important;
 }
 </style>

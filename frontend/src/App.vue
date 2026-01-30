@@ -46,9 +46,11 @@ import { Modal } from 'ant-design-vue'
 import { ExclamationCircleOutlined, RocketOutlined, IdcardOutlined } from '@ant-design/icons-vue'
 import { createVNode } from 'vue'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
+import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
 const route = useRoute()
+const userStore = useUserStore()
 
 // 判断是否是登录页
 const isLoginPage = computed(() => route.path.startsWith('/login'))
@@ -56,17 +58,11 @@ const isLoginPage = computed(() => route.path.startsWith('/login'))
 // 判断是否是企业中心页
 const isEnterpriseCenter = computed(() => route.path === '/enterprise/center')
 
-// 判断是否已登录
-const isLoggedIn = computed(() => !!localStorage.getItem('token'))
+// 判断是否已登录 (使用 store)
+const isLoggedIn = computed(() => userStore.isLoggedIn)
 
-// 用户信息
-const userInfo = computed(() => {
-  try {
-    return JSON.parse(localStorage.getItem('user') || '{}')
-  } catch {
-    return {}
-  }
-})
+// 用户信息 (使用 store)
+const userInfo = computed(() => userStore.userInfo || {})
 
 // 当前页面标题
 const currentTitle = computed(() => {
@@ -112,10 +108,7 @@ const handleLogout = () => {
     okType: 'danger',
     centered: true,
     onOk() {
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-      localStorage.removeItem('studentId')
-      localStorage.removeItem('role')
+      userStore.logout()
       router.push('/login/student')
     }
   })
@@ -174,10 +167,10 @@ const handleLogout = () => {
   box-shadow: 0 4px 24px rgba(102, 126, 234, 0.25);
 }
 
-/* 企业端 - 粉红色 */
+/* 企业端 - 清爽蓝 (浅一点) */
 .app-header-enterprise {
-  background: linear-gradient(135deg, rgba(240, 147, 251, 0.95) 0%, rgba(245, 87, 108, 0.9) 100%);
-  box-shadow: 0 4px 24px rgba(245, 87, 108, 0.25);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.95) 0%, rgba(99, 102, 241, 0.9) 100%);
+  box-shadow: 0 4px 24px rgba(59, 130, 246, 0.25);
 }
 
 /* 高校端 - 青蓝色 */

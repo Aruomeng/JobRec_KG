@@ -412,6 +412,7 @@ import { useRouter } from 'vue-router'
 import { message, notification } from 'ant-design-vue'
 import { InboxOutlined, UserOutlined, LockOutlined, SearchOutlined, BarChartOutlined, RobotOutlined, ThunderboltOutlined, ExperimentOutlined, BankOutlined, EnvironmentOutlined, BookOutlined, AppstoreOutlined, BulbOutlined, FireOutlined, AimOutlined, CheckCircleOutlined, EditOutlined, PieChartOutlined, CheckOutlined, TeamOutlined, TrophyOutlined, KeyOutlined, FileTextOutlined } from '@ant-design/icons-vue'
 import { studentApi, commonApi } from '@/api'
+import { useUserStore } from '@/stores/user'
 import VChart from 'vue-echarts'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
@@ -422,35 +423,17 @@ import { TitleComponent, TooltipComponent, RadarComponent } from 'echarts/compon
 use([CanvasRenderer, RadarChart, TitleComponent, TooltipComponent, RadarComponent])
 
 const router = useRouter()
+const userStore = useUserStore()
 
-// 用户资料 - 优先从登录页存储的user读取
-const getInitialProfile = () => {
-  // 尝试从登录页存储的数据读取
-  const loginUser = JSON.parse(localStorage.getItem('user') || 'null')
-  const savedProfile = JSON.parse(localStorage.getItem('userProfile') || '{}')
+// 用户资料 - 从 Pinia store 获取
+const userProfile = ref({ ...userStore.userProfile })
 
-  if (loginUser && loginUser.student_id) {
-    // 登录用户，使用登录返回的数据
-    return {
-      student_id: loginUser.student_id,
-      name: loginUser.name || '',
-      education: loginUser.education || '',
-      major: loginUser.major || '',
-      expectedJob: loginUser.expected_position || '',
-      skills: Array.isArray(loginUser.skills) ? loginUser.skills : [],
-      courses: Array.isArray(loginUser.courses) ? loginUser.courses : []
-    }
-  }
+// 监听 store 变化同步到本地 ref
+watch(() => userStore.userProfile, (newVal) => {
+  userProfile.value = { ...newVal }
+}, { deep: true })
 
-  // 使用保存的资料
-  if (!Array.isArray(savedProfile.skills)) savedProfile.skills = []
-  if (!Array.isArray(savedProfile.courses)) savedProfile.courses = []
-  return savedProfile
-}
-
-const userProfile = ref(getInitialProfile())
-
-const isLoggedIn = computed(() => !!userProfile.value.student_id && !!localStorage.getItem('token'))
+const isLoggedIn = computed(() => userStore.isLoggedIn)
 
 const showProfileModal = ref(false)
 const showResumeUpload = ref(false)
@@ -522,10 +505,8 @@ const handleLogin = async (values) => {
 }
 
 const logout = () => {
-  userProfile.value = {}
-  localStorage.removeItem('userProfile')
+  userStore.logout()
   message.success('已退出登录')
-  // 刷新页面或重置状态
   window.location.reload()
 }
 
@@ -952,7 +933,8 @@ const showSkillDiagnosis = async () => {
 
 const saveProfile = async () => {
   userProfile.value = { ...profileForm.value }
-  localStorage.setItem('userProfile', JSON.stringify(userProfile.value))
+  // 使用 store 更新用户资料
+  userStore.updateProfile(userProfile.value)
   showProfileModal.value = false
   message.success('个人信息已保存')
 

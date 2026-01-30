@@ -6,8 +6,9 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
 }
 
 /* 三端主题色 */
@@ -16,9 +17,13 @@ body {
   --student-primary: #1890ff;
   --student-gradient: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
 
-  /* 企业端 - 深紫 */
-  --enterprise-primary: #722ed1;
-  --enterprise-gradient: linear-gradient(135deg, #722ed1 0%, #9254de 100%);
+  /* 企业端 - 深蓝商务风 (专业/严肃/信赖) */
+  --enterprise-primary: #1e3a5f;
+  --enterprise-secondary: #3b82f6;
+  --enterprise-accent: #10b981;
+  --enterprise-gradient: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+  --enterprise-light: #eff6ff;
+  --enterprise-border: #bfdbfe;
 
   /* 高校端 - 暖橙 */
   --university-primary: #fa8c16;

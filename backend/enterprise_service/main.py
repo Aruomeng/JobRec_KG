@@ -14,8 +14,11 @@ import math
 import os
 import sys
 
-# 添加GraphSAGE推荐系统的路径
-sys.path.append('/Users/tianyuhang/代码/jobrec/模块_推荐系统/深度学习GraphSAGE/源代码/核心模块')
+# 导入统一配置
+from common import config
+
+# 添加GraphSAGE推荐系统的路径 (使用配置)
+sys.path.insert(0, str(config.GRAPHSAGE_MODULE_PATH))
 
 # 配置类
 class Settings(BaseSettings):
@@ -28,7 +31,7 @@ class Settings(BaseSettings):
     neon_database_url: str = ""
     
     class Config:
-        env_file = "/Users/tianyuhang/代码/jobrec/backend/.env"
+        env_file = str(config.ENV_FILE_PATH)
 
 # 初始化配置
 settings = Settings()

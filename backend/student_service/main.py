@@ -12,8 +12,11 @@ from passlib.context import CryptContext
 import os
 import sys
 
-# 添加GraphSAGE推荐系统的路径
-sys.path.append('/Users/tianyuhang/代码/jobrec/模块_推荐系统/深度学习GraphSAGE/源代码/核心模块')
+# 导入统一配置
+from common import config
+
+# 添加GraphSAGE推荐系统的路径 (使用配置)
+sys.path.insert(0, str(config.GRAPHSAGE_MODULE_PATH))
 from hybrid_recommender import create_recommender_from_trained_model
 
 # 配置类
@@ -27,7 +30,7 @@ class Settings(BaseSettings):
     neon_database_url: str = ""
     
     class Config:
-        env_file = "/Users/tianyuhang/代码/jobrec/backend/.env"
+        env_file = str(config.ENV_FILE_PATH)
 
 # 初始化配置
 settings = Settings()
@@ -58,9 +61,9 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 # 初始化GraphSAGE推荐器
 try:
     print("🔄 正在初始化GraphSAGE推荐器...")
-    # 确保模型路径和数据路径正确
-    model_path = '/Users/tianyuhang/代码/jobrec/模块_推荐系统/深度学习GraphSAGE/源代码/核心模块/输出/模型权重/graphsage_model.pth'
-    data_path = '/Users/tianyuhang/代码/jobrec/模块_推荐系统/深度学习GraphSAGE/源代码/核心模块/graph_data.pt'
+    # 使用配置的模型路径和数据路径
+    model_path = str(config.GRAPHSAGE_MODEL_PATH)
+    data_path = str(config.GRAPHSAGE_DATA_PATH)
     
     # 创建推荐器实例
     graphsage_recommender = create_recommender_from_trained_model(
@@ -86,6 +89,27 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# 启动时创建 Neo4j 索引 (提升查询性能)
+@app.on_event("startup")
+async def create_neo4j_indexes():
+    """创建关键字段索引以优化查询性能"""
+    indexes = [
+        "CREATE INDEX student_id_idx IF NOT EXISTS FOR (s:Student) ON (s.student_id)",
+        "CREATE INDEX student_username_idx IF NOT EXISTS FOR (s:Student) ON (s.username)",
+        "CREATE INDEX skill_name_idx IF NOT EXISTS FOR (sk:Skill) ON (sk.name)",
+        "CREATE INDEX job_url_idx IF NOT EXISTS FOR (j:Job) ON (j.url)",
+        "CREATE INDEX job_title_idx IF NOT EXISTS FOR (j:Job) ON (j.title)",
+        "CREATE INDEX company_name_idx IF NOT EXISTS FOR (c:Company) ON (c.name)",
+        "CREATE INDEX city_name_idx IF NOT EXISTS FOR (ct:City) ON (ct.name)",
+        "CREATE INDEX course_name_idx IF NOT EXISTS FOR (c:Course) ON (c.name)",
+    ]
+    try:
+        for idx_query in indexes:
+            neo4j_conn.query(idx_query)
+        print("✅ Neo4j 索引创建/验证完成")
+    except Exception as e:
+        print(f"⚠️ Neo4j 索引创建失败 (可能已存在): {e}")
 
 # 模型类
 class Token(BaseModel):

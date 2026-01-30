@@ -1,11 +1,26 @@
-fastapi
-uvicorn
-neo4j-driver
-python-multipart
-pydantic
-pydantic-settings
-python-dotenv
-passlib[bcrypt]
-jwt
-python-docx
-PyPDF2
+# Python 依赖 - 版本锁定
+# 生成时间: 2026-01-30
+
+# Web 框架
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+
+# 数据验证
+pydantic==2.6.0
+pydantic-settings==2.1.0
+
+# 数据库
+neo4j==5.17.0
+psycopg2-binary==2.9.9
+
+# 认证
+passlib[bcrypt]==1.7.4
+PyJWT==2.8.0
+
+# 配置
+python-dotenv==1.0.0
+
+# 文档解析
+python-docx==1.1.0
+PyPDF2==3.0.1
