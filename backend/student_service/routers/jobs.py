@@ -144,19 +144,6 @@ def get_job_graph(job_id: str, request_body: Optional[Dict] = Body(default=None)
     return sanitize_data({"nodes": nodes, "edges": edges})
 
 
-@router.get("/api/student/cities")
-def get_cities():
-    """获取城市列表"""
-    query = """
-    MATCH (c:City)
-    OPTIONAL MATCH (c)<-[:LOCATED_IN]-(:Company)<-[:OFFERED_BY]-(j:Job)
-    WITH c.name AS city, COUNT(j) AS job_count
-    ORDER BY job_count DESC
-    RETURN city
-    """
-    results = neo4j_conn.query(query)
-    return {"cities": [r["city"] for r in results if r["city"]]}
-
 
 @router.get("/api/student/health")
 def health_check():

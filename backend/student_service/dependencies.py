@@ -67,8 +67,8 @@ def init_graphsage():
         model_path = str(config.GRAPHSAGE_MODEL_PATH)
         data_path = str(config.GRAPHSAGE_DATA_PATH)
         
-        print(f"   模型路径: {model_path}")
-        print(f"   数据路径: {data_path}")
+        # print(f"   模型路径: {model_path}")
+        # print(f"   数据路径: {data_path}")
         
         graphsage_recommender = create_recommender_from_trained_model(
             model_path=model_path,

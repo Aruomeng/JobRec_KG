@@ -141,7 +141,7 @@
       </div>
     </a-spin>
 
-    <!-- 登录弹窗 -->
+    <!-- 登录弹窗
     <a-modal v-model:open="showLoginModal" :footer="null" width="400px">
       <template #title>
         <KeyOutlined /> 学生登录
@@ -171,21 +171,8 @@
           </a-button>
         </a-form-item>
       </a-form>
-    </a-modal>
+    </a-modal> -->
 
-    <!-- 简历上传弹窗 -->
-    <a-modal v-model:open="showResumeUpload" :footer="null">
-      <template #title>
-        <FileTextOutlined /> 上传简历 (支持PDF/Word)
-      </template>
-      <a-upload-dragger name="file" :multiple="false" :customRequest="handleResumeUpload" accept=".pdf,.docx,.doc,.txt">
-        <p class="ant-upload-drag-icon">
-          <inbox-outlined />
-        </p>
-        <p class="ant-upload-text">点击或拖拽文件到此区域上传</p>
-        <p class="ant-upload-hint">支持解析简历中的技能关键词，自动匹配推荐</p>
-      </a-upload-dragger>
-    </a-modal>
 
     <!-- 技能诊断弹窗 - 紧凑布局 -->
     <a-modal v-model:open="diagnosisVisible" title="" width="1000px" :footer="null" :body-style="{ padding: '0' }"
@@ -214,11 +201,11 @@
             <div class="stat"><span class="n green">{{ diagnosis.skills_analysis?.all_skills?.length || 0 }}</span><span
                 class="l">总技能</span></div>
             <div class="stat"><span class="n blue">{{ diagnosis.position_analysis?.matched_skills?.length || 0
-                }}</span><span class="l">已匹配</span></div>
+            }}</span><span class="l">已匹配</span></div>
             <div class="stat"><span class="n orange">{{ diagnosis.position_analysis?.missing_skills?.length || 0
-                }}</span><span class="l">待学习</span></div>
+            }}</span><span class="l">待学习</span></div>
             <div class="stat"><span class="n purple">{{ diagnosis.market_analysis?.market_match_rate || 0
-                }}%</span><span class="l">市场</span></div>
+            }}%</span><span class="l">市场</span></div>
           </div>
         </div>
 
@@ -244,7 +231,7 @@
                     :percent="Math.min(100, ((diagnosis.skills_analysis?.all_skills?.length || 0) / Math.max(1, diagnosis.peer_comparison?.avg_skills_count || 1)) * 100)"
                     :size="48" :stroke-width="6" stroke-color="#1890ff">
                     <template #format><span class="peer-n">{{ diagnosis.skills_analysis?.all_skills?.length || 0
-                        }}</span></template>
+                    }}</span></template>
                   </a-progress>
                   <span class="peer-l">您</span>
                 </div>
@@ -252,7 +239,7 @@
                 <div class="peer-item">
                   <a-progress type="circle" :percent="100" :size="48" :stroke-width="6" stroke-color="#722ed1">
                     <template #format><span class="peer-n">{{ diagnosis.peer_comparison?.avg_skills_count || 0
-                        }}</span></template>
+                    }}</span></template>
                   </a-progress>
                   <span class="peer-l">同行</span>
                 </div>
@@ -274,7 +261,7 @@
                 <div class="skill-head">
                   <CheckCircleOutlined /> 已掌握 <span class="cnt">{{ diagnosis.position_analysis?.matched_skills?.length
                     || 0
-                  }}</span>
+                    }}</span>
                 </div>
                 <div class="tags">
                   <span v-for="skill in diagnosis.position_analysis?.matched_skills?.slice(0, 10)" :key="skill"
@@ -287,7 +274,7 @@
                 <div class="skill-head">
                   <BookOutlined /> 待学习 <span class="cnt">{{ diagnosis.position_analysis?.missing_skills?.length
                     || 0
-                  }}</span>
+                    }}</span>
                 </div>
                 <div class="tags">
                   <span v-for="skill in diagnosis.position_analysis?.missing_skills?.slice(0, 10)" :key="skill"
@@ -322,7 +309,7 @@
               </div>
               <div class="advice">
                 <div v-for="(s, i) in diagnosis.diagnosis?.suggestions?.slice(0, 2)" :key="i" class="advice-item">• {{ s
-                  }}
+                }}
                 </div>
                 <div v-if="!diagnosis.diagnosis?.suggestions?.length" class="advice-item success">
                   <TrophyOutlined /> 继续保持!

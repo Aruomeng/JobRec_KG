@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # 导入路由
-from .routers import recommend_router, user_router, jobs_router, favorites_router
+from .routers import recommend_router, user_router, jobs_router, favorites_router, common_router
 from .dependencies import create_neo4j_indexes, init_graphsage
 
 # 创建 FastAPI 应用
@@ -30,6 +30,7 @@ app.include_router(recommend_router)
 app.include_router(user_router)
 app.include_router(jobs_router)
 app.include_router(favorites_router)
+app.include_router(common_router)
 
 
 # 启动事件
