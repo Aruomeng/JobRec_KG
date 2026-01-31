@@ -1,27 +1,31 @@
 <template>
   <div class="university-portal">
     <!-- 页面标题 -->
-    <a-page-header sub-title="课程供给 vs 市场需求全景透视" :style="{
-      background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+    <a-page-header :style="{
+      background: 'white',
       marginBottom: '24px',
       borderRadius: '16px',
-      color: 'white',
-      boxShadow: '0 4px 20px rgba(79, 172, 254, 0.25)',
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
     }">
+      <template #subTitle>
+        <span style="color: #666">课程供给 vs 市场需求全景透视</span>
+      </template>
       <template #extra>
         <a-button type="primary" ghost @click="fetchData" :loading="loading">
           <SyncOutlined :spin="loading" /> 刷新数据
         </a-button>
       </template>
       <template #title>
-        <BarChartOutlined /> 高校智能分析平台
+        <span style="color: #333">
+          <BarChartOutlined /> 高校智能分析平台
+        </span>
       </template>
     </a-page-header>
 
     <!-- 顶部统计卡片 + 环形图 -->
     <a-row :gutter="16" class="stat-row">
       <a-col :span="6">
-        <div class="stat-card-modern" style="background: linear-gradient(135deg, #fa8c16 0%, #f5222d 100%)">
+        <div class="stat-card-modern" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%)">
           <FireOutlined class="stat-icon" />
           <div class="stat-content">
             <div class="stat-value">{{ gaps.length }}</div>
@@ -30,7 +34,7 @@
         </div>
       </a-col>
       <a-col :span="6">
-        <div class="stat-card-modern" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)">
+        <div class="stat-card-modern" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)">
           <BookOutlined class="stat-icon" />
           <div class="stat-content">
             <div class="stat-value">{{ courses.length }}</div>
@@ -39,7 +43,7 @@
         </div>
       </a-col>
       <a-col :span="6">
-        <div class="stat-card-modern" style="background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%)">
+        <div class="stat-card-modern" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)">
           <CheckCircleOutlined class="stat-icon" />
           <div class="stat-content">
             <div class="stat-value">{{ highRelevanceCourses }}</div>
@@ -48,7 +52,7 @@
         </div>
       </a-col>
       <a-col :span="6">
-        <div class="stat-card-modern" style="background: linear-gradient(135deg, #ff4d4f 0%, #cf1322 100%)">
+        <div class="stat-card-modern" style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%)">
           <WarningOutlined class="stat-icon" />
           <div class="stat-content">
             <div class="stat-value">{{ lowRelevanceCourses }}</div>
@@ -80,7 +84,7 @@
 
             <!-- 右侧：缺口分布饼图 + 急需技能列表 -->
             <a-col :span="10">
-              <a-card :bordered="false" class="chart-card" style="margin-bottom: 16px">
+              <a-card :bordered="false" class="chart-card">
                 <template #title>
                   <AimOutlined /> 课程供给分布
                 </template>
@@ -604,17 +608,22 @@ onMounted(fetchData);
 <style scoped>
 /* 主题按钮 - 青蓝色 */
 :deep(.ant-btn-primary) {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+  background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%) !important;
   border: none !important;
-  box-shadow: 0 2px 8px rgba(79, 172, 254, 0.35);
+  box-shadow: 0 2px 8px rgba(11, 163, 96, 0.35);
   transition: all 0.25s ease;
-  color: #0c4a6e !important;
+  color: white !important;
 }
 
 :deep(.ant-btn-primary:hover) {
-  background: linear-gradient(135deg, #38a8f5 0%, #00dae8 100%) !important;
-  box-shadow: 0 4px 16px rgba(79, 172, 254, 0.45);
+  background: linear-gradient(135deg, #0d9d58 0%, #2aa87a 100%) !important;
+  box-shadow: 0 4px 16px rgba(11, 163, 96, 0.45);
   transform: translateY(-1px);
+}
+
+/* 页面标题副标题颜色 */
+:deep(.ant-page-header-heading-sub-title) {
+  color: #666 !important;
 }
 
 .university-portal {
@@ -799,10 +808,10 @@ onMounted(fetchData);
 
 /* 总结卡片 */
 .summary-card {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);
   border-radius: 16px;
   color: white;
-  box-shadow: 0 4px 20px rgba(79, 172, 254, 0.25);
+  box-shadow: 0 4px 20px rgba(11, 163, 96, 0.35);
 }
 
 .summary-content {
@@ -870,20 +879,61 @@ onMounted(fetchData);
   margin-bottom: 4px;
 }
 
+/* Tab 导航栏上边距 */
+:deep(.ant-tabs-card > .ant-tabs-nav) {
+  padding-top: 8px;
+  overflow: visible !important;
+}
+
+:deep(.ant-tabs-nav-wrap) {
+  overflow: visible !important;
+}
+
 :deep(.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab) {
   border-radius: 12px 12px 0 0;
-  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-  border: 1px solid rgba(3, 105, 161, 0.1);
-  transition: all 0.2s ease-out;
+  background: white;
+  border: 1px solid #f0f0f0;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #666;
+  transform: translateY(0);
 }
 
 :deep(.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab:hover) {
-  background: #E0F2FE;
+  color: #0ba360;
+  transform: translateY(-2px);
 }
 
 :deep(.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active) {
-  background: white;
-  border-bottom-color: white;
+  background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%) !important;
+  border-color: #0ba360;
+  color: white !important;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(11, 163, 96, 0.3);
+}
+
+:deep(.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-btn) {
+  color: white !important;
+}
+
+/* Tab 内容切换动画 */
+:deep(.ant-tabs-content) {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:deep(.ant-tabs-tabpane) {
+  animation: fadeSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 :deep(.ant-page-header-heading-title),

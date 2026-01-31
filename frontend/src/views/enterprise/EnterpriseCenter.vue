@@ -2,7 +2,7 @@
     <div class="enterprise-center">
         <a-layout class="center-layout">
             <!-- 固定左侧边栏 -->
-            <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible class="fixed-sidebar" :width="160"
+            <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible class="fixed-sidebar" :width="200"
                 :collapsed-width="56">
                 <!-- Logo区域 -->
                 <div class="sidebar-logo">
@@ -52,7 +52,7 @@
             </a-layout-sider>
 
             <!-- 右侧内容区 -->
-            <a-layout class="content-wrapper" :style="{ marginLeft: collapsed ? '56px' : '160px' }">
+            <a-layout class="content-wrapper" :style="{ marginLeft: collapsed ? '56px' : '200px' }">
                 <a-layout-content class="main-content">
 
                     <!-- 企业资料 -->

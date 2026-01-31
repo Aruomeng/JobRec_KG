@@ -102,6 +102,34 @@ export const studentApi = {
       salary: salary,
       include_insight: includeInsight
     }),
+
+  // ==================== 收藏职位 ====================
+  // 收藏职位
+  addFavorite: (userId, jobId, jobTitle, company, salary, city) =>
+    api.post("/student/favorites", {
+      user_id: userId,
+      job_id: jobId,
+      job_title: jobTitle,
+      company: company,
+      salary: salary,
+      city: city,
+    }),
+
+  // 取消收藏
+  removeFavorite: (jobId, userId) =>
+    api.delete(`/student/favorites/${encodeURIComponent(jobId)}`, {
+      params: { user_id: userId }
+    }),
+
+  // 获取收藏列表
+  getFavorites: (userId) =>
+    api.get("/student/favorites", { params: { user_id: userId } }),
+
+  // 检查收藏状态
+  checkFavoriteStatus: (jobId, userId) =>
+    api.get(`/student/favorites/${encodeURIComponent(jobId)}/status`, {
+      params: { user_id: userId }
+    }),
 };
 
 export const commonApi = {

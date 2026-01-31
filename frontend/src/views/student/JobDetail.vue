@@ -154,8 +154,11 @@
               <a-button block size="large" class="action-btn secondary" @click="planCourse">
                 <ReadOutlined /> 制定学习计划
               </a-button>
-              <a-button block class="action-btn ghost" @click="saveJob">
-                <StarOutlined /> 收藏职位
+              <a-button block class="action-btn" :class="isFavorited ? 'favorited' : 'ghost'" @click="toggleFavorite"
+                :loading="favoriteLoading">
+                <StarFilled v-if="isFavorited" style="color: #faad14" />
+                <StarOutlined v-else />
+                {{ isFavorited ? '已收藏' : '收藏职位' }}
               </a-button>
             </div>
 
@@ -219,7 +222,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
-import { BankOutlined, EnvironmentOutlined, BookOutlined, ClockCircleOutlined, AppstoreOutlined, AimOutlined, FileTextOutlined, GiftOutlined, DeploymentUnitOutlined, SendOutlined, StarOutlined, ProfileOutlined, ReadOutlined, PushpinOutlined, TrophyOutlined, CheckCircleOutlined } from '@ant-design/icons-vue'
+import { BankOutlined, EnvironmentOutlined, BookOutlined, ClockCircleOutlined, AppstoreOutlined, AimOutlined, FileTextOutlined, GiftOutlined, DeploymentUnitOutlined, SendOutlined, StarOutlined, StarFilled, ProfileOutlined, ReadOutlined, PushpinOutlined, TrophyOutlined, CheckCircleOutlined } from '@ant-design/icons-vue'
 import { studentApi } from '@/api'
 import G6 from '@antv/g6'
 
@@ -229,6 +232,8 @@ const router = useRouter()
 const loading = ref(true)
 const jobData = ref({})
 const matchPercent = ref(20)
+const isFavorited = ref(false)
+const favoriteLoading = ref(false)
 
 // 技能到推荐课程的映射
 const skillToCourse = {
@@ -461,11 +466,64 @@ onUnmounted(() => { if (graph) graph.destroy() })
 
 const applyJob = () => message.success('已记录您的投递意向！HR将尽快与您联系')
 const planCourse = () => message.info('正在为您生成个性化学习计划...')
-const saveJob = () => message.success('职位已收藏')
+
+// 获取用户ID
+const getUserId = () => {
+  const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}')
+  return userProfile.student_id || ''
+}
+
+// 检查收藏状态
+const checkFavoriteStatus = async () => {
+  try {
+    const userId = getUserId()
+    if (!userId) return
+    const { data } = await studentApi.checkFavoriteStatus(decodedJobId.value, userId)
+    isFavorited.value = data.is_favorited
+  } catch (e) {
+    console.error('检查收藏状态失败', e)
+  }
+}
+
+// 切换收藏
+const toggleFavorite = async () => {
+  favoriteLoading.value = true
+  try {
+    const userId = getUserId()
+    if (!userId) {
+      message.warning('请先登录')
+      return
+    }
+
+    if (isFavorited.value) {
+      // 取消收藏
+      await studentApi.removeFavorite(decodedJobId.value, userId)
+      isFavorited.value = false
+      message.success('已取消收藏')
+    } else {
+      // 添加收藏
+      await studentApi.addFavorite(
+        userId,
+        decodedJobId.value,
+        jobData.value.title,
+        jobData.value.company,
+        jobData.value.salary,
+        jobData.value.city
+      )
+      isFavorited.value = true
+      message.success('收藏成功')
+    }
+  } catch (e) {
+    message.error('操作失败: ' + (e.response?.data?.detail || e.message))
+  } finally {
+    favoriteLoading.value = false
+  }
+}
 
 onMounted(() => {
   window.scrollTo(0, 0)
   fetchJobDetail()
+  checkFavoriteStatus()
 })
 </script>
 
@@ -819,6 +877,12 @@ onMounted(() => {
 .action-btn.ghost {
   border: 1px solid #d9d9d9;
   color: #666;
+}
+
+.action-btn.favorited {
+  border: 1px solid #faad14;
+  color: #faad14;
+  background: #fffbe6;
 }
 
 /* 职位信息卡片 */

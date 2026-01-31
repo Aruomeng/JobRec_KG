@@ -39,18 +39,8 @@ settings = Settings()
 # 密码上下文
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# Neo4j连接
-class Neo4jConnection:
-    def __init__(self, uri, user, password):
-        self.driver = GraphDatabase.driver(uri, auth=(user, password))
-    
-    def close(self):
-        self.driver.close()
-    
-    def query(self, query, parameters=None):
-        with self.driver.session() as session:
-            result = session.run(query, parameters)
-            return [record.data() for record in result]
+# 导入共享的 Neo4j 连接（已包含连接池、健康检查和重连机制）
+from common.database import Neo4jConnection
 
 # 创建Neo4j连接实例
 neo4j_conn = Neo4jConnection(settings.neo4j_uri, settings.neo4j_user, settings.neo4j_password)

@@ -103,11 +103,11 @@ const themeConfig = {
         bg: 'linear-gradient(135deg, #1E293B 0%, #334155 50%, #3B82F6 100%)'
     },
     university: {
-        color: '#4facfe',
-        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        color: '#0ba360',
+        gradient: 'linear-gradient(135deg, #0ba360 0%, #3cba92 100%)',
         iconComponent: BookOutlined,
         title: '高校就业管理平台',
-        bg: 'linear-gradient(135deg, #0c1618 0%, #1c3334 50%, #1d4e5f 100%)'
+        bg: 'linear-gradient(135deg, #0a2618 0%, #0a3d27 50%, #0d5a3a 100%)'
     }
 }
 
@@ -215,7 +215,7 @@ const handleLogin = async () => {
 }
 
 .university-bg {
-    background: linear-gradient(135deg, #0c1618 0%, #1c3334 50%, #1d4e5f 100%);
+    background: linear-gradient(135deg, #0a2618 0%, #0a3d27 50%, #0d5a3a 100%);
 }
 
 /* 太空隧道前进效果 */

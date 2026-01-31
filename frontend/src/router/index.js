@@ -25,6 +25,12 @@ const routes = [
     component: () => import('@/views/student/JobDetail.vue'),
     meta: { title: '职位详情', theme: 'blue', requiresAuth: true, role: 'student' }
   },
+  {
+    path: '/student/center',
+    name: 'studentCenter',
+    component: () => import('@/views/student/StudentCenter.vue'),
+    meta: { title: '个人中心', theme: 'blue', requiresAuth: true, role: 'student' }
+  },
   // 企业端
   {
     path: '/enterprise',

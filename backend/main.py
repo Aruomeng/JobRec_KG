@@ -27,9 +27,11 @@ class Settings(BaseSettings):
     jwt_secret_key: str
     algorithm: str
     access_token_expire_minutes: int
+    neon_database_url: str = ""
     
     class Config:
         env_file = ".env"
+        extra = "ignore"
 
 # 初始化配置
 settings = Settings()

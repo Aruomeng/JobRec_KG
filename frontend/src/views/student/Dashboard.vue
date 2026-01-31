@@ -173,72 +173,6 @@
       </a-form>
     </a-modal>
 
-    <!-- 个人信息弹窗 -->
-    <a-modal v-model:open="showProfileModal" title="完善个人信息" width="800px" @ok="saveProfile">
-      <a-form layout="vertical">
-        <!-- 第一行：基础信息 -->
-        <a-row :gutter="16">
-          <a-col :span="8">
-            <a-form-item label="姓名">
-              <a-input v-model:value="profileForm.name" placeholder="请输入您的姓名" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="8">
-            <a-form-item label="学历">
-              <a-select v-model:value="profileForm.education" placeholder="请选择学历">
-                <a-select-option value="专科">专科</a-select-option>
-                <a-select-option value="本科">本科</a-select-option>
-                <a-select-option value="硕士">硕士</a-select-option>
-                <a-select-option value="博士">博士</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :span="8">
-            <a-form-item label="学生ID (系统自动生成)">
-              <a-input v-model:value="profileForm.student_id" disabled />
-            </a-form-item>
-          </a-col>
-        </a-row>
-
-        <!-- 第二行：专业和期望职位 -->
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item label="专业">
-              <a-input v-model:value="profileForm.major" placeholder="如：计算机科学与技术" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="期望职位">
-              <a-input v-model:value="profileForm.expectedJob" placeholder="如：前端工程师" />
-            </a-form-item>
-          </a-col>
-        </a-row>
-
-        <!-- 第三行：技能 (全宽) -->
-        <a-form-item label="掌握的技能（多选，输入并回车添加）">
-          <a-select v-model:value="profileForm.skills" mode="tags" placeholder="输入并回车添加技能" :options="commonSkills" />
-        </a-form-item>
-
-        <!-- 第四行：已修课程 (全宽) - 仅登录用户可见 -->
-        <a-form-item v-if="isLoggedIn" label="已修课程（用于三层漏斗推荐）">
-          <a-select v-model:value="profileForm.courses" mode="multiple" placeholder="选择已修课程，获得更精准的推荐"
-            :options="courseOptions" :loading="coursesLoading" show-search :filter-option="filterCourse"
-            style="width: 100%">
-            <template #option="{ value, label, skills }">
-              <div>
-                <span>{{ label }}</span>
-                <span style="color: #999; font-size: 12px; margin-left: 8px">{{ skills?.join(', ') }}</span>
-              </div>
-            </template>
-          </a-select>
-          <div style="margin-top: 8px; color: #666; font-size: 12px">
-            已选 {{ profileForm.courses?.length || 0 }} 门课程
-          </div>
-        </a-form-item>
-        <a-alert v-else type="info" show-icon message="登录后可选择已修课程，解锁「三层漏斗」推荐模式" style="margin-bottom: 16px" />
-      </a-form>
-    </a-modal>
-
     <!-- 简历上传弹窗 -->
     <a-modal v-model:open="showResumeUpload" :footer="null">
       <template #title>
@@ -280,11 +214,11 @@
             <div class="stat"><span class="n green">{{ diagnosis.skills_analysis?.all_skills?.length || 0 }}</span><span
                 class="l">总技能</span></div>
             <div class="stat"><span class="n blue">{{ diagnosis.position_analysis?.matched_skills?.length || 0
-            }}</span><span class="l">已匹配</span></div>
+                }}</span><span class="l">已匹配</span></div>
             <div class="stat"><span class="n orange">{{ diagnosis.position_analysis?.missing_skills?.length || 0
-            }}</span><span class="l">待学习</span></div>
+                }}</span><span class="l">待学习</span></div>
             <div class="stat"><span class="n purple">{{ diagnosis.market_analysis?.market_match_rate || 0
-            }}%</span><span class="l">市场</span></div>
+                }}%</span><span class="l">市场</span></div>
           </div>
         </div>
 
@@ -310,7 +244,7 @@
                     :percent="Math.min(100, ((diagnosis.skills_analysis?.all_skills?.length || 0) / Math.max(1, diagnosis.peer_comparison?.avg_skills_count || 1)) * 100)"
                     :size="48" :stroke-width="6" stroke-color="#1890ff">
                     <template #format><span class="peer-n">{{ diagnosis.skills_analysis?.all_skills?.length || 0
-                    }}</span></template>
+                        }}</span></template>
                   </a-progress>
                   <span class="peer-l">您</span>
                 </div>
@@ -318,7 +252,7 @@
                 <div class="peer-item">
                   <a-progress type="circle" :percent="100" :size="48" :stroke-width="6" stroke-color="#722ed1">
                     <template #format><span class="peer-n">{{ diagnosis.peer_comparison?.avg_skills_count || 0
-                    }}</span></template>
+                        }}</span></template>
                   </a-progress>
                   <span class="peer-l">同行</span>
                 </div>
@@ -340,7 +274,7 @@
                 <div class="skill-head">
                   <CheckCircleOutlined /> 已掌握 <span class="cnt">{{ diagnosis.position_analysis?.matched_skills?.length
                     || 0
-                    }}</span>
+                  }}</span>
                 </div>
                 <div class="tags">
                   <span v-for="skill in diagnosis.position_analysis?.matched_skills?.slice(0, 10)" :key="skill"
@@ -353,7 +287,7 @@
                 <div class="skill-head">
                   <BookOutlined /> 待学习 <span class="cnt">{{ diagnosis.position_analysis?.missing_skills?.length
                     || 0
-                    }}</span>
+                  }}</span>
                 </div>
                 <div class="tags">
                   <span v-for="skill in diagnosis.position_analysis?.missing_skills?.slice(0, 10)" :key="skill"
@@ -388,7 +322,7 @@
               </div>
               <div class="advice">
                 <div v-for="(s, i) in diagnosis.diagnosis?.suggestions?.slice(0, 2)" :key="i" class="advice-item">• {{ s
-                }}
+                  }}
                 </div>
                 <div v-if="!diagnosis.diagnosis?.suggestions?.length" class="advice-item success">
                   <TrophyOutlined /> 继续保持!
@@ -435,7 +369,7 @@ watch(() => userStore.userProfile, (newVal) => {
 
 const isLoggedIn = computed(() => userStore.isLoggedIn)
 
-const showProfileModal = ref(false)
+
 const showResumeUpload = ref(false)
 const showLoginModal = ref(false)
 const loginLoading = ref(false)
@@ -791,10 +725,6 @@ const refreshUserData = async () => {
   }
 }
 
-// 监听顶栏编辑资料按钮
-const handleOpenProfileModal = () => {
-  showProfileModal.value = true
-}
 
 // 生命周期
 onMounted(() => {
@@ -806,12 +736,6 @@ onMounted(() => {
   if (isLoggedIn.value) {
     refreshUserData()
   }
-  // 监听顶栏编辑资料事件
-  window.addEventListener('open-profile-modal', handleOpenProfileModal)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('open-profile-modal', handleOpenProfileModal)
 })
 const fetchPersonalizedJobs = async () => {
   // 如果是 KG/AI 模式但未登录，需要提示完善信息（至少有技能）
@@ -824,7 +748,7 @@ const fetchPersonalizedJobs = async () => {
 
   if (!userProfile.value.skills?.length) {
     message.warning('请先完善个人信息，添加您的技能')
-    showProfileModal.value = true
+    router.push('/student/center')
     return
   }
 
@@ -914,7 +838,7 @@ const fetchPersonalizedJobs = async () => {
 const showSkillDiagnosis = async () => {
   if (!userProfile.value.skills?.length) {
     message.warning('请先完善个人信息')
-    showProfileModal.value = true
+    router.push('/student/center')
     return
   }
 
@@ -935,7 +859,6 @@ const saveProfile = async () => {
   userProfile.value = { ...profileForm.value }
   // 使用 store 更新用户资料
   userStore.updateProfile(userProfile.value)
-  showProfileModal.value = false
   message.success('个人信息已保存')
 
   // 同步完整档案到后端 (Major, Expected Position, Skills, Courses)
@@ -976,7 +899,7 @@ const handleResumeUpload = async (options) => {
 
       message.success(`解析成功！提取到 ${data.skills.length} 个技能`)
       showResumeUpload.value = false
-      showProfileModal.value = true // 打开资料确认
+      router.push('/student/center') // 跳转到个人中心确认资料
       if (onSuccess) onSuccess(data)
     } else {
       message.warning('未能识别出有效技能，请手动添加')

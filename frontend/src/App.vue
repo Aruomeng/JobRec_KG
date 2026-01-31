@@ -4,7 +4,7 @@
       <!-- 顶部导航（仅主页面显示，登录页不显示） -->
       <a-layout-header v-if="!isLoginPage" :class="['app-header', `app-header-${currentRole}`]">
         <div class="logo">
-          <RocketOutlined class="logo-icon" />
+          <RocketOutlined class="logo-icon" style="color: white" />
           <span class="logo-text">{{ currentTitle }}</span>
         </div>
         <div class="header-right" v-if="isLoggedIn">
@@ -13,7 +13,7 @@
           </a-tag>
           <span class="user-name">{{ userInfo?.name || userInfo?.display_name || '用户' }}</span>
           <a-button type="link" @click="showProfileModal" class="header-btn">
-            编辑资料
+            个人中心
           </a-button>
           <a-divider type="vertical" style="background: rgba(255,255,255,0.3);" />
           <a-button type="link" @click="handleLogout" class="header-btn logout-btn">
@@ -31,8 +31,8 @@
         </router-view>
       </a-layout-content>
 
-      <!-- 页脚（登录页和企业中心不显示） -->
-      <a-layout-footer v-if="!isLoginPage && !isEnterpriseCenter" class="app-footer">
+      <!-- 页脚（登录页、个人中心、企业中心不显示） -->
+      <a-layout-footer v-if="!isLoginPage && !isEnterpriseCenter && !isStudentCenter" class="app-footer">
         智途AI就业推荐系统 ©2026 基于知识图谱与GraphSAGE
       </a-layout-footer>
     </a-layout>
@@ -58,6 +58,9 @@ const isLoginPage = computed(() => route.path.startsWith('/login'))
 // 判断是否是企业中心页
 const isEnterpriseCenter = computed(() => route.path === '/enterprise/center')
 
+// 判断是否是学生中心页
+const isStudentCenter = computed(() => route.path === '/student/center')
+
 // 判断是否已登录 (使用 store)
 const isLoggedIn = computed(() => userStore.isLoggedIn)
 
@@ -80,8 +83,13 @@ const currentRole = computed(() => {
   return 'student'
 })
 
-// 编辑资料 - 根据角色跳转
+// 个人中心 - 根据角色跳转
 const showProfileModal = () => {
+  // 学生端跳转到学生中心
+  if (currentRole.value === 'student') {
+    router.push('/student/center')
+    return
+  }
   // 企业端跳转到企业中心
   if (currentRole.value === 'enterprise') {
     router.push('/enterprise/center')
@@ -89,16 +97,15 @@ const showProfileModal = () => {
   }
   // 高校端(暂无个人中心，留作扩展)
   if (currentRole.value === 'university') {
-    // router.push('/university/center')
     window.dispatchEvent(new CustomEvent('open-profile-modal'))
     return
   }
-  // 学生端触发弹窗
-  window.dispatchEvent(new CustomEvent('open-profile-modal'))
 }
 
 // 退出登录 - 带确认对话框
 const handleLogout = () => {
+  // 先获取当前角色，退出后用于跳转
+  const role = currentRole.value
   Modal.confirm({
     title: '确认退出',
     icon: createVNode(ExclamationCircleOutlined),
@@ -109,7 +116,7 @@ const handleLogout = () => {
     centered: true,
     onOk() {
       userStore.logout()
-      router.push('/login/student')
+      router.push(`/login/${role}`)
     }
   })
 }
@@ -173,10 +180,10 @@ const handleLogout = () => {
   box-shadow: 0 4px 24px rgba(59, 130, 246, 0.25);
 }
 
-/* 高校端 - 青蓝色 */
+/* 高校端 - 深青蓝色 */
 .app-header-university {
-  background: linear-gradient(135deg, rgba(79, 172, 254, 0.95) 0%, rgba(0, 242, 254, 0.9) 100%);
-  box-shadow: 0 4px 24px rgba(79, 172, 254, 0.25);
+  background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);
+  box-shadow: 0 4px 24px rgba(28, 51, 52, 0.35);
 }
 
 .logo {
@@ -249,6 +256,7 @@ const handleLogout = () => {
   padding-top: 88px;
   background: #ffffff;
   min-height: calc(100vh - 64px);
+
 }
 
 .app-content.no-header {
